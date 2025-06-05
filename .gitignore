@@ -1,0 +1,10 @@
+/backend/.idea/
+/venv/
+
+venv/
+__pycache__/
+*.pyc
+
+keys.env
+/.venv/
+.idea/
