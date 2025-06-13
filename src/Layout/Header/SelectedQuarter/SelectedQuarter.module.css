@@ -1,0 +1,39 @@
+.ConteinerSelectedQuarter{
+    display: flex;
+    flex-direction: row;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    gap: -1px;
+}
+
+.SelectedCell{
+    align-items: center;
+    justify-content: center;
+    color: black;
+    background-color: #F7944D;
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    border: 1px solid #6B6B73;
+    font-family: "Inter", sans-serif;
+    font-size: 16px;
+    color: #000;
+    cursor: pointer;
+}
+
+.DefaultCell{
+    align-items: center;
+    justify-content: center;
+    color: black;
+    background-color: #EFEFFD;
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    border: 1px solid #6B6B73;
+    font-family: "Inter", sans-serif;
+    font-size: 16px;
+    color: #000;
+    cursor: pointer;
+}

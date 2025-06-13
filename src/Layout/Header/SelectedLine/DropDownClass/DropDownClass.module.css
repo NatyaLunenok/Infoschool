@@ -1,0 +1,87 @@
+.DropDownSortContainer {
+   position: relative;
+   display: block;
+   width: 220px;
+}
+.DropDownStatusButton {
+    padding-top: 6.5px;
+    padding-bottom: 6.5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    position: relative;
+    background-color: #E4E4E4;
+    display: flex;
+    flex-direction: row;
+    gap: 9px;
+    align-items: center;
+    border: 1px solid #000;
+    font-family: "Inter", sans-serif;
+    font-size: 16px;
+    color: #000;
+    background-color: white;
+    font-weight: 500;
+    cursor: pointer;
+    justify-content: space-between;
+}
+
+.DropDownStatusButton::before {
+   content: '';
+   background-repeat: no-repeat;
+   position: absolute;
+   top: 50%;
+   right: 16px;
+   transform: translateY(-50%) rotate(0deg);
+   width: 18px; 
+   height: 18px;
+   transition: transform 0.35s ease;
+ }
+
+.DropDown{
+   position: absolute; 
+   z-index: 100;
+   margin-top: 6px;
+   border: 1px solid #000;
+   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.7);
+   background-color: white;
+}
+
+ul {
+   list-style: none;
+   padding: 0;
+   margin: 0;
+}
+li {
+   height: 29px;
+   font-size: 16px;
+   font-family: "Inter", sans-serif;
+   text-align: left;
+   font-weight: 500;
+    padding-right: 10px;
+   padding-left: 10px;
+   line-height: 46px;
+    display: flex;
+    align-items: center;
+}
+  
+li:hover {
+   cursor: pointer;
+   background-color: #E7E4E4;
+}
+
+.Selected {
+   background-color: #E7E4E4;
+}
+
+ .imageStrelochka img {
+     width: 11px; /* ширина изображения */
+     height: 7px;
+     font-weight: 500;
+ }
+
+ .imageStrelochka {
+    display: flex; /* Чтобы контейнер правильно отобразил изображение */
+    align-items: center; 
+    justify-content: center;
+    width: 16px; /* ширина изображения */
+    height: 16px;
+ }
