@@ -1,0 +1,40 @@
+.ConteinerSecondLine{
+    width: 1380px;
+    background-color: #EFEFFD;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 0px;
+    border-radius: 8px;
+}
+
+.activeButton{
+    background-color: #15A138;
+    color: white;
+    font-family: "Inter", sans-serif;
+    font-size: 16px;
+    font-weight: bold;
+    align-items: center;
+    justify-content: center;
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    border: none;
+    border-radius: 8px;
+}
+
+.defaultButton{
+    background-color: #EFEFFD;
+    color: #15A138;
+    font-family: "Inter", sans-serif;
+    font-size: 16px;
+    font-weight: bold;
+    align-items: center;
+    justify-content: center;
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    border: none;
+    border-radius: 8px;
+}

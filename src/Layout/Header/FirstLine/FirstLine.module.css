@@ -1,0 +1,43 @@
+.ConteinerFirstLine{
+    display: flex;
+    flex-direction: row;
+    height: 77px;
+    width: 100%;
+    align-items: center;
+    justify-content:space-between;
+}
+
+.logo{
+    width: 270px;
+    height: 77px;
+}
+
+.textbox{
+    width: 400px;
+    height: 56px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content:space-between;
+    margin-right: 70px;
+}
+
+.NameUser{
+    color: #F7944D;
+    font-family: "Inter", sans-serif;
+    font-size: 16px;
+    font-weight: 500px;
+}
+
+.ButtonExit{
+    width: 63px;
+    height: 19px;
+    font-family: "Inter", sans-serif;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    color: #15A138;
+    text-decoration: none;
+    border: none;
+    background-color: white;
+}

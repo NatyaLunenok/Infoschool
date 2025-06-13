@@ -1,0 +1,50 @@
+.footer{
+    height: 217px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #545454;
+    width: 1440px;
+    margin-bottom: 0px;
+}
+
+.sb__footer{
+
+    width: 1281px;
+    display: flex;
+    flex-direction: row;
+    gap: 219px;
+    height: 102px;
+}
+
+.cont{
+    margin: 0px;
+    display: flex;
+    flex-direction: column;
+    gap: 17px;
+    width: 297px;
+    height: 102px;
+    color: white;
+    font-family: "Inter", sans-serif;
+    font-size: 20px;
+}
+
+.contacts{
+    margin: 0px;
+    width: 244px;
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+    align-items: center;
+    color: white;
+    font-family: "Inter", sans-serif;
+    font-size: 20px;
+}
+
+.label{
+    margin: 0px;
+    width: 337px;
+    color: white;
+    font-family: "Inter", sans-serif;
+    font-size: 20px;
+}

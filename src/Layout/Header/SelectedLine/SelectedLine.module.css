@@ -1,0 +1,30 @@
+.ConteinerSelectedLine{
+    display: flex;
+    flex-direction: row;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    align-items: center;
+    gap: 20px;
+}
+
+.conteinerSelectedSubject{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    margin: 0px;
+}
+
+.ConteinerSelectedClass{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    margin: 0px;
+}
+
+.text{
+    font-family: "Inter", sans-serif;
+    font-size: 16px;
+    color: #000;
+}
