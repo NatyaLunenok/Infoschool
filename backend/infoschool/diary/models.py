@@ -2,6 +2,7 @@ from django.db import models
 from unicodedata import category
 from django.contrib.auth.models import AbstractUser
 from django.utils import timezone
+from django.conf import settings
 
 
 class Role(models.Model):
@@ -9,13 +10,15 @@ class Role(models.Model):
 
 
 class User(AbstractUser):
-    login = models.CharField(max_length=50, unique=True)
+    username = models.CharField(max_length=150, unique=True)
+
+    # login = models.CharField(max_length=50, unique=True)
     role = models.ForeignKey(Role, on_delete=models.CASCADE)
 
-    USERNAME_FIELD = "login"  # Авторизация по login
+    USERNAME_FIELD = "username"  # Авторизация по login
     REQUIRED_FIELDS = []
     def __str__(self):
-        return self.login
+        return self.username
 
 
 class Specialization(models.Model):
@@ -42,7 +45,7 @@ class Class(models.Model):
         constraints = [
             models.CheckConstraint(
                 name="Class_year_admission_checkConstraint",
-                check=models.Q(year_admission__gte=2025) & models.Q(year_admission__lte=2225),
+                check=models.Q(year_admission__gte=2022) & models.Q(year_admission__lte=2225),
             ),
         ]
 
@@ -72,7 +75,7 @@ class Student(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     parent1 = models.ForeignKey(Parent, on_delete=models.CASCADE, related_name='children_as_parent1')
     parent2 = models.ForeignKey(Parent, on_delete=models.CASCADE, blank=True, null=True, related_name='children_as_parent2')
-    class_name = models.ForeignKey(Class, on_delete=models.CASCADE)
+    class_name = models.ForeignKey(Class, on_delete=models.CASCADE, blank=True, null=True)
 
     class Meta:
         constraints = [
@@ -119,6 +122,22 @@ class Lesson(models.Model):
                 name='unique_lesson_classroom'
             ),
         ]
+
+
+class Homework(models.Model):
+    lesson = models.OneToOneField(Lesson, on_delete=models.CASCADE,
+                                  related_name='homework_assignment', null=True, blank=True)
+    description = models.TextField()
+
+
+def homework_file_upload_path(instance, filename):
+    if instance.homework and instance.homework.id:
+        return f'homework_files/homework_{instance.homework.id}/{filename}'
+    return f'homework_files/unassigned/{filename}'
+
+class HomeworkFile(models.Model):
+    homework = models.ForeignKey(Homework, on_delete=models.CASCADE, related_name='files')
+    file = models.FileField(upload_to=homework_file_upload_path)
 
 
 class Mark(models.Model):

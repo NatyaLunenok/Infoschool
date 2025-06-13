@@ -3,19 +3,47 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.permissions import AllowAny
 from rest_framework_simplejwt.tokens import RefreshToken, AccessToken
+from django.db import transaction
 from diary.models import *
 from diary.serializers import *
 from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework_simplejwt.token_blacklist.models import BlacklistedToken, OutstandingToken
 from django.utils import timezone
 from rest_framework.exceptions import AuthenticationFailed
+
+
 class RegisterView(APIView):
     permission_classes = [AllowAny]
+
     def post(self, request):
-        serializer = UserRegistrationSerializer(data=request.data)
+        role_name = request.data.get('role')
+
+        if role_name == 'Родитель':
+            serializer = ParentRegistrationSerializer(data=request.data)
+        elif role_name == 'Учитель':
+            serializer = TeacherRegistrationSerializer(data=request.data)
+        elif role_name == 'Ученик':
+            serializer = StudentRegistrationSerializer(data=request.data)
+        else:
+            return Response(
+                {"error": "Неверная роль пользователя"},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
         if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
+            try:
+                with transaction.atomic():
+                    user = serializer.save()
+                    return Response(
+                        {"message": f"{role_name.capitalize()} успешно зарегистрирован", "user_id": user.id},
+                        status=status.HTTP_201_CREATED
+                    )
+            except Exception as e:
+                return Response(
+                    {"error": str(e)},
+                    status=status.HTTP_500_INTERNAL_SERVER_ERROR
+                )
+
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
@@ -29,7 +57,7 @@ class ProtectedView(APIView):
 
     def get(self, request):
 
-        return Response({"message": f"Привет, {request.user.email}! Это защищённый эндпоинт."})
+        return Response({"message": f"Привет, {request.user.username}! Это защищённый эндпоинт."})
 
 class LogoutView(APIView):
     permission_classes = [IsAuthenticated]
