@@ -16,8 +16,12 @@ const AccountsAdmin = () => {
         <button className={styles.defaultButton}>ПРЕДМЕТЫ</button>
         <button className={styles.defaultButton}>КАБИНЕТЫ</button>
     </div>
-    <SelectedUsers/>
-  </div>
+    <div className={styles.ConteinerSelectedQuarter}>
+        <button className={styles.SelectedCell}>Ученики</button>
+        <button className={styles.DefaultCell}>Учителя</button>
+        <button className={styles.DefaultCell}>Родители</button>
+    </div>
+    </div>
   <AccountStudents/>
   <Footer/>
 </>
