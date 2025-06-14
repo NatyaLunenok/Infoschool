@@ -4,6 +4,7 @@ import A from './A';
 import Authorization from './Pages/Authorization/Authorization'
 import JournalTeacher from './Pages/JournalTeacher/JournalTeacher'
 import AccountsAdmin from './Pages/AccountsAdmin/AccountsAdmin'
+import AccountsAdminParents from './Pages/AccountsAdminParents/AccountsAdminParents'
 
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
@@ -14,10 +15,12 @@ function App(){
     <Router>
       <Routes>
         {/* <Route path="/" element={<AccountsAdmin/>} /> */}
+        <Route path="/" element={<AccountsAdminParents/>} />
         {/* <Route path="/" element={<JournalTeacher/>} /> */}
-        <Route path="/" element={<Authorization/>} />
+        {/* <Route path="/" element={<Authorization/>} /> */}
         <Route path="/paa" element={<AccountsAdmin/>} />
         <Route path="/pjt" element={<JournalTeacher/>} />
+        <Route path="/paap" element={<AccountsAdminParents/>} />
       </Routes>
     </Router>
   );
