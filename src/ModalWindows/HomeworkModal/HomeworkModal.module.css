@@ -1,0 +1,169 @@
+.modalOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modalContent {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 600px; /* Adjust width as needed */
+    max-width: 90%;
+}
+
+.modalHeader {
+    background-color: #15A138;
+    color: white;
+    padding: 16px;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modalTitle {
+    margin: 0;
+    font-size: 1.2rem;
+    color:#eee
+}
+
+.closeButton {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.closeButton:hover {
+    color: #ddd;
+}
+
+.modalBody {
+    padding: 20px;
+}
+
+.homeworkLabel {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+}
+
+.homeworkTextarea {
+    width: 540px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    resize: vertical;
+    min-height: 150px;
+    margin-bottom: 15px;
+}
+
+.fileInputContainer {
+    margin-bottom: 15px;
+}
+
+.fileInputLabel {
+    display: inline-flex;
+    align-items: center;
+    background-color: #f4f4f4;
+    color: #333;
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.fileInputLabel svg {
+    margin-right: 8px;
+}
+
+.fileInputLabel:hover {
+    background-color: #e0e0e0;
+}
+
+.fileInput {
+    display: none;
+}
+
+.modalFooter {
+    padding: 16px 20px;
+    display: flex;
+    justify-content: flex-end;
+    border-top: 1px solid #eee;
+}
+
+.addButton,
+.cancelButton {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-left: 10px;
+    transition: background-color 0.2s;
+}
+
+.addButton {
+    background-color: #15A138;
+    color: white;
+}
+
+.addButton:hover {
+    background-color: #15A138;
+}
+
+.cancelButton {
+    background-color: #ddd;
+    color: #333;
+}
+
+.cancelButton:hover {
+    background-color: #ccc;
+}
+
+.fileList {
+  margin-top: 10px;
+}
+
+.fileList ul {
+  list-style: none;
+  padding: 0;
+}
+
+.fileList li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* Распределяем пространство между именем и кнопкой */
+  margin-bottom: 5px;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.removeFileButton {
+  background: none;
+  border: none;
+  color: #d32f2f; /* Красный цвет для удаления */
+  cursor: pointer;
+  font-size: 1.2em;
+  padding: 0;
+  line-height: 1;      /* Центрируем крестик по вертикали */
+  margin-left: 10px;   /* Добавляем отступ слева от крестика */
+}
+
+.removeFileButton:hover {
+  color: #b71c1c; /* Затемняем красный при наведении */
+}
+
+

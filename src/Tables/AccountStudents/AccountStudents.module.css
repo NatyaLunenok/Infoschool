@@ -1,0 +1,95 @@
+
+/* Стили для таблицы */
+.accountTable {
+    width: 100%;
+    border-collapse: collapse;
+    display: table; /* Важно для корректного отображения */
+        position: relative; /* Важно для абсолютного позиционирования кнопки */
+    /* padding-bottom: 20px;   Удаляем отступ снизу, так как кнопка теперь под таблицей */
+    margin: 30px; 
+}
+
+.headerRow {
+    background-color: #15A138;
+    color: white;
+}
+
+.headerRow th {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 2px solid #ddd;
+    white-space: nowrap;
+}
+
+.dataRow:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.dataRow td {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    white-space: nowrap;
+}
+
+/* Стили для кнопок действий (редактировать, удалить) */
+.actions {
+    display: flex;
+    gap: 5px;
+    justify-content: center;
+    align-items: center;
+}
+
+.actionsColumn {
+    width: 80px;
+    min-width: 80px;
+    text-align: center;
+}
+
+.editButton,
+.deleteButton {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    transition: transform 0.2s ease-in-out;
+}
+
+.editButton svg,
+.deleteButton svg {
+    width: 20px;
+    height: 20px;
+    fill: #555;
+    transition: width 0.2s ease-in-out, height 0.2s ease-in-out;
+    display: block;
+}
+
+.editButton:hover svg,
+.deleteButton:hover svg {
+    width: 24px;
+    height: 24px;
+    fill: #333;
+}
+
+/* Стили для контейнера кнопки "Добавить" */
+.addButtonContainer {
+    position: relative; /* Ставим relative, чтобы не перекрывать таблицу */
+    text-align: right; /* Выравниваем кнопку по правому краю */
+    margin-top: 10px;  /* Добавляем отступ сверху от таблицы */
+    padding-right: 70px; /* Отступ от правого края */
+}
+
+/* Стили для кнопки "Добавить" */
+.addButton {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    color: white;
+    background-color: #15A138;
+    transition: background-color 0.3s ease;
+}
+
+.addButton:hover {
+    background-color: #388E3C;
+}

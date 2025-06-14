@@ -10,8 +10,6 @@ const FirstLine = () => {
         </div>
         <div className={styles.textbox}>
             <p className={styles.NameUser}>Учитель</p>
-            {/* <Link to="/cp" className={styles.catalogNav}>Каталог</Link> */}
-
             <button className={styles.ButtonExit}>ВЫХОД</button>
         </div>
     </div>

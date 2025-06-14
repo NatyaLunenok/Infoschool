@@ -1,0 +1,142 @@
+/* AddStudent.module.css */
+
+.modalOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modalContainer {
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 700px;
+    max-width: 90%;
+    display: flex;
+    flex-direction: column;
+}
+
+.modalHeader {
+    background-color: #15A138;
+    color: white;
+    padding: 15px;
+    border-radius: 5px 5px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0;
+    position: sticky; /* Stick to the top */
+    top: 0;
+    z-index: 1; /* Ensure it's above the scrolling content */
+}
+
+.modalBody {
+  display: flex;
+  flex-direction: column;
+    padding: 20px;
+    overflow-y: auto; /* Enable vertical scrolling */
+    max-height: 80vh; /* Adjust based on your content */
+}
+
+/* For Chrome, Safari, and Edge */
+.modalBody::-webkit-scrollbar {
+  width: 0; /* Hide the scrollbar */
+}
+
+/* For Firefox */
+.modalBody {
+  scrollbar-width: none; /* Hide the scrollbar */
+}
+
+.profileSection {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 20px;
+}
+
+.profileImage {
+    width: 100px;
+    margin-right: 20px;
+    flex-shrink: 0;
+}
+
+.topFields {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    flex-grow: 1;
+}
+
+.bottomFields {
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+}
+
+.modalContent {
+    padding: 20px;
+}
+
+.modalTitle {
+    margin: 0;
+    color:white
+}
+
+.modalCloseButton {
+    cursor: pointer;
+    font-size: 24px;
+}
+
+.formGroup {
+    margin-bottom: 10px;
+}
+
+.formGroup label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.formGroup input,
+.formGroup select,
+.formGroup textarea {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.formRow {
+    display: flex;
+    gap: 10px;
+}
+
+.modalFooter {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.modalFooter button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.modalFooter button[type="submit"] {
+    background-color: #15A138;
+    color: white;
+}
+
+.modalFooter button[type="button"] {
+    background-color: #ddd;
+}
