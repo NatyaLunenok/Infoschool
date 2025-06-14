@@ -2,6 +2,7 @@ from django.urls import path
 from rest_framework_simplejwt.views import TokenRefreshView
 from .handlers.authorization import *
 from .handlers.teacher_journal import *
+from .handlers.admin_managment import *
 
 
 urlpatterns = ([
@@ -18,4 +19,9 @@ urlpatterns = ([
     path('journal/', ElectronicJournalView.as_view(), name='electronic-journal'),
     path('marks/', MarkCreateView.as_view(), name='mark-create'),
     path('marks/<int:pk>/', MarkDestroyView.as_view(), name='mark-delete'),
+    path('classroom/', ClassroomListView.as_view(), name='classroom-list'),
+    path('parent/', ParentListView.as_view(), name='parent-list'),
+    path('teacher/', TeacherListView.as_view(), name='teacher-list'),
+    path('student/', StudentListView.as_view(), name='student-list'),
+
 ])

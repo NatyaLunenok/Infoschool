@@ -8,3 +8,5 @@ __pycache__/
 keys.env
 /.venv/
 .idea/
+
+node_modules
