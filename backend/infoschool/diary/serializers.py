@@ -312,3 +312,57 @@ class MarkCreateUpdateSerializer(serializers.ModelSerializer):
         student = validated_data.get('student')
 
         return super().create(validated_data)
+
+
+class ClassroomSerializer(serializers.ModelSerializer):
+    type_id = serializers.IntegerField(source='type.id')
+    type_name = serializers.CharField(source='type.type_name')
+
+    class Meta:
+        model = Classroom
+        fields = ['classroom_number', 'type_id', 'type_name']
+
+
+class ParentSerializer(serializers.ModelSerializer):
+    type_name = serializers.CharField(source='parent_type.type_name')
+
+    class Meta:
+        model = Parent
+        fields = ['last_name', 'first_name', 'patronymic', 'phone_number', 'type_name']
+
+
+class TeacherSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Teacher
+        fields = ['last_name', 'first_name', 'patronymic', 'email', 'phone_number']
+
+
+class StudentSerializer(serializers.ModelSerializer):
+    parent1 = serializers.SerializerMethodField()
+    parent2 = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Student
+        fields = ['last_name', 'first_name', 'patronymic', 'birth_date',
+                  'email', 'phone_number', 'address', 'birth_certificate_number',
+                  'parent1', 'parent2']
+
+    def get_parent_full_name(self, parent):
+        if not parent:
+            return None
+
+        parts = [parent.last_name]
+
+        if parent.first_name:
+            parts.append(parent.first_name)
+
+        if parent.patronymic:
+            parts.append(parent.patronymic)
+
+        return ' '.join(parts)
+
+    def get_parent1(self, obj):
+        return self.get_parent_full_name(obj.parent1)
+
+    def get_parent2(self, obj):
+        return self.get_parent_full_name(obj.parent2)
