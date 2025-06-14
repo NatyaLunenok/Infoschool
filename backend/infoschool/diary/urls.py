@@ -3,6 +3,7 @@ from rest_framework_simplejwt.views import TokenRefreshView
 from .handlers.authorization import *
 from .handlers.teacher_journal import *
 from .handlers.admin_managment import *
+from .handlers.teacher_schedule import *
 
 
 urlpatterns = ([
@@ -23,5 +24,6 @@ urlpatterns = ([
     path('parent/', ParentListView.as_view(), name='parent-list'),
     path('teacher/', TeacherListView.as_view(), name='teacher-list'),
     path('student/', StudentListView.as_view(), name='student-list'),
+    path('teacher-schedule/', TeacherScheduleView.as_view(), name='teacher-schedule'),
 
 ])
