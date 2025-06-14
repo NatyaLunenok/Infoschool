@@ -392,3 +392,9 @@ class ScheduleForClassSerializer(serializers.ModelSerializer):
         patronymic_initial = obj.teacher.patronymic[0] + '.' if obj.teacher.patronymic else ''
 
         return f"{last_name} {first_name_initial}{' ' if patronymic_initial else ''}{patronymic_initial}".strip()
+
+
+class FullNameSerializer(serializers.Serializer):
+    full_name = serializers.CharField()
+
+

@@ -26,5 +26,6 @@ urlpatterns = ([
     path('student/', StudentListView.as_view(), name='student-list'),
     path('teacher-schedule/', TeacherScheduleView.as_view(), name='teacher-schedule'),
     path('class-schedule/', ClassScheduleView.as_view(), name='class-schedule'),
+    path('full-name/', FullNameView.as_view(), name='full-name'),
 
 ])
