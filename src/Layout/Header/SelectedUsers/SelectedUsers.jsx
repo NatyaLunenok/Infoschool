@@ -1,6 +1,6 @@
 import styles from '../SelectedQuarter/SelectedQuarter.module.css';
 
-const SelectedQuarter = () => {
+const SelectedUsers = () => {
     return(
     <div className={styles.ConteinerSelectedQuarter}>
         <button className={styles.SelectedCell}>Ученики</button>
@@ -9,4 +9,4 @@ const SelectedQuarter = () => {
     </div>
     );
 };
-export default SelectedQuarter;
+export default SelectedUsers;

@@ -205,16 +205,14 @@ const AccountStudents = () => {
     const [editedStudent, setEditedStudent] = useState({});
     const [isAddStudentModalOpen, setIsAddStudentModalOpen] = useState(false);
 
-    const fetchWithAuth = FetchWithAuth(); // Используем хук для получения экземпляра FetchWithAuth
 
-    useEffect(() => {
+   useEffect(() => {
         const fetchStudents = async () => {
             try {
-                const data = await fetchWithAuth('http://127.0.0.1:8000/diary/student/');
+                const data = await FetchWithAuth('http://127.0.0.1:8000/diary/student/');
 
-                // Преобразование данных для соответствия вашей структуре
                 const formattedStudents = data.map(student => ({
-                    id: student.birth_certificate_number, // Уникальный ID (если есть, например, birth_certificate_number)
+                    id: student.birth_certificate_number,
                     lastName: student.last_name,
                     firstName: student.first_name,
                     middleName: student.patronymic,
@@ -228,13 +226,14 @@ const AccountStudents = () => {
                 }));
 
                 setStudents(formattedStudents);
+
             } catch (error) {
                 console.error('Ошибка при загрузке списка студентов:', error);
             }
         };
 
         fetchStudents();
-    }, [fetchWithAuth]);
+    }, []);
 
     const handleDeleteStudent = (id) => {
         setStudents(students.filter(student => student.id !== id));
