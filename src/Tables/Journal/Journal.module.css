@@ -1,0 +1,108 @@
+/* JournalTable.module.css */
+
+.journalTable {
+  border-collapse: collapse;
+  width: 100%;
+  font-family: Arial, sans-serif;
+  margin: 30px;
+}
+
+.headerRow {
+  background-color: #15A138;
+  color: white;
+}
+
+.headerCell {
+  padding: 8px;
+  border: 1px solid #ddd;
+  cursor: pointer;
+}
+
+.highlightedDate {
+  background-color: #F7944D; /* Оранжевый для 05.09.25 */
+}
+
+.dataCell {
+  padding: 8px;
+  border: 1px solid #ddd;
+  text-align: center;
+  vertical-align: top; /* чтобы оценки выравнивались сверху ячейки */
+}
+
+.homework {
+  font-weight: bold;
+}
+
+.evenRow {
+  background-color: #fafafa;
+}
+
+.oddRow {
+  background-color: white;
+}
+
+.grade {
+  display: inline-block;
+  margin: 2px;
+  padding: 4px;
+  border-radius: 4px;
+}
+
+.editingContainer {
+  display: inline-flex; /* Use inline-flex to align items horizontally */
+  align-items: center;
+  width: 100px; /* Vertically align items in the center */
+}
+
+
+.gradeInput {
+  width: 30px; /* Немного уменьшим ширину */
+  text-align: center;
+  padding: 4px;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+  font-size: 14px;
+  margin-right: 2px; /* Отступ между input и кнопкой */
+}
+
+.gradeButton {
+  padding: 4px 6px;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.gradeContainer {
+  display: inline-flex; /* Use inline-flex to align items horizontally */
+  align-items: center; /* Vertically align items in the center */
+  margin-right: 5px; /* Add some spacing between grades */
+  position: relative; /* Add position relative for absolute positioning of the delete button */
+}
+
+.deleteButton {
+  background-color: transparent; /* Make background transparent */
+  color: #888; /* Set text color to grey */
+  border: none;
+  padding: 0; /* Remove padding */
+  cursor: pointer;
+  font-size: 12px; /* Smaller font size */
+  position: absolute; /* Absolute positioning */
+  top: -5px; /* Position at the top */
+  right: -5px; /* Position at the right */
+  line-height: 1; /* Reset line-height */
+  width: 16px; /* Set width */
+  height: 16px; /* Set height */
+  text-align: center; /* Center the text */
+  border-radius: 50%; /* Make it circular */
+  opacity: 0; /* Initially hidden */
+  transition: opacity 0.2s ease-in-out; /* Smooth transition for opacity */
+}
+
+.gradeContainer:hover .deleteButton {
+  opacity: 1; /* Show on hover */
+}
+
+
+.deleteButton:hover {
+  background-color: #ddd; /* Lighter background on hover */
+  color: #333;
+}

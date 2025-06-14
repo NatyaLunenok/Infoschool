@@ -4,25 +4,24 @@ import JournalTable from '../../Tables/Journal/Journal'
 import FirstLine from '../../Layout/Header/FirstLine/FirstLine'
 import SecondLine from '../../Layout/Header/SecondLine/SecondLine'
 import SelectedUsers from '../../Layout/Header/SelectedUsers/SelectedUsers'
-import SelectedQuarter from '../../Layout/Header/SelectedQuarter/SelectedQuarter'
-import styles from './JournalTeacher.module.css'
-
-const JournalTeacher = () => {
+import AccountStudents from '../../Tables/AccountStudents/AccountStudents'
+import styles from './AccountsAdmin.module.css'
+const AccountsAdmin = () => {
   return (
   <>
   <div style={{marginLeft:30}}>
     <FirstLine/>
     <div className={styles.ConteinerSecondLine}>
-        <button className={styles.activeButton}>ЖУРНАЛ</button>
-        <button className={styles.defaultButton}>РАСПИСАНИЕ</button>
+        <button className={styles.activeButton}>УЧЕТНЫЕ ЗАПИСИ</button>
+        <button className={styles.defaultButton}>ПРЕДМЕТЫ</button>
+        <button className={styles.defaultButton}>КАБИНЕТЫ</button>
     </div>
-    <SelectedQuarter/>
+    <SelectedUsers/>
   </div>
-  <JournalTable/>
+  <AccountStudents/>
   <Footer/>
 </>
   );
 }
 
-export default JournalTeacher;
-
+export default AccountsAdmin;

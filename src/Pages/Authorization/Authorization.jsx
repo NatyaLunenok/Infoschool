@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from './Authorization.module.css';
 import logo from '../../images/logo.png';
+import FetchWithAuth from "./FetchWithAuth";
 
 const Authorization = () => {
   const [username, setUsername] = useState('');
@@ -16,7 +17,7 @@ const Authorization = () => {
     setLoading(true);
 
     try {
-      const response = await fetch('http://127.0.0.1:8000/diary/token/', {
+      const response = await FetchWithAuth('http://127.0.0.1:8000/diary/token/', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -48,7 +49,7 @@ const Authorization = () => {
       setLoading(false);
 
       // Переход на страницу JournalTeacher
-      navigate('/pjt');
+      navigate('/paas');
 
     } catch (err) {
       setError('Ошибка сети, попробуйте позже');
