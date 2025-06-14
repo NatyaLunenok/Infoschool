@@ -1,60 +1,131 @@
-import React, { useState } from 'react';
-import styles from './AccountStudents.module.css';
+// import React, { useState } from 'react';
+// import styles from '../AccountStudents/AccountStudents.module.css';
+// import { ReactComponent as EditIcon } from '../../images/edit.svg';
+// import { ReactComponent as DeleteIcon } from '../../images/delete.svg';
+
+// const AccountParents = () => {
+//     const [parents, setParents] = useState([
+//         { id: 1, lastName: 'Лунёнок', firstName: 'Анастасия', middleName: 'Алексеевна', birthDate: '01.10.2004', phone: '+79241112038', email: 'lun@gmail.com', address: 'ул. Вершинина 408', certificateNumber: '12345', parent1: 'Мария Ивановна', parent2: 'Иван Петрович' },
+//         { id: 2, lastName: 'Лунёнок', firstName: 'Анастасия', middleName: 'Алексеевна', birthDate: '01.10.2004', phone: '+79241112038', email: 'lun@gmail.com', address: 'ул. Вершинина 408', certificateNumber: '67890', parent1: 'Елена Сергеевна', parent2: 'Сергей Алексеевич' },
+//         // ... добавьте остальные данные здесь
+//     ]);
+
+//     return (
+//         <div className={styles.accountTable}>
+//             <table>
+//                 <thead className={styles.headerRow}>
+//                     <tr>
+//                         <th>Фамилия</th>
+//                         <th>Имя</th>
+//                         <th>Отчество</th>
+//                         <th>Телефон</th>
+//                         <th>Email</th>
+//                         <th className={styles.actionsColumn}>Действия</th>
+//                     </tr>
+//                 </thead>
+//                 <tbody>
+//                     {parents.map(parent => (
+//                         <tr key={parent.id} className={styles.dataRow}>
+//                                                         <td className={styles.actionsColumn}>
+//                                 <div className={styles.actions}>
+//                                         <>
+//                                             <button className={styles.editButton}>
+//                                                 <EditIcon />
+//                                             </button>
+//                                             <button className={styles.deleteButton}>
+//                                                 <DeleteIcon />
+//                                             </button>
+//                                         </>
+//                                 </div>
+//                             </td>
+//                             <td>
+//                                 {parent?.lastName || ''}
+//                             </td>
+//                             <td>
+//                                 {parent?.firstName || ''}
+//                             </td>
+//                             <td>
+//                                 {parent?.middleName || ''}
+//                             </td>
+//                             <td>
+//                                 {parent?.phone || ''}
+//                             </td>
+//                             <td>
+//                                 {parent?.email || ''}
+//                             </td>
+//                         </tr>
+//                     ))}
+//                 </tbody>
+//             </table>
+//             <div className={styles.addButtonContainer}>
+//                 <button className={styles.addButton}>
+//                     Добавить
+//                 </button>
+//             </div>
+//         </div>
+//     );
+// };
+
+// export default AccountParents;
+
+
+import React, { useState, useEffect } from 'react';
+import styles from '../AccountStudents/AccountStudents.module.css';
 import { ReactComponent as EditIcon } from '../../images/edit.svg';
 import { ReactComponent as DeleteIcon } from '../../images/delete.svg';
+import FetchWithAuth from '../../Pages/Authorization/FetchWithAuth'; // Import FetchWithAuth
 
-const AccountStudents = () => {
-    const [students, setStudents] = useState([
-        { id: 1, lastName: 'Лунёнок', firstName: 'Анастасия', middleName: 'Алексеевна', birthDate: '01.10.2004', phone: '+79241112038', email: 'lun@gmail.com', address: 'ул. Вершинина 408', certificateNumber: '12345', parent1: 'Мария Ивановна', parent2: 'Иван Петрович' },
-        { id: 2, lastName: 'Лунёнок', firstName: 'Анастасия', middleName: 'Алексеевна', birthDate: '01.10.2004', phone: '+79241112038', email: 'lun@gmail.com', address: 'ул. Вершинина 408', certificateNumber: '67890', parent1: 'Елена Сергеевна', parent2: 'Сергей Алексеевич' },
-        // ... добавьте остальные данные здесь
-    ]);
+const AccountParents = () => {
+    const [parents, setParents] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
 
-    const [editingId, setEditingId] = useState(null);
-    const [editedStudent, setEditedStudent] = useState({});
-    const [isAddStudentModalOpen, setIsAddStudentModalOpen] = useState(false);
+    useEffect(() => {
+        const fetchParents = async () => {
+            setLoading(true);
+            setError(null);
 
-    const handleDeleteStudent = (id) => {
-        setStudents(students.filter(student => student.id !== id));
-    };
+            try {
+                const response = await FetchWithAuth('http://127.0.0.1:8000/diary/parent/');
 
-    const handleEditStudent = (id) => {
-        setEditingId(id);
-        const studentToEdit = students.find(student => student.id === id);
-        setEditedStudent({ ...studentToEdit });
-    };
+                if (!response) {
+                    setError('Не удалось получить список родителей. Пожалуйста, попробуйте позже.');
+                    return;
+                }
 
-    const handleInputChange = (event) => {
-        const { name, value } = event.target;
-        setEditedStudent(prev => ({ ...prev, [name]: value }));
-    };
+                if (!response.ok) {
+                    setError(`Ошибка при получении списка родителей: ${response.status}`);
+                    return;
+                }
 
-    const handleSaveStudent = (id) => {
-        setStudents(students.map(student =>
-            student.id === id ? { ...editedStudent } : student
-        ));
-        setEditingId(null);
-        setEditedStudent({});
-    };
+                try {
+                    const data = await response.json();
+                    setParents(data);
+                } catch (jsonError) {
+                    setError('Ошибка при обработке полученных данных.');
+                    console.error("Ошибка при разборе JSON:", jsonError);
+                    return;
+                }
+            } catch (fetchError) {
+                setError('Ошибка подключения к серверу. Проверьте соединение.');
+                console.error("Ошибка при выполнении запроса:", fetchError);
+                return;
+            } finally {
+                setLoading(false);
+            }
+        };
 
-    const handleCancelEdit = () => {
-        setEditingId(null);
-        setEditedStudent({});
-    };
-    const handleOpenAddStudentModal = () => {
-        setIsAddStudentModalOpen(true);
-    };
+        fetchParents();
+    }, []);
 
-    const handleCloseAddStudentModal = () => {
-        setIsAddStudentModalOpen(false);
-    };
+    if (loading) {
+        return <div>Загрузка списка родителей...</div>;
+    }
 
+    if (error) {
+        return <div>Ошибка: {error}</div>;
+    }
 
-    const handleAddStudent = (newStudent) => {
-        // Добавьте логику для добавления нового студента в список
-        setStudents([...students, newStudent]);
-        handleCloseAddStudentModal();
-    };
     return (
         <div className={styles.accountTable}>
             <table>
@@ -69,65 +140,31 @@ const AccountStudents = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {students.map(student => (
-                        <tr key={student.id} className={styles.dataRow}>
-                            <td>
-                                {editingId === student.id ? (
-                                    <input type="text" name="lastName" value={editedStudent.lastName || ''} onChange={handleInputChange} />
-                                ) : (
-                                    student.lastName
-                                )}
-                            </td>
-                            <td>
-                                {editingId === student.id ? (
-                                    <input type="text" name="firstName" value={editedStudent.firstName || ''} onChange={handleInputChange} />
-                                ) : (
-                                    student.firstName
-                                )}
-                            </td>
-                            <td>
-                                {editingId === student.id ? (
-                                    <input type="text" name="middleName" value={editedStudent.middleName || ''} onChange={handleInputChange} />
-                                ) : (
-                                    student.middleName
-                                )}
-                            </td>
-                            <td>
-                                {editingId === student.id ? (
-                                    <input type="text" name="phone" value={editedStudent.phone || ''} onChange={handleInputChange} />
-                                ) : (
-                                    student.phone
-                                )}
-                            </td>
-                            <td>
-                                {editingId === student.id ? (
-                                    <input type="text" name="email" value={editedStudent.email || ''} onChange={handleInputChange} />
-                                ) : (
-                                    student.email
-                                )}
-                            </td>
+                    {parents.map(parent => (
+                        <tr key={parent.lastName} className={styles.dataRow}> {/*Изменил ключ на более уникальный*/}
                             <td className={styles.actionsColumn}>
                                 <div className={styles.actions}>
-                                    {editingId === student.id ? (
-                                        <>
-                                            <button className={styles.editButton} onClick={() => handleSaveStudent(student.id)}>
-                                                Сохранить
-                                            </button>
-                                            <button className={styles.deleteButton} onClick={handleCancelEdit}>
-                                                Отмена
-                                            </button>
-                                        </>
-                                    ) : (
-                                        <>
-                                            <button className={styles.editButton} onClick={() => handleEditStudent(student.id)}>
-                                                <EditIcon />
-                                            </button>
-                                            <button className={styles.deleteButton} onClick={() => handleDeleteStudent(student.id)}>
-                                                <DeleteIcon />
-                                            </button>
-                                        </>
-                                    )}
+                                    <>
+                                        <button className={styles.editButton}>
+                                            <EditIcon />
+                                        </button>
+                                        <button className={styles.deleteButton}>
+                                            <DeleteIcon />
+                                        </button>
+                                    </>
                                 </div>
+                            </td>
+                            <td>
+                                {parent?.lastName || ''} {/*Исправил поле на верные*/}
+                            </td>
+                            <td>
+                                {parent?.firstName || ''} {/*Исправил поле на верные*/}
+                            </td>
+                            <td>
+                                {parent?.middleName || ''} {/*Исправил поле на верные*/}
+                            </td>
+                            <td>
+                                {parent?.phone || ''} {/*Исправил поле на верные*/}
                             </td>
                         </tr>
                     ))}
@@ -142,4 +179,4 @@ const AccountStudents = () => {
     );
 };
 
-export default AccountStudents;
+export default AccountParents;

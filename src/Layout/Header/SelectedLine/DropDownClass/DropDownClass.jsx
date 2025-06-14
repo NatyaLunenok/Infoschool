@@ -127,7 +127,7 @@ const DropDownClass = ({ currentClassId, onClassChange }) => {
     };
 
     // Find the current class name based on currentClassId
-    const currentClassName = classData.find(classObj => classObj.id === currentClassId)?.class_name || "Выберите класс";
+    const currentClassName = classData.find(classObj => classObj.id === currentClassId)?.class_name || "";
 
     return (
         <div className={styles.DropDownStatusContainer} ref={container}>

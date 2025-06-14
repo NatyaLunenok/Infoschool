@@ -127,7 +127,7 @@ const DropDownSubjectList = ({ currentSubjectId, onSubjectChange }) => {
     };
 
     // Find the current subject name based on currentSubjectId
-    const currentSubjectName = subjectData.find(subjectObj => subjectObj.id === currentSubjectId)?.subject_name || "Выберите предмет";
+    const currentSubjectName = subjectData.find(subjectObj => subjectObj.id === currentSubjectId)?.subject_name || "";
 
     return (
         <div className={styles.DropDownStatusContainer} ref={container}>

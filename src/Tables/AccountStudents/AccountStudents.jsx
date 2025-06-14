@@ -235,33 +235,6 @@ const AccountStudents = () => {
         fetchStudents();
     }, []);
 
-    const handleDeleteStudent = (id) => {
-        setStudents(students.filter(student => student.id !== id));
-    };
-
-    const handleEditStudent = (id) => {
-        setEditingId(id);
-        const studentToEdit = students.find(student => student.id === id);
-        setEditedStudent({ ...studentToEdit });
-    };
-
-    const handleInputChange = (event) => {
-        const { name, value } = event.target;
-        setEditedStudent(prev => ({ ...prev, [name]: value }));
-    };
-    const handleSaveStudent = (id) => {
-        setStudents(students.map(student =>
-            student.id === id ? { ...editedStudent } : student
-        ));
-        setEditingId(null);
-        setEditedStudent({});
-    };
-
-    const handleCancelEdit = () => {
-        setEditingId(null);
-        setEditedStudent({});
-    };
-
     const handleOpenAddStudentModal = () => {
         setIsAddStudentModalOpen(true);
     };
@@ -301,92 +274,46 @@ const AccountStudents = () => {
                 <tbody>
                     {students.map(student => (
                         <tr key={student.id} className={styles.dataRow}>
-                            <td>
-                                {editingId === student.id ? (
-                                    <input type="text" name="lastName" value={editedStudent.lastName || ''} onChange={handleInputChange} />
-                                ) : (
-                                    student.lastName
-                                )}
-                            </td>
-                            <td>
-                                {editingId === student.id ? (
-                                    <input type="text" name="firstName" value={editedStudent.firstName || ''} onChange={handleInputChange} />
-                                ) : (
-                                    student.firstName
-                                )}
-                            </td>
-                            <td>
-                                {editingId === student.id ? (
-                                    <input type="text" name="middleName" value={editedStudent.middleName || ''} onChange={handleInputChange} />
-                                ) : (
-                                    student.middleName
-                                )}
-                            </td>
-                            <td>
-                                {editingId === student.id ? (
-                                    <input type="text" name="birthDate" value={editedStudent.birthDate || ''} onChange={handleInputChange} />
-                                ) : (
-                                    student.birthDate
-                                )}
-                            </td>
-                            <td>
-                                {editingId === student.id ? (
-                                    <input type="text" name="phone" value={editedStudent.phone || ''} onChange={handleInputChange} />
-                                ) : (
-                                    student.phone
-                                )}
-                            </td>
-                            <td>
-                                {editingId === student.id ? (
-                                    <input type="text" name="email" value={editedStudent.email || ''} onChange={handleInputChange} />
-                                ) : (
-                                    student.email
-                                )}
-                            </td>
-                            <td>
-                                {editingId === student.id ? (
-                                    <input type="text" name="address" value={editedStudent.address || ''} onChange={handleInputChange} />
-                                ) : (
-                                    student.address
-                                )}
-                            </td>
-                            <td>
-                                {editingId === student.id ? (
-                                    <input type="text" name="certificateNumber" value={editedStudent.certificateNumber || ''} onChange={handleInputChange} />
-                                ) : (
-                                    student.certificateNumber
-                                )}
-                            </td>
-                            <td>
-                                {editingId === student.id ? (
-                                    <input type="text" name="parent1" value={editedStudent.parent1 || ''} onChange={handleInputChange} />
-                                ) : (
-                                    student.parent1
-                                )}
-                            </td>
-                            <td>
-                                {editingId === student.id ? (
-                                    <input type="text" name="parent2" value={editedStudent.parent2 || ''} onChange={handleInputChange} />
-                                ) : (
-                                    student.parent2
-                                )}
-                            </td>
-                            <td className={styles.actionsColumn}>
-                                {editingId === student.id ? (
+                                <td className={styles.actionsColumn}>
                                     <>
-                                        <button onClick={() => handleSaveStudent(student.id)}>Сохранить</button>
-                                        <button onClick={handleCancelEdit}>Отмена</button>
-                                    </>
-                                ) : (
-                                    <>
-                                        <button onClick={() => handleEditStudent(student.id)}>
+                                        <button>
                                             <EditIcon />
                                         </button>
-                                        <button onClick={() => handleDeleteStudent(student.id)}>
+                                        <button>
                                             <DeleteIcon />
                                         </button>
                                     </>
-                                )}
+
+                            </td>
+                            <td>
+                                {student?.lastName || ''} 
+                            </td>
+                            <td>
+                                {student?.firstName || ''} 
+                            </td>
+                            <td>
+                                {student?.middleName || ''} 
+                            </td>
+                            <td>
+                                {student?.birthDate || ''} 
+                            </td>
+                            <td>
+                                {student?.phone || ''} 
+                            </td>
+                            <td>
+                                {student?.email || ''} 
+                            </td>
+                            <td>
+                                {student?.address || ''} 
+                            </td>
+                            <td>
+                                {student?.certificateNumber || ''} 
+                            </td>
+                            <td>
+                                {student?.parent1 || ''} 
+                            </td>
+                            <td>
+                                {student?.parent2 || ''}
                             </td>
                         </tr>
                     ))}
