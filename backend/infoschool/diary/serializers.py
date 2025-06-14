@@ -394,7 +394,12 @@ class ScheduleForClassSerializer(serializers.ModelSerializer):
         return f"{last_name} {first_name_initial}{' ' if patronymic_initial else ''}{patronymic_initial}".strip()
 
 
-class FullNameSerializer(serializers.Serializer):
+class FullNameWithIdSerializer(serializers.Serializer):
     full_name = serializers.CharField()
+    user_id = serializers.IntegerField(source='user.id') # ID пользователя
+    parent_id = serializers.IntegerField(source='parent.id', allow_null=True)
+    teacher_id = serializers.IntegerField(source='teacher.id', allow_null=True)
+    student_id = serializers.IntegerField(source='student.id', allow_null=True)
+    class_id = serializers.IntegerField(source='student.class_name.id', allow_null=True)
 
 
