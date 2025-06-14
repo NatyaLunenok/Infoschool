@@ -376,3 +376,19 @@ class LessonSerializer(serializers.ModelSerializer):
     class Meta:
         model = Lesson
         fields = ['id', 'lesson_number', 'subject_name', 'class_name', 'classroom_number']
+
+class ScheduleForClassSerializer(serializers.ModelSerializer):
+    subject_name = serializers.CharField(source='subject.subject_name')
+    teacher_name = serializers.SerializerMethodField()
+    classroom_number = serializers.CharField(source='classroom.classroom_number')
+
+    class Meta:
+        model = Lesson
+        fields = ['id', 'lesson_number', 'subject_name', 'teacher_name', 'classroom_number']
+
+    def get_teacher_name(self, obj):
+        last_name = obj.teacher.last_name
+        first_name_initial = obj.teacher.first_name[0] + '.' if obj.teacher.first_name else ''
+        patronymic_initial = obj.teacher.patronymic[0] + '.' if obj.teacher.patronymic else ''
+
+        return f"{last_name} {first_name_initial}{' ' if patronymic_initial else ''}{patronymic_initial}".strip()
