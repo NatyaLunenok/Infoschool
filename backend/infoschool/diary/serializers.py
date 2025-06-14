@@ -366,3 +366,13 @@ class StudentSerializer(serializers.ModelSerializer):
 
     def get_parent2(self, obj):
         return self.get_parent_full_name(obj.parent2)
+
+
+class LessonSerializer(serializers.ModelSerializer):
+    subject_name = serializers.CharField(source='subject.subject_name')
+    class_name = serializers.CharField(source='class_name.class_name')
+    classroom_number = serializers.CharField(source='classroom.classroom_number')
+
+    class Meta:
+        model = Lesson
+        fields = ['id', 'lesson_number', 'subject_name', 'class_name', 'classroom_number']
