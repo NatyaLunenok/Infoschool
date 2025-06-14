@@ -6,7 +6,7 @@ import SecondLine from '../../Layout/Header/SecondLine/SecondLine'
 import SelectedUsers from '../../Layout/Header/SelectedUsers/SelectedUsers'
 import SelectedQuarter from '../../Layout/Header/SelectedQuarter/SelectedQuarter'
 import styles from './JournalTeacher.module.css'
-
+import SelectedLine from '../../Layout/Header/SelectedLine/SelectedLine'
 const JournalTeacher = () => {
   return (
   <>
@@ -16,6 +16,7 @@ const JournalTeacher = () => {
         <button className={styles.activeButton}>ЖУРНАЛ</button>
         <button className={styles.defaultButton}>РАСПИСАНИЕ</button>
     </div>
+    <SelectedLine/>
     <SelectedQuarter/>
   </div>
   <JournalTable/>
@@ -25,4 +26,3 @@ const JournalTeacher = () => {
 }
 
 export default JournalTeacher;
-
