@@ -403,3 +403,18 @@ class FullNameWithIdSerializer(serializers.Serializer):
     class_id = serializers.IntegerField(source='student.class_name.id', allow_null=True)
 
 
+class ChildSerializer(serializers.ModelSerializer):
+    full_name = serializers.SerializerMethodField()
+    class_name_id = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Student
+        fields = ['id', 'full_name', 'class_name_id']
+
+    def get_full_name(self, obj):
+        return f"{obj.last_name} {obj.first_name} {obj.patronymic or ''}".strip()
+
+    def get_class_name_id(self, obj):
+        return obj.class_name.id if obj.class_name else None
+
+
