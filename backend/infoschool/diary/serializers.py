@@ -376,3 +376,45 @@ class LessonSerializer(serializers.ModelSerializer):
     class Meta:
         model = Lesson
         fields = ['id', 'lesson_number', 'subject_name', 'class_name', 'classroom_number']
+
+class ScheduleForClassSerializer(serializers.ModelSerializer):
+    subject_name = serializers.CharField(source='subject.subject_name')
+    teacher_name = serializers.SerializerMethodField()
+    classroom_number = serializers.CharField(source='classroom.classroom_number')
+
+    class Meta:
+        model = Lesson
+        fields = ['id', 'lesson_number', 'subject_name', 'teacher_name', 'classroom_number']
+
+    def get_teacher_name(self, obj):
+        last_name = obj.teacher.last_name
+        first_name_initial = obj.teacher.first_name[0] + '.' if obj.teacher.first_name else ''
+        patronymic_initial = obj.teacher.patronymic[0] + '.' if obj.teacher.patronymic else ''
+
+        return f"{last_name} {first_name_initial}{' ' if patronymic_initial else ''}{patronymic_initial}".strip()
+
+
+class FullNameWithIdSerializer(serializers.Serializer):
+    full_name = serializers.CharField()
+    user_id = serializers.IntegerField(source='user.id') # ID пользователя
+    parent_id = serializers.IntegerField(source='parent.id', allow_null=True)
+    teacher_id = serializers.IntegerField(source='teacher.id', allow_null=True)
+    student_id = serializers.IntegerField(source='student.id', allow_null=True)
+    class_id = serializers.IntegerField(source='student.class_name.id', allow_null=True)
+
+
+class ChildSerializer(serializers.ModelSerializer):
+    full_name = serializers.SerializerMethodField()
+    class_name_id = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Student
+        fields = ['id', 'full_name', 'class_name_id']
+
+    def get_full_name(self, obj):
+        return f"{obj.last_name} {obj.first_name} {obj.patronymic or ''}".strip()
+
+    def get_class_name_id(self, obj):
+        return obj.class_name.id if obj.class_name else None
+
+
