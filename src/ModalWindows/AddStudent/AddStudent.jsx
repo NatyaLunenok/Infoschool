@@ -568,6 +568,367 @@
 // export default AddStudent;
 
 
+// import React, { useState, useEffect } from 'react';
+// import styles from './AddStudent.module.css';
+// import FetchWithAuth from '../../Pages/Authorization/FetchWithAuth';
+
+// const AddStudent = ({ onClose, onAdd }) => {
+//     const [formData, setFormData] = useState({
+//         lastName: '',
+//         firstName: '',
+//         middleName: '',
+//         birthDate: '',
+//         motherName: '',
+//         fatherName: '',
+//         phone: '',
+//         email: '',
+//         address: '',
+//         certificateNumber: '',
+//         login: '',
+//         password: ''
+//     });
+    
+//     const [parentOptions, setParentOptions] = useState([]);
+//     const [error, setError] = useState(null);
+//     const [success, setSuccess] = useState(null);
+//     const [loading, setLoading] = useState(false);
+
+//     // Загрузка данных родителей
+//     useEffect(() => {
+//         const fetchParents = async () => {
+//             try {
+//                 setLoading(true);
+//                 const parentsData = await FetchWithAuth('http://127.0.0.1:8000/diary/parent/');
+//                 setParentOptions(parentsData.map(parent => ({
+//                     value: parent.id,
+//                     label: `${parent.last_name} ${parent.first_name} ${parent.patronymic || ''}`
+//                 })));
+//             } catch (error) {
+//                 console.error('Ошибка при загрузке родителей:', error);
+//                 setError('Не удалось загрузить список родителей');
+//             } finally {
+//                 setLoading(false);
+//             }
+//         };
+
+//         fetchParents();
+//     }, []);
+
+//     const handleChange = (event) => {
+//         const { name, value } = event.target;
+        
+//         if (name === 'certificateNumber') {
+//             const cleanedValue = value.replace(/[^ivxlcdm0-9-]/gi, '');
+//             setFormData(prev => ({ ...prev, [name]: cleanedValue }));
+//             return;
+//         }
+        
+//         if (name === 'phone') {
+//             const cleanedValue = value.replace(/[^0-9+()-]/g, '');
+//             setFormData(prev => ({ ...prev, [name]: cleanedValue }));
+//             return;
+//         }
+        
+//         setFormData(prev => ({ ...prev, [name]: value }));
+//     };
+
+//     // Проверка на заполненность обязательных полей
+//     const isFormValid = () => {
+//         const requiredFields = [
+//             'lastName', 'firstName', 'birthDate', 'motherName',
+//             'phone', 'address', 'certificateNumber', 'login', 
+//             'password'
+//         ];
+        
+//         return requiredFields.every(field => formData[field].trim());
+//     };
+
+//     const handleSubmit = async (event) => {
+//         event.preventDefault();
+//         setError(null);
+//         setSuccess(null);
+
+//         if (!isFormValid()) {
+//             setError('Пожалуйста, заполните все обязательные поля');
+//             return;
+//         }
+
+//         try {
+//             setLoading(true);
+            
+//             const response = await FetchWithAuth('http://127.0.0.1:8000/diary/register/', {
+//                 method: 'POST',
+//                 headers: {
+//                     'Content-Type': 'application/json',
+//                 },
+//                 body: JSON.stringify({
+//                     username: formData.login,
+//                     password: formData.password,
+//                     password2: formData.password, // дублируем пароль для сервера
+//                     role: "Ученик",
+//                     last_name: formData.lastName,
+//                     first_name: formData.firstName,
+//                     patronymic: formData.middleName,
+//                     phone_number: formData.phone,
+//                     birth_date: formData.birthDate,
+//                     address: formData.address,
+//                     birth_certificate_number: formData.certificateNumber,
+//                     email: formData.email,
+//                     parent1_id: formData.motherName,
+//                     parent2_id: formData.fatherName || null
+//                 })
+//             });
+
+//             setSuccess(`Ученик ${formData.lastName} ${formData.firstName} успешно добавлен`);
+            
+//             // Очистка формы
+//             setFormData({
+//                 lastName: '',
+//                 firstName: '',
+//                 middleName: '',
+//                 birthDate: '',
+//                 motherName: '',
+//                 fatherName: '',
+//                 phone: '',
+//                 email: '',
+//                 address: '',
+//                 certificateNumber: '',
+//                 login: '',
+//                 password: ''
+//             });
+            
+//             setTimeout(() => {
+//                 onAdd();
+//                 onClose();
+//             }, 2000);
+
+//         } catch (error) {
+//             console.error('Ошибка при добавлении ученика:', error);
+            
+//             if (error.response) {
+//                 try {
+//                     const errorData = await error.response.json();
+//                     setError(errorData.message || 'Ошибка при добавлении ученика');
+//                 } catch {
+//                     setError('Ошибка обработки ответа сервера');
+//                 }
+//             } else {
+//                 setError('Ошибка сети или сервера. Пожалуйста, попробуйте позже.');
+//             }
+//         } finally {
+//             setLoading(false);
+//         }
+//     };
+
+//     return (
+//         <div className={styles.modalOverlay}>
+//             <div className={styles.modalContainer}>
+//                 <div className={styles.modalHeader}>
+//                     <h2 className={styles.modalTitle}>Добавление ученика</h2>
+//                     <span className={styles.modalCloseButton} onClick={onClose}>&times;</span>
+//                 </div>
+//                 <div className={styles.modalBody}>
+//                     {loading && <div className={styles.loadingOverlay}>Загрузка...</div>}
+//                     {error && <div className={styles.errorMessage}>{error}</div>}
+//                     {success && <div className={styles.successMessage}>{success}</div>}
+                    
+//                     <div className={styles.profileSection}>
+//                         <div className={styles.profileImage}>
+//                             <svg width="50" height="50" viewBox="0 0 100 100" fill="#F2D7B8">
+//                                 <circle cx="50" cy="30" r="15" />
+//                                 <path d="M50 60 C 30 60 10 80 10 90 A 40 40 0 0 1 90 90 C 90 80 70 60 50 60 Z" />
+//                             </svg>
+//                         </div>
+//                         <div className={styles.topFields}>
+//                             <div className={styles.formGroup}>
+//                                 <label htmlFor="lastName"><span>*</span>Фамилия:</label>
+//                                 <input 
+//                                     type="text" 
+//                                     id="lastName" 
+//                                     name="lastName" 
+//                                     value={formData.lastName} 
+//                                     onChange={handleChange}
+//                                     required
+//                                     disabled={loading}
+//                                 />
+//                             </div>
+//                             <div className={styles.formGroup}>
+//                                 <label htmlFor="firstName"><span>*</span>Имя:</label>
+//                                 <input 
+//                                     type="text" 
+//                                     id="firstName" 
+//                                     name="firstName" 
+//                                     value={formData.firstName} 
+//                                     onChange={handleChange}
+//                                     required
+//                                     disabled={loading}
+//                                 />
+//                             </div>
+//                             <div className={styles.formGroup}>
+//                                 <label htmlFor="middleName">Отчество:</label>
+//                                 <input 
+//                                     type="text" 
+//                                     id="middleName" 
+//                                     name="middleName" 
+//                                     value={formData.middleName} 
+//                                     onChange={handleChange}
+//                                     disabled={loading}
+//                                 />
+//                             </div>
+//                             <div className={styles.formGroup}>
+//                                 <label htmlFor="birthDate"><span>*</span>Дата рождения:</label>
+//                                 <input 
+//                                     type="date" 
+//                                     id="birthDate" 
+//                                     name="birthDate" 
+//                                     value={formData.birthDate} 
+//                                     onChange={handleChange}
+//                                     required
+//                                     disabled={loading}
+//                                 />
+//                             </div>
+//                         </div>
+//                     </div>
+
+//                     <form className={styles.modalForm} onSubmit={handleSubmit}>
+//                         <div className={styles.bottomFields}>
+//                             <div className={styles.formGroup}>
+//                                 <label htmlFor="motherName"><span>*</span>ФИО матери/опекуна 1:</label>
+//                                 <select
+//                                     id="motherName"
+//                                     name="motherName"
+//                                     value={formData.motherName}
+//                                     onChange={handleChange}
+//                                     required
+//                                     disabled={loading}
+//                                 >
+//                                     <option value="">Выберите родителя</option>
+//                                     {parentOptions.map((option) => (
+//                                         <option key={option.value} value={option.value}>
+//                                             {option.label}
+//                                         </option>
+//                                     ))}
+//                                 </select>
+//                             </div>
+//                             <div className={styles.formGroup}>
+//                                 <label htmlFor="fatherName">ФИО отца/опекуна 2:</label>
+//                                 <select
+//                                     id="fatherName"
+//                                     name="fatherName"
+//                                     value={formData.fatherName}
+//                                     onChange={handleChange}
+//                                     disabled={loading}
+//                                 >
+//                                     <option value="">Выберите родителя</option>
+//                                     {parentOptions.map((option) => (
+//                                         <option key={option.value} value={option.value}>
+//                                             {option.label}
+//                                         </option>
+//                                     ))}
+//                                 </select>
+//                             </div>
+//                             <div className={styles.formGroup}>
+//                                 <label htmlFor="phone"><span>*</span>Телефон:</label>
+//                                 <input 
+//                                     type="tel" 
+//                                     id="phone" 
+//                                     name="phone" 
+//                                     value={formData.phone} 
+//                                     onChange={handleChange}
+//                                     placeholder="+7 (XXX) XXX-XX-XX"
+//                                     required
+//                                     disabled={loading}
+//                                 />
+//                             </div>
+//                             <div className={styles.formGroup}>
+//                                 <label htmlFor="email">Email:</label>
+//                                 <input 
+//                                     type="email" 
+//                                     id="email" 
+//                                     name="email" 
+//                                     value={formData.email} 
+//                                     onChange={handleChange}
+//                                     disabled={loading}
+//                                 />
+//                             </div>
+//                             <div className={styles.formGroup}>
+//                                 <label htmlFor="address"><span>*</span>Адрес проживания:</label>
+//                                 <input 
+//                                     type="text" 
+//                                     id="address" 
+//                                     name="address" 
+//                                     value={formData.address} 
+//                                     onChange={handleChange}
+//                                     required
+//                                     disabled={loading}
+//                                 />
+//                             </div>
+//                             <div className={styles.formGroup}>
+//                                 <label htmlFor="certificateNumber"><span>*</span>Номер свидетельства:</label>
+//                                 <input 
+//                                     type="text" 
+//                                     id="certificateNumber" 
+//                                     name="certificateNumber" 
+//                                     value={formData.certificateNumber} 
+//                                     onChange={handleChange}
+//                                     placeholder="II-СЕ №123456"
+//                                     required
+//                                     disabled={loading}
+//                                 />
+//                             </div>
+//                             <div className={styles.formGroup}>
+//                                 <label htmlFor="login"><span>*</span>Логин:</label>
+//                                 <input 
+//                                     type="text" 
+//                                     id="login" 
+//                                     name="login" 
+//                                     value={formData.login} 
+//                                     onChange={handleChange}
+//                                     required
+//                                     disabled={loading}
+//                                 />
+//                             </div>
+//                             <div className={styles.formGroup}>
+//                                 <label htmlFor="password"><span>*</span>Пароль:</label>
+//                                 <input 
+//                                     type="password" 
+//                                     id="password" 
+//                                     name="password" 
+//                                     value={formData.password} 
+//                                     onChange={handleChange}
+//                                     required
+//                                     disabled={loading}
+//                                 />
+//                             </div>
+//                         </div>
+
+//                         <div className={styles.modalFooter}>
+//                             <button 
+//                                 type="submit" 
+//                                 disabled={loading}
+//                                 className={styles.submitButton}
+//                             >
+//                                 {loading ? 'Добавление...' : 'Добавить'}
+//                             </button>
+//                             <button 
+//                                 type="button" 
+//                                 onClick={onClose} 
+//                                 disabled={loading}
+//                             >
+//                                 Отменить
+//                             </button>
+//                         </div>
+//                     </form>
+//                 </div>
+//             </div>
+//         </div>
+//     );
+// };
+
+// export default AddStudent;
+
+
+
 import React, { useState, useEffect } from 'react';
 import styles from './AddStudent.module.css';
 import FetchWithAuth from '../../Pages/Authorization/FetchWithAuth';
@@ -576,12 +937,12 @@ const AddStudent = ({ onClose, onAdd }) => {
     const [formData, setFormData] = useState({
         lastName: '',
         firstName: '',
-        middleName: '',
+        middleName: null, // Инициализируем как null для необязательных полей
         birthDate: '',
-        motherName: '',
-        fatherName: '',
+        motherId: '',      // Изменено с motherName на motherId
+        fatherId: null,    // Изменено с fatherName на fatherId
         phone: '',
-        email: '',
+        email: null,       // Необязательное поле
         address: '',
         certificateNumber: '',
         login: '',
@@ -593,14 +954,13 @@ const AddStudent = ({ onClose, onAdd }) => {
     const [success, setSuccess] = useState(null);
     const [loading, setLoading] = useState(false);
 
-    // Загрузка данных родителей
     useEffect(() => {
         const fetchParents = async () => {
             try {
                 setLoading(true);
                 const parentsData = await FetchWithAuth('http://127.0.0.1:8000/diary/parent/');
                 setParentOptions(parentsData.map(parent => ({
-                    value: parent.id,
+                    value: parent.id, // Используем ID как значение
                     label: `${parent.last_name} ${parent.first_name} ${parent.patronymic || ''}`
                 })));
             } catch (error) {
@@ -629,18 +989,22 @@ const AddStudent = ({ onClose, onAdd }) => {
             return;
         }
         
-        setFormData(prev => ({ ...prev, [name]: value }));
+        // Для необязательных полей отправляем null если значение пустое
+        const newValue = value.trim() === '' ? null : value;
+        setFormData(prev => ({ ...prev, [name]: newValue }));
     };
 
-    // Проверка на заполненность обязательных полей
     const isFormValid = () => {
         const requiredFields = [
-            'lastName', 'firstName', 'birthDate', 'motherName',
+            'lastName', 'firstName', 'birthDate', 'motherId',
             'phone', 'address', 'certificateNumber', 'login', 
             'password'
         ];
         
-        return requiredFields.every(field => formData[field].trim());
+        return requiredFields.every(field => {
+            const value = formData[field];
+            return value !== null && value !== undefined && value.toString().trim() !== '';
+        });
     };
 
     const handleSubmit = async (event) => {
@@ -664,18 +1028,18 @@ const AddStudent = ({ onClose, onAdd }) => {
                 body: JSON.stringify({
                     username: formData.login,
                     password: formData.password,
-                    password2: formData.password, // дублируем пароль для сервера
+                    password2: formData.password,
                     role: "Ученик",
                     last_name: formData.lastName,
                     first_name: formData.firstName,
-                    patronymic: formData.middleName,
+                    patronymic: formData.middleName, // null если не указано
                     phone_number: formData.phone,
                     birth_date: formData.birthDate,
                     address: formData.address,
                     birth_certificate_number: formData.certificateNumber,
-                    email: formData.email,
-                    parent1_id: formData.motherName,
-                    parent2_id: formData.fatherName || null
+                    email: formData.email, // null если не указано
+                    parent1_id: formData.motherId, // ID первого родителя
+                    parent2_id: formData.fatherId // null если не указан
                 })
             });
 
@@ -685,12 +1049,12 @@ const AddStudent = ({ onClose, onAdd }) => {
             setFormData({
                 lastName: '',
                 firstName: '',
-                middleName: '',
+                middleName: null,
                 birthDate: '',
-                motherName: '',
-                fatherName: '',
+                motherId: '',
+                fatherId: null,
                 phone: '',
-                email: '',
+                email: null,
                 address: '',
                 certificateNumber: '',
                 login: '',
@@ -789,44 +1153,45 @@ const AddStudent = ({ onClose, onAdd }) => {
                             </div>
                         </div>
                     </div>
-
                     <form className={styles.modalForm} onSubmit={handleSubmit}>
                         <div className={styles.bottomFields}>
                             <div className={styles.formGroup}>
-                                <label htmlFor="motherName"><span>*</span>ФИО матери/опекуна 1:</label>
-                                <select
-                                    id="motherName"
-                                    name="motherName"
-                                    value={formData.motherName}
-                                    onChange={handleChange}
-                                    required
-                                    disabled={loading}
-                                >
-                                    <option value="">Выберите родителя</option>
-                                    {parentOptions.map((option) => (
-                                        <option key={option.value} value={option.value}>
-                                            {option.label}
-                                        </option>
-                                    ))}
-                                </select>
-                            </div>
-                            <div className={styles.formGroup}>
-                                <label htmlFor="fatherName">ФИО отца/опекуна 2:</label>
-                                <select
-                                    id="fatherName"
-                                    name="fatherName"
-                                    value={formData.fatherName}
-                                    onChange={handleChange}
-                                    disabled={loading}
-                                >
-                                    <option value="">Выберите родителя</option>
-                                    {parentOptions.map((option) => (
-                                        <option key={option.value} value={option.value}>
-                                            {option.label}
-                                        </option>
-                                    ))}
-                                </select>
-                            </div>
+                    <label htmlFor="motherId"><span>*</span>ФИО матери/опекуна 1:</label>
+                    <select
+                        id="motherId"
+                        name="motherId"
+                        value={formData.motherId}
+                        onChange={handleChange}
+                        required
+                        disabled={loading}
+                    >
+                        <option value="">Выберите родителя</option>
+                        {parentOptions.map((option) => (
+                            <option key={option.value} value={option.value}>
+                                {option.label}
+                            </option>
+                        ))}
+                    </select>
+                </div>
+
+                {/* Пример изменения для поля отца */}
+                <div className={styles.formGroup}>
+                    <label htmlFor="fatherId">ФИО отца/опекуна 2:</label>
+                    <select
+                        id="fatherId"
+                        name="fatherId"
+                        value={formData.fatherId || ''}
+                        onChange={handleChange}
+                        disabled={loading}
+                    >
+                        <option value="">Выберите родителя (необязательно)</option>
+                        {parentOptions.map((option) => (
+                            <option key={option.value} value={option.value}>
+                                {option.label}
+                            </option>
+                        ))}
+                    </select>
+                </div>
                             <div className={styles.formGroup}>
                                 <label htmlFor="phone"><span>*</span>Телефон:</label>
                                 <input 
