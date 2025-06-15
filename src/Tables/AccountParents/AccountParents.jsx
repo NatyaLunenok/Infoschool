@@ -255,11 +255,6 @@ const AccountParents = () => {
                 <tbody>
                     {parents.map(parent => (
                         <tr key={parent.id} className={styles.dataRow}>
-                            <td>{parent.lastName || ''}</td>
-                            <td>{parent.firstName || ''}</td>
-                            <td>{parent.middleName || ''}</td>
-                            <td>{parent.phone || ''}</td>
-                            <td>{parent.email || ''}</td>
                             <td className={styles.actionsColumn}>
                                 <div className={styles.actions}>
                                     <button className={styles.editButton}>
@@ -270,6 +265,11 @@ const AccountParents = () => {
                                     </button>
                                 </div>
                             </td>
+                            <td>{parent.lastName || ''}</td>
+                            <td>{parent.firstName || ''}</td>
+                            <td>{parent.middleName || ''}</td>
+                            <td>{parent.phone || ''}</td>
+                            <td>{parent.email || ''}</td>
                         </tr>
                     ))}
                 </tbody>

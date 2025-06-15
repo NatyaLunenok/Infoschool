@@ -2,46 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styles from './FirstLine.module.css';
 import logo from '../../../images/logo.png';
 import FetchWithAuth from '../../../Pages/Authorization/FetchWithAuth'; // Обязательно импортируйте FetchWithAuth
-
-
-// const FirstLine = () => {
-//   const [fullName, setFullName] = useState('');
-
-//   useEffect(() => {
-//     const fetchFullName = async () => {
-//       try {
-//         const username = localStorage.getItem('username');
-//         if (!username) return;
-
-//         const response = await FetchWithAuth(
-//           `http://127.0.0.1:8000/diary/full-name/?username=${username}`
-//         );
-
-//         if (response && response.full_name) {
-//           setFullName(response.full_name);
-//         }
-//       } catch (error) {
-//         console.error('Ошибка при загрузке ФИО:', error);
-//       }
-//     };
-
-//     fetchFullName();
-//   }, []);
-
-//   return (
-//     <div className={styles.ConteinerFirstLine}>
-//       <div className={styles.logo}>
-//         <img src={logo} alt="Логотип" />
-//       </div>
-//       <div className={styles.textbox}>
-//         <p className={styles.NameUser}>{fullName || 'Загрузка...'}</p>
-//         <button className={styles.ButtonExit}>ВЫХОД</button>
-//       </div>
-//     </div>
-//   );
-// };
-// export default FirstLine;
-
+import { useNavigate } from 'react-router-dom';
 
 const FirstLine = () => {
   const [fullName, setFullName] = useState('');

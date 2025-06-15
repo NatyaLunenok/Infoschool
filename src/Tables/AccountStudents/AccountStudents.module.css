@@ -1,17 +1,28 @@
-
-/* Стили для таблицы */
 .accountTable {
+    width: 1380px; /* Фиксированная ширина таблицы */
+    margin: 30px;
+    position: relative;
+    overflow-x: auto; /* Горизонтальный скролл при необходимости */
+}
+
+/* Контейнер для таблицы, обеспечивающий скролл */
+.table-container {
+    width: 100%;
+    overflow-x: auto;
+}
+
+/* Стили для самой таблицы */
+.accountTable table {
     width: 100%;
     border-collapse: collapse;
-    display: table; /* Важно для корректного отображения */
-        position: relative; /* Важно для абсолютного позиционирования кнопки */
-    /* padding-bottom: 20px;   Удаляем отступ снизу, так как кнопка теперь под таблицей */
-    margin: 30px; 
+    min-width: 1380px; /* Минимальная ширина таблицы */
 }
 
 .headerRow {
     background-color: #15A138;
     color: white;
+    position: sticky;
+    top: 0;
 }
 
 .headerRow th {
@@ -31,7 +42,7 @@
     white-space: nowrap;
 }
 
-/* Стили для кнопок действий (редактировать, удалить) */
+/* Стили для кнопок действий */
 .actions {
     display: flex;
     gap: 5px;
@@ -45,6 +56,7 @@
     text-align: center;
 }
 
+/* Остальные стили остаются без изменений */
 .editButton,
 .deleteButton {
     background: none;
@@ -70,15 +82,13 @@
     fill: #333;
 }
 
-/* Стили для контейнера кнопки "Добавить" */
 .addButtonContainer {
-    position: relative; /* Ставим relative, чтобы не перекрывать таблицу */
-    text-align: right; /* Выравниваем кнопку по правому краю */
-    margin-top: 10px;  /* Добавляем отступ сверху от таблицы */
-    padding-right: 70px; /* Отступ от правого края */
+    position: relative;
+    text-align: right;
+    margin-top: 10px;
+    padding-right: 70px;
 }
 
-/* Стили для кнопки "Добавить" */
 .addButton {
     padding: 10px 20px;
     border: none;

@@ -1,36 +1,48 @@
 /* JournalTable.module.css */
 
+/* Основной контейнер таблицы */
+.tableWrapper {
+  width: 1380px;
+  margin: 30px;
+  overflow-x: auto; /* Горизонтальный скролл при необходимости */
+  position: relative;
+}
+
+/* Сама таблица */
 .journalTable {
   border-collapse: collapse;
   width: 100%;
+  min-width: 1380px; /* Минимальная ширина таблицы */
   font-family: Arial, sans-serif;
-  margin: 30px;
 }
 
+/* Заголовок таблицы - делаем sticky */
 .headerRow {
   background-color: #15A138;
   color: white;
+  position: sticky;
+  top: 0;
+  z-index: 10;
 }
 
 .headerCell {
   padding: 8px;
   border: 1px solid #ddd;
   cursor: pointer;
+  white-space: nowrap; /* Запрещаем перенос текста */
 }
 
 .highlightedDate {
-  background-color: #F7944D; /* Оранжевый для 05.09.25 */
+  background-color: #F7944D;
 }
 
+/* Стили для строк и ячеек */
 .dataCell {
   padding: 8px;
   border: 1px solid #ddd;
   text-align: center;
-  vertical-align: top; /* чтобы оценки выравнивались сверху ячейки */
-}
-
-.homework {
-  font-weight: bold;
+  vertical-align: top;
+  white-space: nowrap; /* Запрещаем перенос текста */
 }
 
 .evenRow {
@@ -41,68 +53,72 @@
   background-color: white;
 }
 
+/* Стили для оценок */
 .grade {
   display: inline-block;
   margin: 2px;
   padding: 4px;
   border-radius: 4px;
+  min-width: 20px; /* Фиксированная минимальная ширина */
 }
 
+/* Контейнер для редактирования оценки */
 .editingContainer {
-  display: inline-flex; /* Use inline-flex to align items horizontally */
+  display: inline-flex;
   align-items: center;
-  width: 100px; /* Vertically align items in the center */
+  justify-content: center;
+  width: 100px;
 }
-
 
 .gradeInput {
-  width: 30px; /* Немного уменьшим ширину */
+  width: 30px;
   text-align: center;
   padding: 4px;
   border: 1px solid #ccc;
   box-sizing: border-box;
   font-size: 14px;
-  margin-right: 2px; /* Отступ между input и кнопкой */
+  margin-right: 2px;
 }
 
 .gradeButton {
   padding: 4px 6px;
   font-size: 12px;
   cursor: pointer;
+  white-space: nowrap;
 }
 
+/* Контейнер для оценки и кнопки удаления */
 .gradeContainer {
-  display: inline-flex; /* Use inline-flex to align items horizontally */
-  align-items: center; /* Vertically align items in the center */
-  margin-right: 5px; /* Add some spacing between grades */
-  position: relative; /* Add position relative for absolute positioning of the delete button */
+  display: inline-flex;
+  align-items: center;
+  margin: 2px;
+  position: relative;
 }
 
 .deleteButton {
-  background-color: transparent; /* Make background transparent */
-  color: #888; /* Set text color to grey */
+  background-color: transparent;
+  color: #888;
   border: none;
-  padding: 0; /* Remove padding */
+  padding: 0;
   cursor: pointer;
-  font-size: 12px; /* Smaller font size */
-  position: absolute; /* Absolute positioning */
-  top: -5px; /* Position at the top */
-  right: -5px; /* Position at the right */
-  line-height: 1; /* Reset line-height */
-  width: 16px; /* Set width */
-  height: 16px; /* Set height */
-  text-align: center; /* Center the text */
-  border-radius: 50%; /* Make it circular */
-  opacity: 0; /* Initially hidden */
-  transition: opacity 0.2s ease-in-out; /* Smooth transition for opacity */
+  font-size: 12px;
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  line-height: 1;
+  width: 16px;
+  height: 16px;
+  text-align: center;
+  border-radius: 50%;
+  opacity: 0;
+  transition: opacity 0.2s ease-in-out;
 }
 
 .gradeContainer:hover .deleteButton {
-  opacity: 1; /* Show on hover */
+  opacity: 1;
 }
 
-
 .deleteButton:hover {
-  background-color: #ddd; /* Lighter background on hover */
+  background-color: #ddd;
   color: #333;
 }
