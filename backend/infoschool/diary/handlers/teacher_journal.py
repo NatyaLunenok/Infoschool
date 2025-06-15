@@ -325,6 +325,22 @@ class MarkCreateView(CreateAPIView):
         try:
             serializer = self.get_serializer(data=request.data)
             serializer.is_valid(raise_exception=True)
+
+            lesson_id = request.data.get('lesson')
+            student_id = request.data.get('student')
+
+            if not Lesson.objects.filter(pk=lesson_id).exists():
+                return Response(
+                    {"error": "Урок с указанным ID не найден"},
+                    status=status.HTTP_404_NOT_FOUND
+                )
+
+            if not Student.objects.filter(pk=student_id).exists():
+                return Response(
+                    {"error": "Студент с указанным ID не найден"},
+                    status=status.HTTP_404_NOT_FOUND
+                )
+
             self.perform_create(serializer)
 
             return Response(

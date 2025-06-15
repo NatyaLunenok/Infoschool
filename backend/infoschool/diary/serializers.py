@@ -301,15 +301,20 @@ class StudentJournalSerializer(serializers.ModelSerializer):
 class MarkCreateUpdateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Mark
-        fields = ['id', 'mark', 'lesson', 'student']
+        fields = ['id', 'mark', 'lesson', 'student', 'quarter_number']
     def validate_mark(self, value):
         if not (2 <= value <= 5):
             raise serializers.ValidationError("Оценка должна быть целым числом от 2 до 5.")
         return value
 
     def create(self, validated_data):
-        lesson = validated_data.get('lesson')
-        student = validated_data.get('student')
+        mark_type, _ = MarkType.objects.get_or_create(
+            id=1,
+            defaults={'type_name': 'Текущая оценка'}
+        )
+
+        # Добавляем mark_type в validated_data
+        validated_data['mark_type'] = mark_type
 
         return super().create(validated_data)
 
