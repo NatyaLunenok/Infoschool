@@ -301,15 +301,20 @@ class StudentJournalSerializer(serializers.ModelSerializer):
 class MarkCreateUpdateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Mark
-        fields = ['id', 'mark', 'lesson', 'student']
+        fields = ['id', 'mark', 'lesson', 'student', 'quarter_number']
     def validate_mark(self, value):
         if not (2 <= value <= 5):
             raise serializers.ValidationError("Оценка должна быть целым числом от 2 до 5.")
         return value
 
     def create(self, validated_data):
-        lesson = validated_data.get('lesson')
-        student = validated_data.get('student')
+        mark_type, _ = MarkType.objects.get_or_create(
+            id=1,
+            defaults={'type_name': 'Текущая оценка'}
+        )
+
+        # Добавляем mark_type в validated_data
+        validated_data['mark_type'] = mark_type
 
         return super().create(validated_data)
 
@@ -381,10 +386,11 @@ class ScheduleForClassSerializer(serializers.ModelSerializer):
     subject_name = serializers.CharField(source='subject.subject_name')
     teacher_name = serializers.SerializerMethodField()
     classroom_number = serializers.CharField(source='classroom.classroom_number')
+    homework_id = serializers.SerializerMethodField()
 
     class Meta:
         model = Lesson
-        fields = ['id', 'lesson_number', 'subject_name', 'teacher_name', 'classroom_number']
+        fields = ['id', 'lesson_number', 'subject_name', 'teacher_name', 'classroom_number', 'homework_id']
 
     def get_teacher_name(self, obj):
         last_name = obj.teacher.last_name
@@ -393,6 +399,10 @@ class ScheduleForClassSerializer(serializers.ModelSerializer):
 
         return f"{last_name} {first_name_initial}{' ' if patronymic_initial else ''}{patronymic_initial}".strip()
 
+    def get_homework_id(self, obj):
+        if hasattr(obj, 'homework_assignment'):
+            return obj.homework_assignment.id
+        return None
 
 class FullNameWithIdSerializer(serializers.Serializer):
     full_name = serializers.CharField()

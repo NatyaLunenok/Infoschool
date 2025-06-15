@@ -75,9 +75,16 @@ class ClassScheduleView(APIView):
         start_of_week = date_obj - timedelta(days=date_obj.weekday())
         end_of_week = start_of_week + timedelta(days=6)
 
+
         lessons = Lesson.objects.filter(
             class_name=class_obj,
             date__range=(start_of_week, end_of_week)
+        ).select_related(
+            'subject',
+            'classroom',
+            'teacher'
+        ).prefetch_related(
+            'homework_assignment'
         ).order_by('date', 'lesson_number')
 
 
