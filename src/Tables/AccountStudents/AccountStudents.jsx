@@ -201,8 +201,6 @@ import FetchWithAuth from '../../Pages/Authorization/FetchWithAuth'; // Путь
 
 const AccountStudents = () => {
     const [students, setStudents] = useState([]);
-    const [editingId, setEditingId] = useState(null);
-    const [editedStudent, setEditedStudent] = useState({});
     const [isAddStudentModalOpen, setIsAddStudentModalOpen] = useState(false);
 
 

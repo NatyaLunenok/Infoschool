@@ -1,59 +1,32 @@
-// import React, { useState, useEffect, useCallback } from 'react'; // <-- Добавлен useCallback
-// import styles from './FirstLine.module.css';
-// import logo from '../../../images/logo.png';
-
-// const FirstLine = () => {
-//     return(
-//     <div className={styles.ConteinerFirstLine}>
-//         <div className={styles.logo}>
-//             <img src={logo} alt="" />
-//         </div>
-//         <div className={styles.textbox}>
-//             <p className={styles.NameUser}>Учитель</p>
-//             <button className={styles.ButtonExit}>ВЫХОД</button>
-//         </div>
-//     </div>
-//     );
-// };
-// export default FirstLine;
-
-
 import React, { useState, useEffect } from 'react';
 import styles from './FirstLine.module.css';
 import logo from '../../../images/logo.png';
 import FetchWithAuth from '../../../Pages/Authorization/FetchWithAuth'; // Обязательно импортируйте FetchWithAuth
 
+
 // const FirstLine = () => {
-//   const [fullName, setFullName] = useState(''); // Состояние для хранения ФИО
+//   const [fullName, setFullName] = useState('');
 
 //   useEffect(() => {
 //     const fetchFullName = async () => {
 //       try {
-//         // Получаем имя пользователя из localStorage (или откуда вы его получаете при авторизации)
-//         const username = localStorage.getItem('username'); //  или sessionStorage, или из контекста, откуда вы получаете username
-//         if (!username) {
-//           console.error('Имя пользователя не найдено в localStorage.');
-//           return; // Прекращаем, если нет имени пользователя
+//         const username = localStorage.getItem('username');
+//         if (!username) return;
+
+//         const response = await FetchWithAuth(
+//           `http://127.0.0.1:8000/diary/full-name/?username=${username}`
+//         );
+
+//         if (response && response.full_name) {
+//           setFullName(response.full_name);
 //         }
-
-//         // Делаем запрос к API
-//         const response = await FetchWithAuth(`http://127.0.0.1:8000/diary/full-name/?username=${username}`);
-
-//         if (!response) {
-//           console.error('Не удалось получить данные ФИО.');
-//           return;
-//         }
-
-//         const data = await response.json();
-//         setFullName(data.full_name || 'Неизвестный пользователь'); // Устанавливаем ФИО или текст по умолчанию
 //       } catch (error) {
 //         console.error('Ошибка при загрузке ФИО:', error);
-//         setFullName('Ошибка загрузки'); // Показываем сообщение об ошибке
 //       }
 //     };
 
 //     fetchFullName();
-//   }, []); // Хук useEffect запускается только при монтировании компонента
+//   }, []);
 
 //   return (
 //     <div className={styles.ConteinerFirstLine}>
@@ -61,18 +34,18 @@ import FetchWithAuth from '../../../Pages/Authorization/FetchWithAuth'; // Об�
 //         <img src={logo} alt="Логотип" />
 //       </div>
 //       <div className={styles.textbox}>
-//         <p className={styles.NameUser}>{fullName}</p> {/* Отображаем ФИО */}
+//         <p className={styles.NameUser}>{fullName || 'Загрузка...'}</p>
 //         <button className={styles.ButtonExit}>ВЫХОД</button>
 //       </div>
 //     </div>
 //   );
 // };
-
 // export default FirstLine;
 
 
 const FirstLine = () => {
   const [fullName, setFullName] = useState('');
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchFullName = async () => {
@@ -95,16 +68,69 @@ const FirstLine = () => {
     fetchFullName();
   }, []);
 
+  const handleLogout = async () => {
+    try {
+      const refreshToken = localStorage.getItem('refreshToken');
+      
+      if (!refreshToken) {
+        console.warn('Refresh token не найден');
+        clearAndRedirect();
+        return;
+      }
+
+      // Отправляем запрос на выход
+      const response = await fetch('http://127.0.0.1:8000/diary/logout/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
+        },
+        body: JSON.stringify({ refresh: refreshToken })
+      });
+
+      if (!response.ok) {
+        throw new Error(`Ошибка выхода: ${response.status}`);
+      }
+
+      const result = await response.json();
+      console.log(result.message); // "Успешный выход"
+
+      clearAndRedirect();
+      
+    } catch (error) {
+      console.error('Ошибка при выходе:', error);
+      // В любом случае очищаем и перенаправляем
+      clearAndRedirect();
+    }
+  };
+
+  const clearAndRedirect = () => {
+    // Очищаем localStorage
+    localStorage.removeItem('accessToken');
+    localStorage.removeItem('refreshToken');
+    localStorage.removeItem('username');
+    localStorage.removeItem('role');
+    
+    // Перенаправляем на страницу входа
+    navigate('/');
+  };
+
   return (
     <div className={styles.ConteinerFirstLine}>
       <div className={styles.logo}>
         <img src={logo} alt="Логотип" />
       </div>
       <div className={styles.textbox}>
-        <p className={styles.NameUser}>{fullName || 'Загрузка...'}</p>
-        <button className={styles.ButtonExit}>ВЫХОД</button>
+        <p className={styles.NameUser}>{fullName || 'Администратор'}</p>
+        <button 
+          className={styles.ButtonExit} 
+          onClick={handleLogout}
+        >
+          ВЫХОД
+        </button>
       </div>
     </div>
   );
 };
+
 export default FirstLine;
