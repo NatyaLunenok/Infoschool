@@ -67,12 +67,12 @@
 
 
 // DropDownClass.jsx
+import React, { useState, useRef, useEffect } from "react";
 import styles from "./DropDownClass.module.css";
-import { useState, useRef, useEffect } from "react";
 import st from '../../../../images/strelochka_icon.png';
 import FetchWithAuth from '../../../../Pages/Authorization/FetchWithAuth'; // Import FetchWithAuth
 
-const DropDownClass = ({ currentClassId, onClassChange }) => {
+const DropDownClass = ({ currentClassName, onClassChange }) => { // Используем currentClassName и onClassChange
     const [isOpen, setIsOpen] = useState(false);
     const container = useRef();
     const [classData, setClassData] = useState([]); // State to hold class data
@@ -122,12 +122,9 @@ const DropDownClass = ({ currentClassId, onClassChange }) => {
     };
 
     const handleOptionClick = (classObj) => {
-        onClassChange(classObj.id); // Pass the class ID
+        onClassChange(classObj.class_name); // Pass the class name instead of ID
         setIsOpen(false);
     };
-
-    // Find the current class name based on currentClassId
-    const currentClassName = classData.find(classObj => classObj.id === currentClassId)?.class_name || "";
 
     return (
         <div className={styles.DropDownStatusContainer} ref={container}>
@@ -136,7 +133,7 @@ const DropDownClass = ({ currentClassId, onClassChange }) => {
                 className={`${styles.DropDownStatusButton} ${isOpen ? styles.Open : ""}`}
                 onClick={handleToggle}
             >
-                {currentClassName} {/* Display the current class name */}
+                {currentClassName || "Выберите класс"} {/* Display the current class name */}
                 <div className={styles.imageStrelochka}>
                     <img src={st} alt="Стрелка" />
                 </div>
