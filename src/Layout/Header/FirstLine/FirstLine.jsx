@@ -29,88 +29,88 @@ const FirstLine = () => {
     fetchFullName();
   }, []);
 
-  // const handleLogout = async () => {
-  //   try {
-  //     const refreshToken = localStorage.getItem('refreshToken');
-      
-  //     if (!refreshToken) {
-  //       console.warn('Refresh token не найден');
-  //       clearAndRedirect();
-  //       return;
-  //     }
-
-  //     // Отправляем запрос на выход
-  //     const response = await fetch('http://127.0.0.1:8000/diary/logout/', {
-  //       method: 'POST',
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //         'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
-  //       },
-  //       body: JSON.stringify({ refresh: refreshToken })
-  //     });
-
-  //     if (!response.ok) {
-  //       throw new Error(`Ошибка выхода: ${response.status}`);
-  //     }
-
-  //     const result = await response.json();
-  //     console.log(result.message); // "Успешный выход"
-
-  //     clearAndRedirect();
-      
-  //   } catch (error) {
-  //     console.error('Ошибка при выходе:', error);
-  //     // В любом случае очищаем и перенаправляем
-  //     clearAndRedirect();
-  //   }
-  // };
-
   const handleLogout = async () => {
-  try {
-    const refreshToken = localStorage.getItem('refreshToken');
-    
-    if (!refreshToken) {
-      console.warn('Refresh token не найден');
-      clearAndRedirect();
-      return;
-    }
-
-    // Отправляем запрос на выход
-    const response = await fetch('http://127.0.0.1:8000/diary/logout/', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
-      },
-      body: JSON.stringify({ refresh: refreshToken })
-    });
-
-    // Проверяем статус ответа, но не пытаемся парсить JSON если ответ пустой
-    if (!response.ok) {
-      throw new Error(`Ошибка выхода: ${response.status}`);
-    }
-
-    // Пытаемся получить JSON только если есть содержимое
-    const text = await response.text();
-    if (text) {
-      try {
-        const result = JSON.parse(text);
-        console.log(result.message || 'Успешный выход');
-      } catch (e) {
-        console.log('Успешный выход (не JSON ответ)');
+    try {
+      const refreshToken = localStorage.getItem('refreshToken');
+      
+      if (!refreshToken) {
+        console.warn('Refresh token не найден');
+        clearAndRedirect();
+        return;
       }
-    } else {
-      console.log('Успешный выход (пустой ответ)');
-    }
 
-    clearAndRedirect();
+      // Отправляем запрос на выход
+      const response = await fetch('http://127.0.0.1:8000/diary/logout/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
+        },
+        body: JSON.stringify({ refresh: refreshToken })
+      });
+
+      if (!response.ok) {
+        throw new Error(`Ошибка выхода: ${response.status}`);
+      }
+
+      const result = await response.json();
+      console.log(result.message); // "Успешный выход"
+
+      clearAndRedirect();
+      
+    } catch (error) {
+      console.error('Ошибка при выходе:', error);
+      // В любом случае очищаем и перенаправляем
+      clearAndRedirect();
+    }
+  };
+
+//   const handleLogout = async () => {
+//   try {
+//     const refreshToken = localStorage.getItem('refreshToken');
     
-  } catch (error) {
-    console.error('Ошибка при выходе:', error);
-    // В любом случае очищаем и перенаправляем
-    clearAndRedirect();
-  }
-};
+//     if (!refreshToken) {
+//       console.warn('Refresh token не найден');
+//       clearAndRedirect();
+//       return;
+//     }
+
+//     // Отправляем запрос на выход
+//     const response = await fetch('http://127.0.0.1:8000/diary/logout/', {
+//       method: 'POST',
+//       headers: {
+//         'Content-Type': 'application/json',
+//         'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
+//       },
+//       body: JSON.stringify({ refresh: refreshToken })
+//     });
+
+//     // Проверяем статус ответа, но не пытаемся парсить JSON если ответ пустой
+//     if (!response.ok) {
+//       throw new Error(`Ошибка выхода: ${response.status}`);
+//     }
+
+//     // Пытаемся получить JSON только если есть содержимое
+//     const text = await response.text();
+//     if (text) {
+//       try {
+//         const result = JSON.parse(text);
+//         console.log(result.message || 'Успешный выход');
+//       } catch (e) {
+//         console.log('Успешный выход (не JSON ответ)');
+//       }
+//     } else {
+//       console.log('Успешный выход (пустой ответ)');
+//     }
+
+//     clearAndRedirect();
+    
+//   } catch (error) {
+//     console.error('Ошибка при выходе:', error);
+//     // В любом случае очищаем и перенаправляем
+//     clearAndRedirect();
+//   }
+// };
 
   const clearAndRedirect = () => {
     // Очищаем localStorage
