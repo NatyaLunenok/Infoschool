@@ -381,10 +381,11 @@ class ScheduleForClassSerializer(serializers.ModelSerializer):
     subject_name = serializers.CharField(source='subject.subject_name')
     teacher_name = serializers.SerializerMethodField()
     classroom_number = serializers.CharField(source='classroom.classroom_number')
+    homework_id = serializers.SerializerMethodField()
 
     class Meta:
         model = Lesson
-        fields = ['id', 'lesson_number', 'subject_name', 'teacher_name', 'classroom_number']
+        fields = ['id', 'lesson_number', 'subject_name', 'teacher_name', 'classroom_number', 'homework_id']
 
     def get_teacher_name(self, obj):
         last_name = obj.teacher.last_name
@@ -393,6 +394,10 @@ class ScheduleForClassSerializer(serializers.ModelSerializer):
 
         return f"{last_name} {first_name_initial}{' ' if patronymic_initial else ''}{patronymic_initial}".strip()
 
+    def get_homework_id(self, obj):
+        if hasattr(obj, 'homework_assignment'):
+            return obj.homework_assignment.id
+        return None
 
 class FullNameWithIdSerializer(serializers.Serializer):
     full_name = serializers.CharField()
