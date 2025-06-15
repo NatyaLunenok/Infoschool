@@ -633,49 +633,46 @@ const JournalTable = ({ classId, subjectId }) => { // Accept classId and subject
   const tableRef = useRef(null);
   const inputRef = useRef(null);
   const [dates, setDates] = useState([]); // Add state for dates
-  const fetchWithAuth = FetchWithAuth();
-
+ const [loading, setLoading] = useState(false);
   useEffect(() => {
     const loadJournalData = async () => {
-      if (!classId || !subjectId || !fetchWithAuth) {
-        return; // Don't fetch if classId or subjectId is missing or fetchWithAuth is not yet available
-      }
-
+      if (!classId || !subjectId) return;
+      
+      setLoading(true);
       try {
-        const response = await FetchWithAuth(`http://127.0.0.1:8000/diary/journal/?class_id=${classId}&subject_id=${subjectId}`);
+        const response = await FetchWithAuth(
+          `http://127.0.0.1:8000/diary/journal/?class_id=${classId}&subject_id=${subjectId}`
+        );
 
         if (!response) {
-          console.error('Failed to fetch journal data.');
-          return;
+          throw new Error('Failed to fetch journal data');
         }
 
-        // Prepare the data
-        const fetchedData = response.map(item => ({
+        // Обработка данных
+        const processedData = response.map(item => ({
           id: item.id,
           student: `${item.last_name} ${item.first_name}`,
           grades: item.grades.reduce((acc, grade) => {
-            const date = grade.date;
-            if (!acc[date]) {
-              acc[date] = [];
-            }
-            acc[date].push(grade.mark);
+            acc[grade.date] = acc[grade.date] || [];
+            acc[grade.date].push(grade.mark);
             return acc;
-          }, {}),
+          }, {})
         }));
 
-        setData(fetchedData);
-
-        // Extract unique dates from the grades
-        const uniqueDates = [...new Set(response.flatMap(item => item.grades.map(grade => grade.date)))];
-        setDates(uniqueDates);
-
+        setData(processedData);
+        setDates([...new Set(response.flatMap(item => 
+          item.grades.map(grade => grade.date)
+        ))]);
       } catch (error) {
         console.error('Error loading journal data:', error);
+      } finally {
+        setLoading(false);
       }
     };
 
     loadJournalData();
-  }, [classId, subjectId, fetchWithAuth]);
+  }, [classId, subjectId]);
+
 
   const handleGradeChange = (event) => {
     setNewGrade(event.target.value);
