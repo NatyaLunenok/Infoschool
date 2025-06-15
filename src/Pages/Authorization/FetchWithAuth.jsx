@@ -30,7 +30,6 @@
 
 
 
-FetchWithAuth.js
 import RefreshToken from './RefreshToken';
 
 async function FetchWithAuth(url, options = {}) {

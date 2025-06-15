@@ -27,35 +27,41 @@ import SelectedLine from '../../Layout/Header/SelectedLine/SelectedLine'
 
 // export default JournalTeacher;
 
-        const JournalTeacher = () => {
-          const [selectedSubjectId, setSelectedSubjectId] = useState(null);
-          const [selectedClassId, setSelectedClassId] = useState(null);
 
-          const handleSubjectChange = (subjectId) => {
-            setSelectedSubjectId(subjectId);
-            console.log("ID выбранного предмета:", subjectId); // Для отладки
-          };
 
-          const handleClassChange = (classId) => {
-            setSelectedClassId(classId);
-            console.log("ID выбранного класса:", classId); // Для отладки
-          };
+const JournalTeacher = () => {
+  const [selectedSubjectId, setSelectedSubjectId] = useState(null);
+  const [selectedClassName, setSelectedClassName] = useState(null); // Изменено: храним название класса
 
-          return (
-            <>
-              <div style={{ marginLeft: 30 }}>
-                <FirstLine/>
-                <div className={styles.ConteinerSecondLine}>
-                  <button className={styles.activeButton}>ЖУРНАЛ</button>
-                  <button className={styles.defaultButton}>РАСПИСАНИЕ</button>
-                </div>
-                <SelectedLine onSubjectChange={handleSubjectChange} onClassChange={handleClassChange}/>
-                <SelectedQuarter/>
-              </div>
-              <JournalTable subjectId={selectedSubjectId} classId={selectedClassId}/>
-              <Footer/>
-            </>
-          );
-        }
+  const handleSubjectChange = (subjectId) => {
+    setSelectedSubjectId(subjectId);
+    console.log("ID выбранного предмета:", subjectId); // Для отладки
+  };
 
-        export default JournalTeacher;
+  const handleClassChange = (className) => { // Изменено: получаем название класса
+    setSelectedClassName(className);
+    console.log("Выбран класс:", className); // Для отладки
+  };
+
+  return (
+    <>
+      <div style={{ marginLeft: 30 }}>
+        <FirstLine/>
+        <div className={styles.ConteinerSecondLine}>
+          <button className={styles.activeButton}>ЖУРНАЛ</button>
+          <button className={styles.defaultButton}>РАСПИСАНИЕ</button>
+        </div>
+        <SelectedLine
+          onSubjectChange={handleSubjectChange}
+          onClassChange={handleClassChange}
+          currentClassName={selectedClassName} // Передаем название класса в SelectedLine
+        />
+        <SelectedQuarter/>
+      </div>
+      <JournalTable subjectId={selectedSubjectId} className={selectedClassName}/> {/* Передаем название класса в JournalTable */}
+      <Footer/>
+    </>
+  );
+}
+
+export default JournalTeacher;
