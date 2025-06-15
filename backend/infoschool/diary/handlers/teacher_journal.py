@@ -388,3 +388,38 @@ class MarkDestroyView(DestroyAPIView):
                 {"error": "Произошла ошибка при удалении оценки."},
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR
             )
+
+
+class SimpleLessonListView(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get(self, request):
+        class_id = request.query_params.get('class_id')
+        subject_id = request.query_params.get('subject_id')
+        quarter = request.query_params.get('quarter')
+
+        if not all([class_id, subject_id, quarter]):
+            return Response(
+                {"error": "Необходимо указать class_id, subject_id и quarter"},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        try:
+            quarter = int(quarter)
+            if quarter not in [1, 2, 3, 4]:
+                raise ValueError
+        except ValueError:
+            return Response(
+                {"error": "Номер четверти должен быть целым числом от 1 до 4"},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+
+        lessons = Lesson.objects.filter(
+            class_name_id=class_id,
+            subject_id=subject_id,
+            quarter_number=quarter
+        ).order_by('date')
+
+        serializer = LessonListSerializer(lessons, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)

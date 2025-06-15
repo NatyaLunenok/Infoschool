@@ -496,3 +496,9 @@ class StudentToClassSerializer(serializers.Serializer):
         data['student'] = student
         data['class_obj'] = class_obj
         return data
+
+
+class LessonListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Lesson
+        fields = ['id', 'date']
