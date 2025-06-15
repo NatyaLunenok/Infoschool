@@ -333,13 +333,13 @@ class ParentSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Parent
-        fields = ['last_name', 'first_name', 'patronymic', 'phone_number', 'type_name']
+        fields = ['id', 'last_name', 'first_name', 'patronymic', 'phone_number', 'type_name']
 
 
 class TeacherSerializer(serializers.ModelSerializer):
     class Meta:
         model = Teacher
-        fields = ['last_name', 'first_name', 'patronymic', 'email', 'phone_number']
+        fields = ['id', 'last_name', 'first_name', 'patronymic', 'email', 'phone_number']
 
 
 class StudentSerializer(serializers.ModelSerializer):
@@ -502,3 +502,11 @@ class LessonListSerializer(serializers.ModelSerializer):
     class Meta:
         model = Lesson
         fields = ['id', 'date']
+
+
+class MarkSerializer(serializers.ModelSerializer):
+    lesson_id = serializers.IntegerField(source='lesson.id')
+
+    class Meta:
+        model = Mark
+        fields = ['lesson_id', 'mark']

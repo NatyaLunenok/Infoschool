@@ -6,6 +6,7 @@ from .handlers.admin_managment import *
 from .handlers.teacher_schedule import *
 from .handlers.parent_page import *
 from .handlers.headteacher_page import *
+from .handlers.student_page import *
 
 
 
@@ -37,5 +38,6 @@ urlpatterns = ([
     path('classes/add-student/', AddStudentToClassView.as_view(), name='add-student-to-class'),
     path('classes/student-info/<int:student_id>/', StudentDetailView.as_view(), name='student-info'),
     path('lessons/', SimpleLessonListView.as_view(), name='lesson-list'),
+    path('student-marks/', StudentMarksView.as_view(), name='student-marks'),
 
 ])
