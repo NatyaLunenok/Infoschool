@@ -451,7 +451,7 @@ const AccountParents = () => {
                             <th>Email</th>
                         </tr>
                     </thead>
-                    <tbody className={styles.tableBody}>
+                    <tbody>
                         {parents.map(parent => (
                             <tr key={parent.id} className={styles.dataRow}>
                                 <td className={styles.actionsColumn}>
@@ -476,7 +476,7 @@ const AccountParents = () => {
             </div>
             <div className={styles.addButtonContainer}>
                 <button className={styles.addButton}>
-                    Добавить
+                    Добавить родителя
                 </button>
             </div>
         </div>
