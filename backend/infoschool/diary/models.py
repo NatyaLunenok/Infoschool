@@ -140,16 +140,25 @@ class HomeworkFile(models.Model):
     file = models.FileField(upload_to=homework_file_upload_path)
 
 
+class MarkType(models.Model):
+    type_name = models.CharField(max_length=30, unique=True)
+
 class Mark(models.Model):
     mark = models.IntegerField()
     lesson = models.ForeignKey(Lesson, on_delete=models.CASCADE)
     student = models.ForeignKey(Student, on_delete=models.CASCADE)
+    mark_type = models.ForeignKey(MarkType, on_delete=models.CASCADE, default=1)
+    quarter_number = models.IntegerField(default=4)
 
     class Meta:
         constraints = [
             models.CheckConstraint(
                 name="Mark_checkConstraint",
                 check=models.Q(mark__gte=2) & models.Q(mark__lte=5),
+            ),
+            models.CheckConstraint(
+                name="Quarter_number_checkConstraint",
+                check=models.Q(quarter_number__gte=1) & models.Q(quarter_number__lte=4),
             ),
         ]
 
