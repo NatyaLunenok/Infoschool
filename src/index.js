@@ -16,8 +16,8 @@ function App(){
       <Routes>
         {/* <Route path="/" element={<AccountsAdmin/>} /> */}
         {/* <Route path="/" element={<AccountsAdminParents/>} /> */}
-        <Route path="/" element={<JournalTeacher/>} />
-        {/* <Route path="/" element={<Authorization/>} /> */}
+        {/* <Route path="/" element={<JournalTeacher/>} /> */}
+        <Route path="/" element={<Authorization/>} />
         <Route path="/paa" element={<AccountsAdmin/>} />
         <Route path="/pjt" element={<JournalTeacher/>} />
         <Route path="/paap" element={<AccountsAdminParents/>} />
