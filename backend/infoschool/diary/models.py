@@ -106,6 +106,7 @@ class Lesson(models.Model):
     classroom = models.ForeignKey(Classroom, on_delete=models.CASCADE)
     teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE)
     class_name = models.ForeignKey(Class, on_delete=models.CASCADE)
+    quarter_number = models.IntegerField(default=4)
 
     class Meta:
         constraints = [
