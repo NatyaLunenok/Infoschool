@@ -272,20 +272,21 @@ class ElectronicJournalView(ListAPIView):
     def get(self, request, *args, **kwargs):
         class_id = request.query_params.get('class_id')
         subject_id = request.query_params.get('subject_id')
+        quarter = request.query_params.get('quarter')
 
-        if not class_id or not subject_id:
+        if not class_id or not subject_id or not quarter:
             return Response(
-                {"error": "Необходимо указать class_id и subject_id"},
+                {"error": "Необходимо указать class_id, subject_id и quarter"},
                 status=status.HTTP_400_BAD_REQUEST
             )
 
         try:
-            queryset = self.get_queryset(class_id, subject_id)
+            queryset = self.get_queryset(class_id, subject_id, quarter)
 
             if not queryset.exists():
                 return Response(
-                    {"message": "Данные не найдены для указанного класса и предмета."},
-                    status=status.HTTP_200_OK
+                    {"message": "Данные не найдены для указанного класса, предмета и четверти."},
+                    status=status.HTTP_404_NOT_FOUND
                 )
 
             serializer = self.get_serializer(queryset, many=True)
@@ -297,14 +298,18 @@ class ElectronicJournalView(ListAPIView):
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR
             )
 
-    def get_queryset(self, class_id, subject_id):
+    def get_queryset(self, class_id, subject_id, quarter):
+        if not quarter or int(quarter) not in range(1, 5):
+            raise ValueError("Номер четверти должен быть от 1 до 4")
+
         return Student.objects.filter(
             class_name_id=class_id
         ).select_related('class_name').prefetch_related(
             Prefetch(
                 'mark_set',
                 queryset=Mark.objects.filter(
-                    lesson__subject_id=subject_id
+                    lesson__subject_id=subject_id,
+                    quarter_number=quarter
                 ).select_related('lesson', 'lesson__subject'),
                 to_attr='filtered_marks'
             )
