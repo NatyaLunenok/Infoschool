@@ -50,13 +50,15 @@ class HomeworkListView(ListAPIView):
     def get_queryset(self):
         subject_id = self.request.query_params.get('subject_id')
         class_id = self.request.query_params.get('class_id')
+        quarter = self.request.query_params.get('quarter')
 
-        if not subject_id or not class_id:
+        if not subject_id or not class_id or not quarter:
             return Lesson.objects.none()
 
         return Lesson.objects.filter(
             subject_id=subject_id,
-            class_name_id=class_id
+            class_name_id=class_id,
+            quarter_number=quarter
         ).prefetch_related(
             Prefetch('homework_assignment', queryset=Homework.objects.all())
         )
@@ -64,10 +66,12 @@ class HomeworkListView(ListAPIView):
     def list(self, request, *args, **kwargs):
         subject_id = request.query_params.get('subject_id')
         class_id = request.query_params.get('class_id')
+        quarter = self.request.query_params.get('quarter')
 
-        if not subject_id or not class_id:
+
+        if not subject_id or not class_id or not quarter:
             return Response(
-                {'error': 'Необходимо указать subject_id и class_id.'},
+                {'error': 'Необходимо указать subject_id, class_id и quarter.'},
                 status=status.HTTP_400_BAD_REQUEST
             )
 
