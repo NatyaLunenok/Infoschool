@@ -502,3 +502,11 @@ class LessonListSerializer(serializers.ModelSerializer):
     class Meta:
         model = Lesson
         fields = ['id', 'date']
+
+
+class MarkSerializer(serializers.ModelSerializer):
+    lesson_id = serializers.IntegerField(source='lesson.id')
+
+    class Meta:
+        model = Mark
+        fields = ['lesson_id', 'mark']
