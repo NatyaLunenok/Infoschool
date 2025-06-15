@@ -1,21 +1,25 @@
 .accountTable {
-    width: 1380px; /* Фиксированная ширина таблицы */
+    width: 1380px;
     margin: 30px;
     position: relative;
-    overflow-x: auto; /* Горизонтальный скролл при необходимости */
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh - 200px); /* Ограничение высоты */
 }
 
-/* Контейнер для таблицы, обеспечивающий скролл */
-.table-container {
+.tableContainer {
     width: 100%;
-    overflow-x: auto;
+    overflow: auto; /* Скролл по горизонтали и вертикали */
+    flex-grow: 1;
+    border: 1px solid #ddd;
+    border-radius: 4px;
 }
 
 /* Стили для самой таблицы */
 .accountTable table {
     width: 100%;
     border-collapse: collapse;
-    min-width: 1380px; /* Минимальная ширина таблицы */
+    min-width: 1380px;
 }
 
 .headerRow {
@@ -23,6 +27,13 @@
     color: white;
     position: sticky;
     top: 0;
+    z-index: 10;
+}
+
+.tableBody {
+    display: block;
+    max-height: calc(100vh - 250px); /* Ограничение высоты тела таблицы */
+    overflow-y: auto; /* Вертикальный скролл */
 }
 
 .headerRow th {
@@ -42,7 +53,7 @@
     white-space: nowrap;
 }
 
-/* Стили для кнопок действий */
+/* Остальные стили остаются без изменений */
 .actions {
     display: flex;
     gap: 5px;
@@ -56,7 +67,6 @@
     text-align: center;
 }
 
-/* Остальные стили остаются без изменений */
 .editButton,
 .deleteButton {
     background: none;
