@@ -363,9 +363,8 @@ const AccountStudents = () => {
                     phone: student.phone_number,
                     address: student.address,
                     certificateNumber: student.birth_certificate_number,
-                    parent1: student.parent1_name,
-                    parent2: student.parent2_name,
-                    class: student.class_name
+                    parent1: student.parent1,
+                    parent2: student.parent2,
                 }));
 
                 setStudents(formattedStudents);
@@ -404,6 +403,7 @@ const AccountStudents = () => {
                         <table>
                             <thead className={styles.headerRow}>
                                 <tr>
+                                    <th className={styles.actionsColumn}>Действия</th>
                                     <th>Фамилия</th>
                                     <th>Имя</th>
                                     <th>Отчество</th>
@@ -414,24 +414,11 @@ const AccountStudents = () => {
                                     <th>№ Свидетельства</th>
                                     <th>Родитель 1</th>
                                     <th>Родитель 2</th>
-                                    <th>Класс</th>
-                                    <th className={styles.actionsColumn}>Действия</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {students.map(student => (
                                     <tr key={student.id} className={styles.dataRow}>
-                                        <td>{student.lastName || '-'}</td>
-                                        <td>{student.firstName || '-'}</td>
-                                        <td>{student.middleName || '-'}</td>
-                                        <td>{student.birthDate || '-'}</td>
-                                        <td>{student.phone || '-'}</td>
-                                        <td>{student.email || '-'}</td>
-                                        <td>{student.address || '-'}</td>
-                                        <td>{student.certificateNumber || '-'}</td>
-                                        <td>{student.parent1 || '-'}</td>
-                                        <td>{student.parent2 || '-'}</td>
-                                        <td>{student.class || '-'}</td>
                                         <td className={styles.actionsColumn}>
                                             <div className={styles.actions}>
                                                 <button className={styles.editButton}>
@@ -442,6 +429,16 @@ const AccountStudents = () => {
                                                 </button>
                                             </div>
                                         </td>
+                                        <td>{student.lastName || '-'}</td>
+                                        <td>{student.firstName || '-'}</td>
+                                        <td>{student.middleName || '-'}</td>
+                                        <td>{student.birthDate || '-'}</td>
+                                        <td>{student.phone || '-'}</td>
+                                        <td>{student.email || '-'}</td>
+                                        <td>{student.address || '-'}</td>
+                                        <td>{student.certificateNumber || '-'}</td>
+                                        <td>{student.parent1 || '-'}</td>
+                                        <td>{student.parent2 || '-'}</td>
                                     </tr>
                                 ))}
                             </tbody>
