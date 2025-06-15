@@ -244,12 +244,12 @@ const AccountParents = () => {
             <table>
                 <thead className={styles.headerRow}>
                     <tr>
+                        <th className={styles.actionsColumn}>Действия</th>
                         <th>Фамилия</th>
                         <th>Имя</th>
                         <th>Отчество</th>
                         <th>Телефон</th>
                         <th>Email</th>
-                        <th className={styles.actionsColumn}>Действия</th>
                     </tr>
                 </thead>
                 <tbody>
