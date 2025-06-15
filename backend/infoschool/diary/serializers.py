@@ -343,7 +343,7 @@ class StudentSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Student
-        fields = ['last_name', 'first_name', 'patronymic', 'birth_date',
+        fields = ['id', 'last_name', 'first_name', 'patronymic', 'birth_date',
                   'email', 'phone_number', 'address', 'birth_certificate_number',
                   'parent1', 'parent2']
 
@@ -432,3 +432,57 @@ class TeacherForListSerializer(serializers.ModelSerializer):
 
     def get_teacher_name(self, obj):
         return f"{obj.last_name} {obj.first_name} {obj.patronymic or ''}".strip()
+
+
+class StudentShortSerializer(serializers.ModelSerializer):
+    full_name = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Student
+        fields = ['id', 'full_name']
+
+    def get_full_name(self, obj):
+        parts = [obj.last_name, obj.first_name]
+        if obj.patronymic:
+            parts.append(obj.patronymic)
+        return ' '.join(parts)
+
+
+class ClassDetailSerializer(serializers.ModelSerializer):
+    students = StudentShortSerializer(many=True, source='student_set')
+    class_teacher_id = serializers.IntegerField(source='class_teacher.id')
+    specialization_id = serializers.IntegerField(source='specialization.id')
+
+    class Meta:
+        model = Class
+        fields = [
+            'id',
+            'class_name',
+            'year_admission',
+            'specialization_id',
+            'class_teacher_id',
+            'students'
+        ]
+
+
+class StudentToClassSerializer(serializers.Serializer):
+    student_id = serializers.IntegerField()
+    class_id = serializers.IntegerField()
+
+    def validate(self, data):
+        try:
+            student = Student.objects.get(pk=data['student_id'])
+        except Student.DoesNotExist:
+            raise serializers.ValidationError("Ученик с указанным ID не найден")
+
+        try:
+            class_obj = Class.objects.get(pk=data['class_id'])
+        except Class.DoesNotExist:
+            raise serializers.ValidationError("Класс с указанным ID не найден")
+
+        if student.class_name and student.class_name.id != data['class_id']:
+            raise serializers.ValidationError("Ученик уже состоит в другом классе")
+
+        data['student'] = student
+        data['class_obj'] = class_obj
+        return data
