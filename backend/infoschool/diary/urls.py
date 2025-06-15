@@ -5,6 +5,7 @@ from .handlers.teacher_journal import *
 from .handlers.admin_managment import *
 from .handlers.teacher_schedule import *
 from .handlers.parent_page import *
+from .handlers.headteacher_page import *
 
 
 
@@ -30,4 +31,7 @@ urlpatterns = ([
     path('class-schedule/', ClassScheduleView.as_view(), name='class-schedule'),
     path('full-name/', FullNameWithIdView.as_view(), name='full-name'),
     path('children/', ParentChildrenView.as_view(), name='parent-children'),
+    path('specialization/', SpecializationListView.as_view(), name='specialization-list'),
+    path('teacher-list/', TeachersListView.as_view(), name='teacher-list'),
+
 ])

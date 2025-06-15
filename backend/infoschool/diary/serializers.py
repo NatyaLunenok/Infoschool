@@ -418,3 +418,17 @@ class ChildSerializer(serializers.ModelSerializer):
         return obj.class_name.id if obj.class_name else None
 
 
+class SpecializationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Specialization
+        fields = ['id', 'specialization_name']
+
+
+class TeacherForListSerializer(serializers.ModelSerializer):
+    teacher_name = serializers.SerializerMethodField()
+    class Meta:
+        model = Teacher
+        fields = ['id', 'teacher_name']
+
+    def get_teacher_name(self, obj):
+        return f"{obj.last_name} {obj.first_name} {obj.patronymic or ''}".strip()
