@@ -67,18 +67,57 @@ import SelectedLine from '../../Layout/Header/SelectedLine/SelectedLine'
 // export default JournalTeacher;
 
 
+// const JournalTeacher = () => {
+//   const [selectedSubject, setSelectedSubject] = useState(null);
+//   const [selectedClass, setSelectedClass] = useState(null);
+
+//   const handleSubjectChange = (subject) => {
+//     setSelectedSubject(subject);
+//     console.log("Выбранный предмет:", subject);
+//   };
+
+//   const handleClassChange = (classItem) => {
+//     setSelectedClass(classItem);
+//     console.log("Выбранный класс:", classItem);
+//   };
+
+//   return (
+//     <>
+//       <div style={{ marginLeft: 30 }}>
+//         <FirstLine />
+//         <div className={styles.ConteinerSecondLine}>
+//           <button className={styles.activeButton}>ЖУРНАЛ</button>
+//           <button className={styles.defaultButton}>РАСПИСАНИЕ</button>
+//         </div>
+//         <SelectedLine
+//           onSubjectChange={handleSubjectChange}
+//           onClassChange={handleClassChange}
+//           selectedSubject={selectedSubject}
+//           selectedClass={selectedClass}
+//         />
+//         <SelectedQuarter />
+//       </div>
+//       <JournalTable 
+//         subjectId={selectedSubject?.id} 
+//         className={selectedClass?.class_name}
+//       />
+//       <Footer />
+//     </>
+//   );
+// };
+
+// export default JournalTeacher;
+
 const JournalTeacher = () => {
   const [selectedSubject, setSelectedSubject] = useState(null);
   const [selectedClass, setSelectedClass] = useState(null);
 
   const handleSubjectChange = (subject) => {
     setSelectedSubject(subject);
-    console.log("Выбранный предмет:", subject);
   };
 
   const handleClassChange = (classItem) => {
     setSelectedClass(classItem);
-    console.log("Выбранный класс:", classItem);
   };
 
   return (
@@ -97,13 +136,14 @@ const JournalTeacher = () => {
         />
         <SelectedQuarter />
       </div>
-      <JournalTable 
-        subjectId={selectedSubject?.id} 
-        className={selectedClass?.class_name}
-      />
+      {selectedSubject && selectedClass && (
+        <JournalTable 
+          classId={selectedClass.id}  // Передаем id класса
+          subjectId={selectedSubject.id}  // Передаем id предмета
+        />
+      )}
       <Footer />
     </>
   );
 };
-
 export default JournalTeacher;
