@@ -169,22 +169,16 @@ const DropDownSubjectList = ({ currentSubject, onChange }) => {
 
   useEffect(() => {
     const fetchSubjects = async () => {
-      try {
-        const response = await FetchWithAuth('http://127.0.0.1:8000/diary/subject/');
-        
-        if (!response.ok) {
-          throw new Error(`Ошибка загрузки предметов: ${response.status}`);
-        }
-        
-        const data = await response.json();
+  try {
+    const data = await FetchWithAuth('http://127.0.0.1:8000/diary/subject/');
         setSubjects(data);
-      } catch (err) {
-        console.error('Ошибка при загрузке предметов:', err);
-        setError(err.message);
-      } finally {
-        setLoading(false);
-      }
-    };
+  } catch (err) {
+    console.error('Ошибка при загрузке классов:', err);
+    setError(err.message);
+  } finally {
+    setLoading(false);
+  }
+};
 
     fetchSubjects();
   }, []);

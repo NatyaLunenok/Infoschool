@@ -165,22 +165,16 @@ const DropDownClass = ({ currentClass, onChange }) => {
 
   useEffect(() => {
     const fetchClasses = async () => {
-      try {
-        const response = await FetchWithAuth('http://127.0.0.1:8000/diary/class/');
-        
-        if (!response.ok) {
-          throw new Error(`Ошибка загрузки классов: ${response.status}`);
-        }
-        
-        const data = await response.json();
-        setClasses(data);
-      } catch (err) {
-        console.error('Ошибка при загрузке классов:', err);
-        setError(err.message);
-      } finally {
-        setLoading(false);
-      }
-    };
+  try {
+    const data = await FetchWithAuth('http://127.0.0.1:8000/diary/class/');
+    setClasses(data); // data уже распарсена
+  } catch (err) {
+    console.error('Ошибка при загрузке классов:', err);
+    setError(err.message);
+  } finally {
+    setLoading(false);
+  }
+};
 
     fetchClasses();
   }, []);
