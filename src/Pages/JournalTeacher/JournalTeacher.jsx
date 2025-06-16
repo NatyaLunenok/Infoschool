@@ -55,7 +55,7 @@ const JournalTeacher = () => {
         
         // Загружаем данные об учениках и оценках
         const journalData = await FetchWithAuth(
-          `http://127.0.0.1:8000/diary/journal/?class_id=${selectedClass.id}&subject_id=${selectedSubject.id}&quarter=4`
+          `http://127.0.0.1:8000/diary/journal/?class_id=${selectedClass.id}&subject_id=${selectedSubject.id}&quarter=4&year=2024`
         );
         
         if (!journalData) {

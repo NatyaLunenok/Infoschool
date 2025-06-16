@@ -865,6 +865,9 @@ const JournalTable = ({ class: selectedClass, subject: selectedSubject, quarter,
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [homeworksList, setHomeworksList] = useState([]);
+  const [homeworkViewData, setHomeworkViewData] = useState(null);
+  const [homeworkModalMode, setHomeworkModalMode] = useState('add');
+
 
   useEffect(() => {
     const formattedData = students.map(student => {
@@ -904,15 +907,28 @@ const JournalTable = ({ class: selectedClass, subject: selectedSubject, quarter,
     }
   }, [homeworks, dates]);
 
-  const openHomeworkModal = (lessonId) => {
+  const openHomeworkModal = (lessonId, mode = 'add') => {
+    if (mode === 'view') {
+      const homework = homeworks.find(hw => hw.id === lessonId);
+      if (homework) {
+        setHomeworkViewData({
+          text: homework.description,
+          files: homework.files || []
+        });
+      }
+    }
     setSelectedLessonForHomework(lessonId);
+    setHomeworkModalMode(mode);
     setIsHomeworkModalOpen(true);
   };
 
   const closeHomeworkModal = () => {
     setIsHomeworkModalOpen(false);
     setSelectedLessonForHomework(null);
+    setHomeworkViewData(null);
+    setHomeworkModalMode('add');
   };
+  
 
   const handleClickOutside = (event) => {
     if (editingCell && tableRef.current && !tableRef.current.contains(event.target)) {
@@ -920,7 +936,8 @@ const JournalTable = ({ class: selectedClass, subject: selectedSubject, quarter,
     }
   };
 
-  const handleHomeworkSubmit = async (homeworkData) => {
+// Изменения в handleHomeworkSubmit (JournalTable.js)
+const handleHomeworkSubmit = async (homeworkData) => {
     try {
       setLoading(true);
       
@@ -928,9 +945,10 @@ const JournalTable = ({ class: selectedClass, subject: selectedSubject, quarter,
       formData.append('lesson', selectedLessonForHomework);
       formData.append('description', homeworkData.text);
       
-      if (homeworkData.file) {
-        formData.append('files', homeworkData.file);
-      }
+      // Добавляем все файлы
+      homeworkData.files.forEach(file => {
+        formData.append('files', file);
+      });
 
       const response = await FetchWithAuth('http://127.0.0.1:8000/diary/homeworks/', {
         method: 'POST',
@@ -938,6 +956,7 @@ const JournalTable = ({ class: selectedClass, subject: selectedSubject, quarter,
       });
 
       if (response) {
+        // Обновляем список домашних заданий
         const updatedHomeworks = [...homeworksList];
         const homeworkIndex = updatedHomeworks.findIndex(hw => hw.lessonId === selectedLessonForHomework);
         
@@ -1140,7 +1159,10 @@ const JournalTable = ({ class: selectedClass, subject: selectedSubject, quarter,
               <td
                 key={dateObj.id}
                 className={styles.dataCell}
-                onClick={() => openHomeworkModal(dateObj.id)}
+                onClick={() => hasHomework(dateObj.id) 
+                  ? openHomeworkModal(dateObj.id, 'view') 
+                  : openHomeworkModal(dateObj.id)
+                }
                 style={{ cursor: 'pointer' }}
               >
                 {hasHomework(dateObj.id) && <PaperclipIcon />}
@@ -1205,12 +1227,12 @@ const JournalTable = ({ class: selectedClass, subject: selectedSubject, quarter,
           ))}
         </tbody>
       </table>
-
       <HomeworkModal
         isOpen={isHomeworkModalOpen}
         onClose={closeHomeworkModal}
         onSubmit={handleHomeworkSubmit}
-      />
+        mode={homeworkModalMode}
+        homeworkData={homeworkViewData}/>
     </>
   );
 };
