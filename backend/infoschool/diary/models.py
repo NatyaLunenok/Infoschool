@@ -171,3 +171,20 @@ class Schedule(models.Model):
     class Meta:
         unique_together = ('lesson_start', 'lesson_finish')
 
+
+class FinalMark(models.Model):
+    student = models.ForeignKey(Student, on_delete=models.CASCADE)
+    subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
+    mark_type = models.ForeignKey(MarkType, on_delete=models.CASCADE)
+    mark = models.IntegerField()
+    year = models.IntegerField() # Год начала учебного года
+    quarter_number = models.IntegerField(null=True, blank=True) # Четверть (null для годовой)
+
+    class Meta:
+        constraints = [
+            models.CheckConstraint(
+                name="FinalMark_checkConstraint",
+                check=models.Q(mark__gte=2) & models.Q(mark__lte=5),
+            ),
+        ]
+
