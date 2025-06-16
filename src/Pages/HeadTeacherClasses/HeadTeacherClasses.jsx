@@ -233,7 +233,7 @@ const HeadTeacherClasses = () => {
   const checkAuth = () => {
     const token = localStorage.getItem('access_token');
     if (!token) {
-      navigate('/login');
+      navigate('/');
       return false;
     }
     return true;
