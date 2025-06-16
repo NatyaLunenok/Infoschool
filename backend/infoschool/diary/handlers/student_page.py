@@ -97,7 +97,7 @@ class StudentFinalMarksView(APIView):
         # Группируем оценки по предметам
         marks_by_subject = {}
         for mark in final_marks:
-            subject_name = mark.subject.name
+            subject_name = mark.subject.subject_name
             if subject_name not in marks_by_subject:
                 marks_by_subject[subject_name] = []
             marks_by_subject[subject_name].append({
