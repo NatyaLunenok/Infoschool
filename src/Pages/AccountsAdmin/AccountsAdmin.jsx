@@ -20,7 +20,9 @@ const AccountsAdmin = () => {
         </div>
         <div className={styles.ConteinerSelectedQuarter}>
           <button className={styles.SelectedCell}>Ученики</button>
-          <button className={styles.DefaultCell}>Учителя</button>
+        <Link to="/paat">
+        <button className={styles.DefaultCell}>Учителя</button>
+        </Link>
           <Link to="/paap">
           <button className={styles.DefaultCell}>Родители</button>
           </Link>
