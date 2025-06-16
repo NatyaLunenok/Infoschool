@@ -4,7 +4,7 @@ import { ReactComponent as EditIcon } from '../../images/edit.svg';
 import { ReactComponent as DeleteIcon } from '../../images/delete.svg';
 import FetchWithAuth from '../../Pages/Authorization/FetchWithAuth';
 
-const AccountParents = () => {
+const AccountTeachers = () => {
     const [parents, setParents] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -15,7 +15,7 @@ const AccountParents = () => {
             setError(null);
 
             try {
-                const data = await FetchWithAuth('http://127.0.0.1:8000/diary/parent/');
+                const data = await FetchWithAuth('http://127.0.0.1:8000/diary/teacher/');
                 
                 if (!data) {
                     setError('Не удалось получить список родителей');
@@ -28,7 +28,7 @@ const AccountParents = () => {
                     firstName: parent.first_name || '',
                     middleName: parent.patronymic || '',
                     phone: parent.phone_number || '',
-                    email: parent.type || ''
+                    email: parent.email || ''
                 }));
 
                 setParents(formattedParents);
@@ -63,7 +63,7 @@ const AccountParents = () => {
                             <th>Имя</th>
                             <th>Отчество</th>
                             <th>Телефон</th>
-                            <th>Тип</th>
+                            <th>Email</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -83,7 +83,7 @@ const AccountParents = () => {
                                 <td>{parent.firstName}</td>
                                 <td>{parent.middleName}</td>
                                 <td>{parent.phone}</td>
-                                <td>{parent.type}</td>
+                                <td>{parent.email}</td>
                             </tr>
                         ))}
                     </tbody>
@@ -91,11 +91,11 @@ const AccountParents = () => {
             </div>
             <div className={styles.addButtonContainer}>
                 <button className={styles.addButton}>
-                    Добавить родителя
+                    Добавить учителя
                 </button>
             </div>
         </div>
     );
 };
 
-export default AccountParents;
+export default AccountTeachers;

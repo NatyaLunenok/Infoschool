@@ -5,8 +5,8 @@ import Authorization from './Pages/Authorization/Authorization'
 import JournalTeacher from './Pages/JournalTeacher/JournalTeacher'
 import AccountsAdmin from './Pages/AccountsAdmin/AccountsAdmin'
 import AccountsAdminParents from './Pages/AccountsAdminParents/AccountsAdminParents'
-
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import HeadTeacherClasses from './Pages/HeadTeacherClasses/HeadTeacherClasses';
 
 
 function App(){
@@ -17,10 +17,12 @@ function App(){
         {/* <Route path="/" element={<AccountsAdmin/>} /> */}
         {/* <Route path="/" element={<AccountsAdminParents/>} /> */}
         {/* <Route path="/" element={<JournalTeacher/>} /> */}
+        {/* <Route path="/" element={<HeadTeacherClasses/>} /> */}
         <Route path="/" element={<Authorization/>} />
         <Route path="/paa" element={<AccountsAdmin/>} />
         <Route path="/pjt" element={<JournalTeacher/>} />
         <Route path="/paap" element={<AccountsAdminParents/>} />
+        <Route path="/phtc" element={<HeadTeacherClasses/>} />
       </Routes>
     </Router>
   );

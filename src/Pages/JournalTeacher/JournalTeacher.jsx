@@ -46,7 +46,6 @@ const JournalTeacher = () => {
           class={selectedClass} 
           subject={selectedSubject}
           quarter={1}
-            // Передаем id предмета
         />
       )}
       <Footer />

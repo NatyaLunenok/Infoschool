@@ -54,6 +54,9 @@ const Authorization = () => {
                 case 'Администратор':
                     redirectPath = '/paa';
                     break;
+                case 'Завуч':
+                    redirectPath = '/phtc';
+                    break;
                     // Добавьте остальные роли по аналогии
                 default:
                     redirectPath = '/'; // Путь по умолчанию
