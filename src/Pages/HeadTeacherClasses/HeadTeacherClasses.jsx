@@ -214,8 +214,10 @@ import styles from './HeadTeacherClasses.module.css';
 import DropDownClass from '../../Layout/Header/SelectedLine/DropDownClass/DropDownClass';
 import st from '../../images/strelochka_icon.png';
 import ListClass from '../../Tables/ListClass/ListClass';
+import { useNavigate } from 'react-router-dom';
 
 const HeadTeacherClasses = () => {
+  const navigate = useNavigate();
   const [selectedClass, setSelectedClass] = useState(null);
   const [classData, setClassData] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -228,18 +230,37 @@ const HeadTeacherClasses = () => {
 
   const specializationOptions = ['Математический', 'Гуманитарный', 'Естественно-научный', 'Общий'];
 
+  const checkAuth = () => {
+    const token = localStorage.getItem('access_token');
+    if (!token) {
+      navigate('/login');
+      return false;
+    }
+    return true;
+  };
+
   const fetchClassData = async (classId) => {
+    if (!checkAuth()) return;
+    
     setLoading(true);
     setError(null);
     try {
+      const token = localStorage.getItem('access_token');
       const response = await fetch(`http://127.0.0.1:8000/diary/classes/${classId}/`, {
         headers: {
-          'Authorization': `Bearer ${localStorage.getItem('access_token')}`
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
         }
       });
       
+      if (response.status === 401) {
+        localStorage.removeItem('access_token');
+        navigate('/login');
+        return;
+      }
+      
       if (!response.ok) {
-        throw new Error('Failed to fetch class data');
+        throw new Error(`Ошибка сервера: ${response.status}`);
       }
       
       const data = await response.json();
@@ -263,21 +284,30 @@ const HeadTeacherClasses = () => {
     }));
   };
 
-  const handleSpecializationChange = async (selected) => {
+const handleSpecializationChange = async (selected) => {
+    if (!checkAuth() || !selectedClass) return;
+    
     try {
+      const token = localStorage.getItem('access_token');
       const response = await fetch(`http://127.0.0.1:8000/diary/classes/${selectedClass.id}/`, {
         method: 'PATCH',
         headers: {
-          'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
+          'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
           specialization_name: selected
         })
       });
+
+      if (response.status === 401) {
+        localStorage.removeItem('access_token');
+        navigate('/login');
+        return;
+      }
       
       if (!response.ok) {
-        throw new Error('Failed to update specialization');
+        throw new Error('Не удалось обновить специализацию');
       }
       
       setClassData(prev => ({
@@ -292,21 +322,30 @@ const HeadTeacherClasses = () => {
   };
 
   const handleYearChange = async (e) => {
+    if (!checkAuth() || !selectedClass) return;
+    
     const newYear = e.target.value;
     try {
+      const token = localStorage.getItem('access_token');
       const response = await fetch(`http://127.0.0.1:8000/diary/classes/${selectedClass.id}/`, {
         method: 'PATCH',
         headers: {
-          'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
+          'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
           year_admission: newYear
         })
       });
+
+      if (response.status === 401) {
+        localStorage.removeItem('access_token');
+        navigate('/');
+        return;
+      }
       
       if (!response.ok) {
-        throw new Error('Failed to update year');
+        throw new Error('Не удалось обновить год поступления');
       }
       
       setClassData(prev => ({
@@ -317,6 +356,7 @@ const HeadTeacherClasses = () => {
       setError(err.message);
     }
   };
+
 
   return (
     <>

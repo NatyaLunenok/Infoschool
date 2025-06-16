@@ -28,7 +28,7 @@ const AccountParents = () => {
                     firstName: parent.first_name || '',
                     middleName: parent.patronymic || '',
                     phone: parent.phone_number || '',
-                    email: parent.type || ''
+                    type_name: parent.type_name || ''
                 }));
 
                 setParents(formattedParents);
@@ -83,7 +83,7 @@ const AccountParents = () => {
                                 <td>{parent.firstName}</td>
                                 <td>{parent.middleName}</td>
                                 <td>{parent.phone}</td>
-                                <td>{parent.type}</td>
+                                <td>{parent.type_name}</td>
                             </tr>
                         ))}
                     </tbody>
