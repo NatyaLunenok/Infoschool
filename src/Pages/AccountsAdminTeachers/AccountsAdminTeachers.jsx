@@ -1,10 +1,10 @@
 import Footer from '../../Layout/Footer/Footer'
 import FirstLine from '../../Layout/Header/FirstLine/FirstLine'
-import AccountParents from '../../Tables/AccountParents/AccountParents'
+import AccountTeachers from '../../Tables/AccountTeachers/AccountTeachers';
 import styles from '../AccountsAdmin/AccountsAdmin.module.css'
 import { Link } from 'react-router-dom'; // Import Link
 
-const AccountsAdminParents = () => {
+const AccountsAdminTeachers = () => {
   return (
   <>
   <div style={{marginLeft:30}}>
@@ -18,16 +18,16 @@ const AccountsAdminParents = () => {
         <Link to="/paa">
         <button className={styles.DefaultCell}>Ученики</button>
         </Link>
-        <Link to="/paat">
-        <button className={styles.DefaultCell}>Учителя</button>
+        <button className={styles.SelectedCell}>Учителя</button>
+        <Link to="/paap">
+        <button className={styles.DefaultCell}>Родители</button>
         </Link>
-        <button className={styles.SelectedCell}>Родители</button>
     </div>
     </div>
-  <AccountParents/>
+  <AccountTeachers/>
   <Footer/>
 </>
   );
 }
 
-export default AccountsAdminParents;
+export default AccountsAdminTeachers;
