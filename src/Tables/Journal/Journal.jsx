@@ -333,6 +333,390 @@
 
 
 // JournalTable.js
+// import React, { useState, useEffect, useRef } from 'react';
+// import styles from './Journal.module.css';
+// import HomeworkModal from '../../ModalWindows/HomeworkModal/HomeworkModal';
+// import FetchWithAuth from '../../Pages/Authorization/FetchWithAuth';
+
+// const PaperclipIcon = () => (
+//   <svg
+//     width="16"
+//     height="16"
+//     viewBox="0 0 24 24"
+//     fill="none"
+//     stroke="#4CAF50"
+//     strokeWidth="2"
+//     strokeLinecap="round"
+//     strokeLinejoin="round"
+//   >
+//     <path d="M21.44 11.05L12.96 19.53a4.5 4.5 0 01-6.36-6.36l7.07-7.07a3 3 0 114.24 4.24l-6.36 6.36" />
+//   </svg>
+// );
+
+// const getGradeColor = (grade) => {
+//   switch (grade) {
+//     case 5:
+//       return '#C8E6C9';
+//     case 4:
+//       return '#DCEDC8';
+//     case 3:
+//       return '#FFF9C4';
+//     case 2:
+//       return '#FFCDD2';
+//     default:
+//       return 'transparent';
+//   }
+// };
+
+// const formatDate = (dateString) => {
+//   const date = new Date(dateString);
+//   return date.toLocaleDateString('ru-RU', {
+//     day: '2-digit',
+//     month: '2-digit',
+//     year: '2-digit'
+//   }).replace(/\./g, '.');
+// };
+
+// const JournalTable = ({ class: selectedClass, subject: selectedSubject, quarter, dates, students }) => {
+//   const [data, setData] = useState([]);
+//   const [editingCell, setEditingCell] = useState(null);
+//   const [newGrade, setNewGrade] = useState('');
+//   const tableRef = useRef(null);
+//   const inputRef = useRef(null);
+//   const [isHomeworkModalOpen, setIsHomeworkModalOpen] = useState(false);
+//   const [selectedHomeworkDate, setSelectedHomeworkDate] = useState(null);
+//   const [homeworks, setHomeworks] = useState({});
+//   const [loading, setLoading] = useState(false);
+//   const [error, setError] = useState(null);
+
+//   useEffect(() => {
+//     // Преобразуем данные из API в формат, который ожидает таблица
+//     const formattedData = students.map(student => {
+//       const gradesByDate = {};
+      
+//       // Группируем оценки по датам
+//       student.grades.forEach(grade => {
+//         const formattedDate = formatDate(grade.date);
+//         if (!gradesByDate[formattedDate]) {
+//           gradesByDate[formattedDate] = [];
+//         }
+//         gradesByDate[formattedDate].push(grade.mark);
+//       });
+      
+//       return {
+//         id: student.id,
+//         student: `${student.last_name} ${student.first_name}`,
+//         grades: gradesByDate,
+//         hasHomework: false
+//       };
+//     });
+    
+//     setData(formattedData);
+//   }, [students]);
+
+//   const openHomeworkModal = (date) => {
+//     setSelectedHomeworkDate(date);
+//     setIsHomeworkModalOpen(true);
+//   };
+
+//   const closeHomeworkModal = () => {
+//     setIsHomeworkModalOpen(false);
+//     setSelectedHomeworkDate(null);
+//   };
+
+//   const handleClickOutside = (event) => {
+//     if (editingCell && tableRef.current && !tableRef.current.contains(event.target)) {
+//       setEditingCell(null);
+//     }
+//   };
+
+//   const handleHomeworkSubmit = async (homework) => {
+//     try {
+//       setLoading(true);
+//       // Отправляем домашнее задание на сервер
+//       await FetchWithAuth('http://127.0.0.1:8000/diary/homeworks/', {
+//         method: 'POST',
+//         body: JSON.stringify({
+//           date: homework.date,
+//           text: homework.text,
+//           file: homework.file,
+//           class_id: selectedClass.id,
+//           subject_id: selectedSubject.id
+//         })
+//       });
+
+//       setHomeworks(prevHomeworks => ({
+//         ...prevHomeworks,
+//         [homework.date]: {
+//           text: homework.text,
+//           file: homework.file,
+//         },
+//       }));
+//     } catch (err) {
+//       setError('Ошибка при сохранении домашнего задания');
+//       console.error('Error saving homework:', err);
+//     } finally {
+//       setLoading(false);
+//     }
+//   };
+
+//   const hasHomework = (date) => {
+//     return homeworks[date] !== undefined;
+//   };
+
+//   useEffect(() => {
+//     document.addEventListener('mousedown', handleClickOutside);
+//     return () => {
+//       document.removeEventListener('mousedown', handleClickOutside);
+//     };
+//   }, [editingCell]);
+
+//   const handleGradeChange = (event) => {
+//     setNewGrade(event.target.value);
+//   };
+
+//   const handleCellClick = (studentId, date) => {
+//     setEditingCell({ studentId, date });
+//     setNewGrade('');
+//     setTimeout(() => {
+//       if (inputRef.current) {
+//         inputRef.current.focus();
+//       }
+//     }, 0);
+//   };
+
+//   const handleGradeSubmit = async (studentId, date) => {
+//     if (newGrade === '') {
+//       setEditingCell(null);
+//       setNewGrade('');
+//       return;
+//     }
+
+//     const grade = parseInt(newGrade, 10);
+
+//     if (isNaN(grade) || grade < 2 || grade > 5) {
+//       alert('Пожалуйста, введите корректную оценку от 2 до 5.');
+//       return;
+//     }
+
+//     try {
+//       setLoading(true);
+//       setError(null);
+      
+//       // Находим ID урока по дате (предполагая, что dates содержит объекты уроков)
+//       const lesson = dates.find(d => d === date);
+//       if (!lesson) {
+//         throw new Error('Урок не найден');
+//       }
+      
+//       // Отправляем оценку на сервер
+//       const response = await FetchWithAuth('http://127.0.0.1:8000/diary/current-marks/create/', {
+//         method: 'POST',
+//         body: JSON.stringify({
+//           student_id: studentId,
+//           lesson_id: lesson.id,
+//           mark: grade
+//         })
+//       });
+
+//       if (!response) {
+//         throw new Error('Не удалось сохранить оценку');
+//       }
+      
+//       // Обновляем локальное состояние
+//       setData(prevData =>
+//         prevData.map(student => {
+//           if (student.id === studentId) {
+//             return {
+//               ...student,
+//               grades: {
+//                 ...student.grades,
+//                 [date]: [...(student.grades[date] || []), grade],
+//               },
+//             };
+//           }
+//           return student;
+//         })
+//       );
+//     } catch (err) {
+//       setError(err.message || 'Ошибка при сохранении оценки');
+//       console.error('Error saving grade:', err);
+//     } finally {
+//       setEditingCell(null);
+//       setNewGrade('');
+//       setLoading(false);
+//     }
+//   };
+
+//   const handleDeleteGrade = async (studentId, date, gradeIndex) => {
+//     try {
+//       setLoading(true);
+//       setError(null);
+      
+//       const student = data.find(s => s.id === studentId);
+//       const gradeId = student.grades[date][gradeIndex].id;
+      
+//       // Удаляем оценку на сервере
+//       const response = await FetchWithAuth(`http://127.0.0.1:8000/diary/marks/${gradeId}/`, {
+//         method: 'DELETE'
+//       });
+
+//       if (!response) {
+//         throw new Error('Не удалось удалить оценку');
+//       }
+      
+//       // Обновляем локальное состояние
+//       setData(prevData =>
+//         prevData.map(student => {
+//           if (student.id === studentId) {
+//             const updatedGrades = [...(student.grades[date] || [])];
+//             updatedGrades.splice(gradeIndex, 1);
+
+//             return {
+//               ...student,
+//               grades: {
+//                 ...student.grades,
+//                 [date]: updatedGrades,
+//               },
+//             };
+//           }
+//           return student;
+//         })
+//       );
+//     } catch (err) {
+//       setError(err.message || 'Ошибка при удалении оценки');
+//       console.error('Error deleting grade:', err);
+//     } finally {
+//       setLoading(false);
+//     }
+//   };
+
+//   const handleKeyDown = (event, studentId, date) => {
+//     if (event.key === 'Enter') {
+//       event.preventDefault();
+//       handleGradeSubmit(studentId, date);
+//     } else if (event.key === 'Escape') {
+//       setEditingCell(null);
+//       setNewGrade('');
+//     }
+//   };
+
+//   if (loading) {
+//     return <div>Загрузка данных...</div>;
+//   }
+
+//   if (error) {
+//     return <div style={{color: 'red'}}>{error}</div>;
+//   }
+
+//   return (
+//     <>
+//       <table className={styles.journalTable} ref={tableRef}>
+//         <thead>
+//           <tr className={styles.headerRow}>
+//             <th className={styles.headerCell}>№</th>
+//             <th className={styles.headerCell}>Ученик</th>
+//             {dates.map((date, idx) => (
+//               <th
+//                 key={date}
+//                 className={`${styles.headerCell} ${idx === 2 ? styles.highlightedDate : ''}`}
+//                 title={date}
+//               >
+//                 {date}
+//               </th>
+//             ))}
+//           </tr>
+//         </thead>
+//         <tbody>
+//           <tr>
+//             <td className={styles.dataCell}></td>
+//             <td className={`${styles.dataCell} ${styles.homework}`}>Домашнее задание</td>
+//             {dates.map((date) => (
+//               <td
+//                 key={date}
+//                 className={styles.dataCell}
+//                 onClick={() => openHomeworkModal(date)}
+//                 style={{ cursor: 'pointer' }}
+//               >
+//                 {hasHomework(date) && <PaperclipIcon />}
+//               </td>
+//             ))}
+//           </tr>
+
+//           {data.map((row, idx) => (
+//             <tr key={row.id} className={idx % 2 === 0 ? styles.evenRow : styles.oddRow}>
+//               <td className={styles.dataCell}>{idx + 1}</td>
+//               <td className={styles.dataCell}>{row.student}</td>
+//               {dates.map((date) => {
+//                 const grades = (row.grades && row.grades[date]) ? row.grades[date] : [];
+//                 const isEditing = editingCell && editingCell.studentId === row.id && editingCell.date === date;
+//                 return (
+//                   <td
+//                     key={date}
+//                     className={styles.dataCell}
+//                     onClick={(event) => {
+//                       event.stopPropagation();
+//                       handleCellClick(row.id, date);
+//                     }}
+//                   >
+//                     {isEditing ? (
+//                       <div className={styles.editingContainer}>
+//                         <input
+//                           type="text"
+//                           ref={inputRef}
+//                           value={newGrade}
+//                           onChange={handleGradeChange}
+//                           className={styles.gradeInput}
+//                           onKeyDown={(event) => handleKeyDown(event, row.id, date)}
+//                           pattern="[2-5]"
+//                         />
+//                         <button className={styles.gradeButton} onClick={() => handleGradeSubmit(row.id, date)}>OK</button>
+//                       </div>
+//                     ) : (
+//                       grades.map((grade, index) => (
+//                         <div key={index} className={styles.gradeContainer}>
+//                           <span
+//                             className={styles.grade}
+//                             style={{ backgroundColor: getGradeColor(grade) }}
+//                           >
+//                             {grade}
+//                           </span>
+//                           <button
+//                             className={styles.deleteButton}
+//                             onClick={(event) => {
+//                               event.stopPropagation();
+//                               handleDeleteGrade(row.id, date, index);
+//                             }}
+//                           >
+//                             &#10006;
+//                           </button>
+//                         </div>
+//                       ))
+//                     )}
+//                   </td>
+//                 );
+//               })}
+//             </tr>
+//           ))}
+//         </tbody>
+//       </table>
+
+//       <HomeworkModal
+//         isOpen={isHomeworkModalOpen}
+//         onClose={closeHomeworkModal}
+//         date={selectedHomeworkDate}
+//         onHomeworkSubmit={handleHomeworkSubmit}
+//       />
+//     </>
+//   );
+// };
+
+// export default JournalTable;
+
+
+
+
+// JournalTable.js
 import React, { useState, useEffect, useRef } from 'react';
 import styles from './Journal.module.css';
 import HomeworkModal from '../../ModalWindows/HomeworkModal/HomeworkModal';
@@ -368,16 +752,7 @@ const getGradeColor = (grade) => {
   }
 };
 
-const formatDate = (dateString) => {
-  const date = new Date(dateString);
-  return date.toLocaleDateString('ru-RU', {
-    day: '2-digit',
-    month: '2-digit',
-    year: '2-digit'
-  }).replace(/\./g, '.');
-};
-
-const JournalTable = ({ class: selectedClass, subject: selectedSubject, quarter, dates, students }) => {
+const JournalTable = ({ class: selectedClass, subject: selectedSubject, quarter, dates, students, homeworks }) => {
   const [data, setData] = useState([]);
   const [editingCell, setEditingCell] = useState(null);
   const [newGrade, setNewGrade] = useState('');
@@ -385,9 +760,9 @@ const JournalTable = ({ class: selectedClass, subject: selectedSubject, quarter,
   const inputRef = useRef(null);
   const [isHomeworkModalOpen, setIsHomeworkModalOpen] = useState(false);
   const [selectedHomeworkDate, setSelectedHomeworkDate] = useState(null);
-  const [homeworks, setHomeworks] = useState({});
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [homeworksList, setHomeworksList] = useState(homeworks);
 
   useEffect(() => {
     // Преобразуем данные из API в формат, который ожидает таблица
@@ -396,27 +771,41 @@ const JournalTable = ({ class: selectedClass, subject: selectedSubject, quarter,
       
       // Группируем оценки по датам
       student.grades.forEach(grade => {
-        const formattedDate = formatDate(grade.date);
-        if (!gradesByDate[formattedDate]) {
-          gradesByDate[formattedDate] = [];
+        const formattedDate = dates.find(d => d.id === grade.lesson_id)?.date;
+        if (formattedDate) {
+          if (!gradesByDate[formattedDate]) {
+            gradesByDate[formattedDate] = [];
+          }
+          gradesByDate[formattedDate].push({
+            id: grade.id,
+            mark: grade.mark
+          });
         }
-        gradesByDate[formattedDate].push(grade.mark);
       });
       
       return {
         id: student.id,
         student: `${student.last_name} ${student.first_name}`,
-        grades: gradesByDate,
-        hasHomework: false
+        grades: gradesByDate
       };
     });
     
     setData(formattedData);
-  }, [students]);
+  }, [students, dates]);
+
+  useEffect(() => {
+    setHomeworksList(homeworks);
+  }, [homeworks]);
 
   const openHomeworkModal = (date) => {
-    setSelectedHomeworkDate(date);
-    setIsHomeworkModalOpen(true);
+    const lesson = dates.find(d => d.date === date);
+    if (lesson) {
+      setSelectedHomeworkDate({
+        date: lesson.date,
+        lessonId: lesson.id
+      });
+      setIsHomeworkModalOpen(true);
+    }
   };
 
   const closeHomeworkModal = () => {
@@ -430,38 +819,51 @@ const JournalTable = ({ class: selectedClass, subject: selectedSubject, quarter,
     }
   };
 
-  const handleHomeworkSubmit = async (homework) => {
+  const handleHomeworkSubmit = async (homeworkData) => {
     try {
       setLoading(true);
-      // Отправляем домашнее задание на сервер
-      await FetchWithAuth('http://127.0.0.1:8000/diary/homeworks/', {
+      
+      const formData = new FormData();
+      formData.append('lesson', homeworkData.lessonId);
+      formData.append('description', homeworkData.text);
+      
+      if (homeworkData.file) {
+        formData.append('files', homeworkData.file);
+      }
+
+      const response = await FetchWithAuth('http://127.0.0.1:8000/diary/homeworks/', {
         method: 'POST',
-        body: JSON.stringify({
-          date: homework.date,
-          text: homework.text,
-          file: homework.file,
-          class_id: selectedClass.id,
-          subject_id: selectedSubject.id
-        })
+        body: formData
       });
 
-      setHomeworks(prevHomeworks => ({
-        ...prevHomeworks,
-        [homework.date]: {
-          text: homework.text,
-          file: homework.file,
-        },
-      }));
+      if (response) {
+        // Обновляем список домашних заданий
+        const updatedHomeworks = [...homeworksList];
+        const existingIndex = updatedHomeworks.findIndex(hw => hw.date === homeworkData.date);
+        
+        if (existingIndex >= 0) {
+          updatedHomeworks[existingIndex].homework_id = response.id;
+        } else {
+          updatedHomeworks.push({
+            date: homeworkData.date,
+            homework_id: response.id
+          });
+        }
+        
+        setHomeworksList(updatedHomeworks);
+      }
     } catch (err) {
       setError('Ошибка при сохранении домашнего задания');
       console.error('Error saving homework:', err);
     } finally {
       setLoading(false);
+      closeHomeworkModal();
     }
   };
 
   const hasHomework = (date) => {
-    return homeworks[date] !== undefined;
+    const formattedDate = dates.find(d => d.date === date)?.originalDate;
+    return homeworksList.some(hw => hw.date === formattedDate && hw.homework_id !== null);
   };
 
   useEffect(() => {
@@ -503,19 +905,18 @@ const JournalTable = ({ class: selectedClass, subject: selectedSubject, quarter,
       setLoading(true);
       setError(null);
       
-      // Находим ID урока по дате (предполагая, что dates содержит объекты уроков)
-      const lesson = dates.find(d => d === date);
+      const lesson = dates.find(d => d.date === date);
       if (!lesson) {
         throw new Error('Урок не найден');
       }
       
-      // Отправляем оценку на сервер
-      const response = await FetchWithAuth('http://127.0.0.1:8000/diary/grades/', {
+      const response = await FetchWithAuth('http://127.0.0.1:8000/diary/current-marks/create/', {
         method: 'POST',
         body: JSON.stringify({
-          student_id: studentId,
-          lesson_id: lesson.id,
-          mark: grade
+          mark: grade,
+          lesson: lesson.id,
+          student: studentId,
+          quarter_number: quarter
         })
       });
 
@@ -527,11 +928,17 @@ const JournalTable = ({ class: selectedClass, subject: selectedSubject, quarter,
       setData(prevData =>
         prevData.map(student => {
           if (student.id === studentId) {
+            const updatedGrades = [...(student.grades[date] || [])];
+            updatedGrades.push({
+              id: response.id || Date.now(), // временный ID, если сервер не вернул
+              mark: grade
+            });
+
             return {
               ...student,
               grades: {
                 ...student.grades,
-                [date]: [...(student.grades[date] || []), grade],
+                [date]: updatedGrades,
               },
             };
           }
@@ -554,10 +961,9 @@ const JournalTable = ({ class: selectedClass, subject: selectedSubject, quarter,
       setError(null);
       
       const student = data.find(s => s.id === studentId);
-      const gradeId = student.grades[date][gradeIndex].id;
+      const gradeToDelete = student.grades[date][gradeIndex];
       
-      // Удаляем оценку на сервере
-      const response = await FetchWithAuth(`http://127.0.0.1:8000/diary/grades/${gradeId}/`, {
+      const response = await FetchWithAuth(`http://127.0.0.1:8000/diary/marks/${gradeToDelete.id}/`, {
         method: 'DELETE'
       });
 
@@ -616,13 +1022,13 @@ const JournalTable = ({ class: selectedClass, subject: selectedSubject, quarter,
           <tr className={styles.headerRow}>
             <th className={styles.headerCell}>№</th>
             <th className={styles.headerCell}>Ученик</th>
-            {dates.map((date, idx) => (
+            {dates.map((dateObj, idx) => (
               <th
-                key={date}
+                key={dateObj.date}
                 className={`${styles.headerCell} ${idx === 2 ? styles.highlightedDate : ''}`}
-                title={date}
+                title={dateObj.date}
               >
-                {date}
+                {dateObj.date}
               </th>
             ))}
           </tr>
@@ -631,14 +1037,14 @@ const JournalTable = ({ class: selectedClass, subject: selectedSubject, quarter,
           <tr>
             <td className={styles.dataCell}></td>
             <td className={`${styles.dataCell} ${styles.homework}`}>Домашнее задание</td>
-            {dates.map((date) => (
+            {dates.map((dateObj) => (
               <td
-                key={date}
+                key={dateObj.date}
                 className={styles.dataCell}
-                onClick={() => openHomeworkModal(date)}
+                onClick={() => openHomeworkModal(dateObj.date)}
                 style={{ cursor: 'pointer' }}
               >
-                {hasHomework(date) && <PaperclipIcon />}
+                {hasHomework(dateObj.date) && <PaperclipIcon />}
               </td>
             ))}
           </tr>
@@ -647,16 +1053,16 @@ const JournalTable = ({ class: selectedClass, subject: selectedSubject, quarter,
             <tr key={row.id} className={idx % 2 === 0 ? styles.evenRow : styles.oddRow}>
               <td className={styles.dataCell}>{idx + 1}</td>
               <td className={styles.dataCell}>{row.student}</td>
-              {dates.map((date) => {
-                const grades = (row.grades && row.grades[date]) ? row.grades[date] : [];
-                const isEditing = editingCell && editingCell.studentId === row.id && editingCell.date === date;
+              {dates.map((dateObj) => {
+                const grades = (row.grades && row.grades[dateObj.date]) ? row.grades[dateObj.date] : [];
+                const isEditing = editingCell && editingCell.studentId === row.id && editingCell.date === dateObj.date;
                 return (
                   <td
-                    key={date}
+                    key={dateObj.date}
                     className={styles.dataCell}
                     onClick={(event) => {
                       event.stopPropagation();
-                      handleCellClick(row.id, date);
+                      handleCellClick(row.id, dateObj.date);
                     }}
                   >
                     {isEditing ? (
@@ -667,25 +1073,25 @@ const JournalTable = ({ class: selectedClass, subject: selectedSubject, quarter,
                           value={newGrade}
                           onChange={handleGradeChange}
                           className={styles.gradeInput}
-                          onKeyDown={(event) => handleKeyDown(event, row.id, date)}
+                          onKeyDown={(event) => handleKeyDown(event, row.id, dateObj.date)}
                           pattern="[2-5]"
                         />
-                        <button className={styles.gradeButton} onClick={() => handleGradeSubmit(row.id, date)}>OK</button>
+                        <button className={styles.gradeButton} onClick={() => handleGradeSubmit(row.id, dateObj.date)}>OK</button>
                       </div>
                     ) : (
                       grades.map((grade, index) => (
                         <div key={index} className={styles.gradeContainer}>
                           <span
                             className={styles.grade}
-                            style={{ backgroundColor: getGradeColor(grade) }}
+                            style={{ backgroundColor: getGradeColor(grade.mark) }}
                           >
-                            {grade}
+                            {grade.mark}
                           </span>
                           <button
                             className={styles.deleteButton}
                             onClick={(event) => {
                               event.stopPropagation();
-                              handleDeleteGrade(row.id, date, index);
+                              handleDeleteGrade(row.id, dateObj.date, index);
                             }}
                           >
                             &#10006;
