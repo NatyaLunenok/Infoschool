@@ -177,7 +177,7 @@
 /* Добавьте эти стили в ваш файл стилей */
 
 .DropDownSortContainer input {
-  width: 150px;
+  width: 80px;
   border: 1px solid #000;
   border-radius: 0%;
   outline: none;
