@@ -251,7 +251,7 @@ const JournalTeacher = () => {
 
         // Загружаем домашние задания
         const homeworksData = await FetchWithAuth(
-          `http://127.0.0.1:8000/diary/homeworks/?class_id=${selectedClass.id}&subject_id=${selectedSubject.id}`
+          `http://127.0.0.1:8000/diary/homeworks/?class_id=${selectedClass.id}&subject_id=${selectedSubject.id}quarter=4`
         );
 
         if (homeworksData) {
