@@ -3,7 +3,7 @@ from rest_framework.generics import ListAPIView, CreateAPIView, DestroyAPIView
 from rest_framework.response import Response
 from rest_framework import permissions, status
 from django.db.models import Prefetch
-from datetime import datetime
+from datetime import date
 import os
 from django.db import transaction
 from diary.models import *
@@ -277,15 +277,17 @@ class ElectronicJournalView(ListAPIView):
         class_id = request.query_params.get('class_id')
         subject_id = request.query_params.get('subject_id')
         quarter = request.query_params.get('quarter')
+        year = request.query_params.get('year')
 
-        if not class_id or not subject_id or not quarter:
+        if not class_id or not subject_id or not quarter or not year:
             return Response(
-                {"error": "Необходимо указать class_id, subject_id и quarter"},
+                {"error": "Необходимо указать class_id, subject_id, quarter и year"},
                 status=status.HTTP_400_BAD_REQUEST
             )
 
         try:
-            queryset = self.get_queryset(class_id, subject_id, quarter)
+            year = int(year)
+            queryset = self.get_queryset(class_id, subject_id, quarter, year)
 
             if not queryset.exists():
                 return Response(
@@ -302,9 +304,12 @@ class ElectronicJournalView(ListAPIView):
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR
             )
 
-    def get_queryset(self, class_id, subject_id, quarter):
+    def get_queryset(self, class_id, subject_id, quarter, year):
         if not quarter or int(quarter) not in range(1, 5):
             raise ValueError("Номер четверти должен быть от 1 до 4")
+
+        start_date = date(year, 9, 1)
+        end_date = date(year + 1, 5, 31)
 
         return Student.objects.filter(
             class_name_id=class_id
@@ -313,7 +318,8 @@ class ElectronicJournalView(ListAPIView):
                 'mark_set',
                 queryset=Mark.objects.filter(
                     lesson__subject_id=subject_id,
-                    quarter_number=quarter
+                    quarter_number=quarter,
+                    lesson__date__range = (start_date, end_date)
                 ).select_related('lesson', 'lesson__subject'),
                 to_attr='filtered_marks'
             )
