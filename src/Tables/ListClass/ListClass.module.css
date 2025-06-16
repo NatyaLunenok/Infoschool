@@ -1,4 +1,3 @@
-/* ClassListTable.module.css */
 .classListTableContainer {
   width: 500px; /* Set the width of the table */
   border: 1px solid #ddd;
@@ -16,7 +15,7 @@
 }
 
 .tableWrapper {
-  height: 300px; /* Set the desired height for the scrollable area */
+  height: 400px; /* Set the desired height for the scrollable area */
   overflow-y: auto; /* Enable vertical scrolling */
 }
 
