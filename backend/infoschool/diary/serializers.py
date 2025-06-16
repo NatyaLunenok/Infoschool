@@ -460,8 +460,8 @@ class StudentShortSerializer(serializers.ModelSerializer):
 
 class ClassDetailSerializer(serializers.ModelSerializer):
     students = StudentShortSerializer(many=True, source='student_set')
-    class_teacher_id = serializers.IntegerField(source='class_teacher.id')
-    specialization_id = serializers.IntegerField(source='specialization.id')
+    class_teacher_name = serializers.SerializerMethodField()
+    specialization_name = serializers.CharField(source='specialization.specialization_name')
 
     class Meta:
         model = Class
@@ -469,10 +469,13 @@ class ClassDetailSerializer(serializers.ModelSerializer):
             'id',
             'class_name',
             'year_admission',
-            'specialization_id',
-            'class_teacher_id',
+            'specialization_name',
+            'class_teacher_name',
             'students'
         ]
+
+    def get_class_teacher_name(self, obj):
+        return f"{obj.class_teacher.last_name} {obj.class_teacher.first_name} {obj.class_teacher.patronymic or ''}".strip()
 
 
 class StudentToClassSerializer(serializers.Serializer):
