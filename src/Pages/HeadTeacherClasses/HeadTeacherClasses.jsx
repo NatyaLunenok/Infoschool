@@ -328,8 +328,8 @@ const HeadTeacherClasses = () => {
         </div>
         <div style={{marginTop: '10px', marginBottom:'10px',marginRight:'30px', display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
           <DropDownClass
-            selectedClass={selectedClass}
-            onClassChange={handleClassChange}
+            currentClass={selectedClass}
+            onChange={handleClassChange}
           />
           <div className={styles.ConteinerButtons}>
             <button className={styles.Button}>Сменить учебный год</button>
