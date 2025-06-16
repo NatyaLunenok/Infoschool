@@ -184,9 +184,6 @@ import React, { useState, useEffect } from 'react';
 import Footer from '../../Layout/Footer/Footer';
 import JournalTable from '../../Tables/Journal/Journal';
 import FirstLine from '../../Layout/Header/FirstLine/FirstLine';
-import SecondLine from '../../Layout/Header/SecondLine/SecondLine';
-import SelectedUsers from '../../Layout/Header/SelectedUsers/SelectedUsers';
-import SelectedQuarter from '../../Layout/Header/SelectedQuarter/SelectedQuarter';
 import styles from './JournalTeacher.module.css';
 import SelectedLine from '../../Layout/Header/SelectedLine/SelectedLine';
 import FetchWithAuth from '../Authorization/FetchWithAuth';
@@ -218,7 +215,7 @@ const JournalTeacher = () => {
       try {
         // Загружаем даты уроков
         const lessonsData = await FetchWithAuth(
-          `http://127.0.0.1:8000/diary/lessons/?class_id=${selectedClass.id}&subject_id=${selectedSubject.id}&quarter=1`
+          `http://127.0.0.1:8000/diary/lessons/?class_id=${selectedClass.id}&subject_id=${selectedSubject.id}&quarter=4`
         );
         
         if (!lessonsData) {
@@ -240,7 +237,7 @@ const JournalTeacher = () => {
         
         // Загружаем данные об учениках и оценках
         const journalData = await FetchWithAuth(
-          `http://127.0.0.1:8000/diary/journal/?class_id=${selectedClass.id}&subject_id=${selectedSubject.id}&quarter=1`
+          `http://127.0.0.1:8000/diary/journal/?class_id=${selectedClass.id}&subject_id=${selectedSubject.id}&quarter=4`
         );
         
         if (!journalData) {
@@ -251,7 +248,7 @@ const JournalTeacher = () => {
 
         // Загружаем домашние задания
         const homeworksData = await FetchWithAuth(
-          `http://127.0.0.1:8000/diary/homeworks/?class_id=${selectedClass.id}&subject_id=${selectedSubject.id}quarter=4`
+          `http://127.0.0.1:8000/diary/homeworks/?class_id=${selectedClass.id}&subject_id=${selectedSubject.id}$quarter=4`
         );
 
         if (homeworksData) {

@@ -57,7 +57,6 @@ const Authorization = () => {
                 case 'Завуч':
                     redirectPath = '/phtc';
                     break;
-                    // Добавьте остальные роли по аналогии
                 default:
                     redirectPath = '/'; // Путь по умолчанию
                     break;
