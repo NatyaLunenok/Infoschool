@@ -40,5 +40,6 @@ urlpatterns = ([
     path('lessons/', SimpleLessonListView.as_view(), name='lesson-list'),
     path('student-marks/', StudentMarksView.as_view(), name='student-marks'),
     path('student-final-marks/', StudentFinalMarksView.as_view(), name='student-final-marks'),
+    path('student-quarter-marks/', StudentQuarterMarksView.as_view(), name='student-quarter-marks'),
 
 ])
