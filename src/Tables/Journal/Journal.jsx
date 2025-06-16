@@ -907,18 +907,38 @@ const JournalTable = ({ class: selectedClass, subject: selectedSubject, quarter,
     }
   }, [homeworks, dates]);
 
-  const openHomeworkModal = (lessonId, mode = 'add') => {
-    if (mode === 'view') {
-      const homework = homeworks.find(hw => hw.id === lessonId);
-      if (homework) {
-        setHomeworkViewData({
-          text: homework.description,
-          files: homework.files || []
-        });
-      }
-    }
+  const openHomeworkModal = async (lessonId, mode = 'add') => {
     setSelectedLessonForHomework(lessonId);
     setHomeworkModalMode(mode);
+    
+    if (mode === 'view') {
+      try {
+        setLoading(true);
+        const response = await FetchWithAuth(`http://127.0.0.1:8000/diary/homework/${lessonId}/`);
+        
+        if (response) {
+          setHomeworkViewData({
+            text: response.description,
+            files: response.files.map(file => ({
+              id: file.id,
+              url: file.file_url,
+              name: file.file_url.split('/').pop() // Извлекаем имя файла из URL
+            })),
+            lessonInfo: {
+              date: response.lesson.date,
+              subject: response.lesson.subject_name,
+              teacher: response.lesson.teacher_name
+            }
+          });
+        }
+      } catch (err) {
+        setError('Ошибка при загрузке домашнего задания');
+        console.error('Error fetching homework:', err);
+      } finally {
+        setLoading(false);
+      }
+    }
+    
     setIsHomeworkModalOpen(true);
   };
 
@@ -950,7 +970,7 @@ const handleHomeworkSubmit = async (homeworkData) => {
         formData.append('files', file);
       });
 
-      const response = await FetchWithAuth('http://127.0.0.1:8000/diary/homeworks/', {
+      const response = await FetchWithAuth('http://127.0.0.1:8000/diary/homework/', {
         method: 'POST',
         body: formData
       });
