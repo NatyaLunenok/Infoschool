@@ -1,0 +1,232 @@
+.ConteinerSecondLine{
+    width: 1380px;
+    background-color: #EFEFFD;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 0px;
+    border-radius: 8px;
+}
+
+.activeButton{
+    background-color: #15A138;
+    color: white;
+    font-family: "Inter", sans-serif;
+    font-size: 16px;
+    font-weight: bold;
+    align-items: center;
+    justify-content: center;
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+
+}
+
+.defaultButton{
+    background-color: #EFEFFD;
+    color: #15A138;
+    font-family: "Inter", sans-serif;
+    font-size: 16px;
+    font-weight: bold;
+    align-items: center;
+    justify-content: center;
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+.ConteinerSelectedQuarter{
+    display: flex;
+    flex-direction: row;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    gap: -1px;
+}
+
+.SelectedCell{
+    align-items: center;
+    justify-content: center;
+    color: black;
+    background-color: #F7944D;
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    border: 1px solid #6B6B73;
+    font-family: "Inter", sans-serif;
+    font-size: 16px;
+    color: #000;
+    cursor: pointer;
+}
+
+.DefaultCell{
+    align-items: center;
+    justify-content: center;
+    color: black;
+    background-color: #EFEFFD;
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    border: 1px solid #6B6B73;
+    font-family: "Inter", sans-serif;
+    font-size: 16px;
+    color: #000;
+    cursor: pointer;
+}
+
+.ConteinerButtons{
+    display: flex;
+    flex-direction: row;
+    gap: 47px;
+}
+
+.Button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    color: white;
+    background-color: #15A138;
+    transition: background-color 0.3s ease;
+}
+
+/* ClassForm.module.css */
+.classForm {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+}
+
+.formRow {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.label {
+    width: 180px;
+    text-align: left;
+    margin-right: 10px;
+    font-weight: 500;
+    font-size: 16px;
+    font-family: "Inter", sans-serif;
+    color:#000
+}
+
+.input {
+    border: 2px solid #000;
+    font-size: 16px;
+    width: 200px;
+    font-family: "Inter", sans-serif;
+}
+
+.DropDownSortContainer {
+    position: relative;
+    display: block;
+}
+
+.DropDownStatusButton {
+    padding-top: 6.5px;
+    padding-bottom: 6.5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    gap: 9px;
+    align-items: center;
+    border: 1px solid #000;
+    font-family: "Inter", sans-serif;
+    font-size: 16px;
+    color: #000;
+    background-color: white;
+    font-weight: 500;
+    cursor: pointer;
+    justify-content: space-between;
+    text-align: left; /* Добавил выравнивание текста слева */
+}
+
+.DropDownStatusButton::before {
+    content: '';
+    background-repeat: no-repeat;
+    position: absolute;
+    top: 50%;
+    right: 16px;
+    transform: translateY(-50%) rotate(0deg);
+    width: 18px;
+    height: 18px;
+    transition: transform 0.35s ease;
+}
+
+.DropDown {
+    position: absolute;
+    z-index: 100;
+    margin-top: 6px;
+    border: 1px solid #000;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.7);
+    background-color: white;
+}
+/* Добавьте эти стили в ваш файл стилей */
+
+.DropDownSortContainer input {
+  width: 150px;
+  border: 1px solid #000;
+  border-radius: 0%;
+  outline: none;
+  background-color: white;
+  font-family: "Inter", sans-serif;
+  font-size: 16px;
+  color: #000;
+  font-weight: 500;
+}
+
+/* Остальные стили остаются такими же, как у вас были */
+ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+li {
+    height: 29px;
+    font-size: 16px;
+    font-family: "Inter", sans-serif;
+    text-align: left;
+    font-weight: 500;
+    padding-right: 10px;
+    padding-left: 10px;
+    line-height: 46px;
+    display: flex;
+    align-items: center;
+}
+
+li:hover {
+    cursor: pointer;
+    background-color: #E7E4E4;
+}
+
+.Selected {
+    background-color: #E7E4E4;
+}
+
+.imageStrelochka img {
+    width: 11px;
+    height: 7px;
+    font-weight: 500;
+}
+
+.imageStrelochka {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 16px;
+    height: 16px;
+}

@@ -1,0 +1,60 @@
+/* ClassListTable.module.css */
+.classListTableContainer {
+  width: 500px; /* Set the width of the table */
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  overflow: hidden; /* Hide overflowing content */
+}
+
+.classListTableContainer h2 {
+  padding: 10px;
+  text-align: center;
+  font-size: 18px;
+  background-color: #15A138;
+  color: white;
+  margin: 0;
+}
+
+.tableWrapper {
+  height: 300px; /* Set the desired height for the scrollable area */
+  overflow-y: auto; /* Enable vertical scrolling */
+}
+
+.classListTable {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.classListTable th,
+.classListTable td {
+  padding: 8px 12px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.classListTable tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.addButton {
+    background-color: white;
+    color: black;
+    border: 1px solid black;
+    border-radius: 5px;
+    font-size: 20px;
+    width: 30px;
+    height: 30px;
+    text-align: center;
+    line-height: 30px;
+    cursor: pointer;
+}
+
+.emptyRow {
+    border-bottom: none;
+}
+.emptyRow td {
+    padding: 5px;
+    border: none;
+    text-align: left;
+}
+
