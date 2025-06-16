@@ -7,6 +7,7 @@ from django.contrib.auth import get_user_model
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework_simplejwt.token_blacklist.models import OutstandingToken
 from django.utils import timezone
+import os
 from rest_framework.reverse import reverse
 from django.conf import settings
 
@@ -220,13 +221,19 @@ class ClassSerializer(serializers.ModelSerializer):
 
 class HomeworkFileSerializer(serializers.ModelSerializer):
     file_url = serializers.SerializerMethodField()
+    file_name = serializers.SerializerMethodField()
 
     class Meta:
         model = HomeworkFile
-        fields = ['id', 'file_url']
+        fields = ['id', 'file_url', 'file_name']
 
     def get_file_url(self, obj):
         return obj.file.url if obj.file else None
+
+    def get_file_name(self, obj):
+        if obj.file:
+            return os.path.basename(obj.file.name)
+        return None
 
 
 class LessonHomeworkSerializer(serializers.ModelSerializer):
