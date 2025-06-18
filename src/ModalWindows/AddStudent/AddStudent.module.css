@@ -192,3 +192,69 @@ input:invalid, select:invalid {
 input:invalid:focus, select:invalid:focus {
     box-shadow: 0 0 0 2px rgba(211, 47, 47, 0.2);
 }
+
+/* Стили для контейнера с фото профиля */
+.profileImage {
+    position: relative;
+    width: 100px;
+    height: 100px;
+    margin-right: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Стили для превью загруженного фото */
+.profilePhoto {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #e0e0e0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Стили для кнопки загрузки фото */
+.photoUploadLabel {
+    margin-top: 10px;
+    padding: 6px 12px;
+    background-color: #f0f0f0;
+    color: #333;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.photoUploadLabel:hover {
+    background-color: #e0e0e0;
+    border-color: #adadad;
+}
+
+.photoUploadLabel:active {
+    background-color: #d4d4d4;
+    border-color: #8c8c8c;
+}
+
+/* Стили для иконки загрузки (если нужно) */
+.uploadIcon {
+    margin-right: 5px;
+    vertical-align: middle;
+}
+
+/* Дополнительные стили для состояния загрузки */
+.profileImage.disabled {
+    opacity: 0.6;
+    pointer-events: none;
+}
+
+/* Стили для сообщения об ошибке загрузки фото */
+.photoError {
+    color: #dc3545;
+    font-size: 12px;
+    margin-top: 5px;
+    text-align: center;
+}

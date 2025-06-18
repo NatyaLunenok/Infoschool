@@ -295,6 +295,7 @@ const ListClass = ({ students = [], onAddStudent, classId }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [selectedStudent, setSelectedStudent] = useState(null);
+  const [addError, setAddError] = useState(null);
 
   useEffect(() => {
     const searchStudents = async (query) => {
@@ -360,15 +361,29 @@ const ListClass = ({ students = [], onAddStudent, classId }) => {
     setShowSearchResults(false);
   };
 
-  const handleAddClick = async () => {
+  // const handleAddClick = async () => {
+  //   if (!selectedStudent || !classId) return;
+    
+  //   const result = await onAddStudent(selectedStudent.id);
+  //   if (result.success) {
+  //     setSearchTerm('');
+  //     setSelectedStudent(null);
+  //   } else {
+  //     setError(result.message);
+  //   }
+  // };
+
+    const handleAddClick = async () => {
     if (!selectedStudent || !classId) return;
     
+    setAddError(null); // Сбрасываем предыдущую ошибку
     const result = await onAddStudent(selectedStudent.id);
+    
     if (result.success) {
       setSearchTerm('');
       setSelectedStudent(null);
     } else {
-      setError(result.message);
+      setAddError(result.message); // Устанавливаем сообщение об ошибке
     }
   };
 
@@ -380,6 +395,12 @@ const ListClass = ({ students = [], onAddStudent, classId }) => {
   return (
     <div className={styles.classListTableContainer}>
       <h2>Список класса</h2>
+      {/* Добавьте отображение ошибки добавления */}
+      {addError && (
+        <div className={styles.errorMessage}>
+          {addError}
+        </div>
+      )}
       <div className={styles.tableWrapper}>
         <table className={styles.classListTable}>
           <thead>

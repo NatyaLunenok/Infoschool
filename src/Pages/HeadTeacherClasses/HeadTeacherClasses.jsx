@@ -244,42 +244,92 @@ const HeadTeacherClasses = () => {
     }
   };
 
-  const handleAddStudent = async (studentId) => {
-    if (!selectedClass) return;
+  // const handleAddStudent = async (studentId) => {
+  //   if (!selectedClass) return;
     
-    try {
-      const token = localStorage.getItem('accessToken');
-      if (!token) {
-        throw new Error('Требуется авторизация');
-      }
+  //   try {
+  //     const token = localStorage.getItem('accessToken');
+  //     if (!token) {
+  //       throw new Error('Требуется авторизация');
+  //     }
 
-      const response = await fetch('http://127.0.0.1:8000/diary/classes/add-student/', {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          student_id: studentId,
-          class_id: selectedClass.id
-        })
-      });
+  //     const response = await fetch('http://127.0.0.1:8000/diary/classes/add-student/', {
+  //       method: 'POST',
+  //       headers: {
+  //         'Authorization': `Bearer ${token}`,
+  //         'Content-Type': 'application/json'
+  //       },
+  //       body: JSON.stringify({
+  //         student_id: studentId,
+  //         class_id: selectedClass.id
+  //       })
+  //     });
       
-      const data = await response.json();
+  //     const data = await response.json();
       
-      if (!response.ok) {
-        if (data.non_field_errors) {
-          throw new Error(data.non_field_errors[0]);
-        }
-        throw new Error('Не удалось добавить ученика');
-      }
+  //     if (!response.ok) {
+  //       if (data.non_field_errors) {
+  //         throw new Error(data.non_field_errors[0]);
+  //       }
+  //       throw new Error('Не удалось добавить ученика');
+  //     }
       
-      fetchClassData(selectedClass.id);
-      return { success: true, message: data.message };
-    } catch (err) {
-      return { success: false, message: err.message };
+  //     fetchClassData(selectedClass.id);
+  //     return { success: true, message: data.message };
+  //   } catch (err) {
+  //     return { success: false, message: err.message };
+  //   }
+  // };
+
+const handleAddStudent = async (studentId) => {
+  if (!selectedClass) return;
+  
+  try {
+    const token = localStorage.getItem('accessToken');
+    if (!token) {
+      throw new Error('Требуется авторизация');
     }
-  };
+
+    const response = await fetch('http://127.0.0.1:8000/diary/classes/add-student/', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        student_id: studentId,
+        class_id: selectedClass.id
+      })
+    });
+    
+    const data = await response.json();
+    
+    if (!response.ok) {
+      if (data.non_field_errors) {
+        // Обработка ошибки о том, что ученик уже в классе
+        if (data.non_field_errors[0].includes('уже находится в этом классе')) {
+          return { 
+            success: false, 
+            message: 'Этот ученик уже есть в данном классе' 
+          };
+        }
+        throw new Error(data.non_field_errors[0]);
+      }
+      throw new Error('Не удалось добавить ученика');
+    }
+    
+    fetchClassData(selectedClass.id);
+    return { 
+      success: true, 
+      message: 'Ученик успешно добавлен в класс' 
+    };
+  } catch (err) {
+    return { 
+      success: false, 
+      message: err.message || 'Произошла ошибка при добавлении ученика' 
+    };
+  }
+};
 
   return (
     <>
