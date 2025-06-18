@@ -922,7 +922,7 @@ const JournalTable = ({ class: selectedClass, subject: selectedSubject, quarter,
             files: response.files.map(file => ({
               id: file.id,
               url: file.file_url,
-              name: file.file_url.split('/').pop() // Извлекаем имя файла из URL
+              name: file.file_name
             })),
             lessonInfo: {
               date: response.lesson.date,
