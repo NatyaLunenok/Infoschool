@@ -133,10 +133,162 @@
 // export default ClassList;
 
 
+// import { useState, useEffect } from 'react';
+// import styles from './ListClass.module.css';
+
+// const ClassList = ({ students = [], onAddStudent, classId }) => {
+//   const [searchTerm, setSearchTerm] = useState('');
+//   const [searchResults, setSearchResults] = useState([]);
+//   const [showSearchResults, setShowSearchResults] = useState(false);
+//   const [loading, setLoading] = useState(false);
+//   const [error, setError] = useState(null);
+//   const [selectedStudent, setSelectedStudent] = useState(null);
+
+//   const handleSearchChange = (e) => {
+//     const value = e.target.value;
+//     setSearchTerm(value);
+    
+//     if (value.length > 0) {
+//       setShowSearchResults(true);
+//       searchStudents(value);
+//     } else {
+//       setShowSearchResults(false);
+//       setSearchResults([]);
+//     }
+//   };
+
+//   const searchStudents = async (query) => {
+//     setLoading(true);
+//     setError(null);
+//     try {
+//       const token = localStorage.getItem('accessToken');
+//       if (!token) {
+//         throw new Error('Требуется авторизация');
+//       }
+
+//       const response = await fetch(`http://127.0.0.1:8000/diary/student/?search=${query}`, {
+//         headers: {
+//           'Authorization': `Bearer ${token}`,
+//           'Content-Type': 'application/json'
+//         }
+//       });
+      
+//       if (!response.ok) {
+//         throw new Error('Ошибка при поиске учеников');
+//       }
+      
+//       const data = await response.json();
+//       setSearchResults(data);
+//     } catch (err) {
+//       setError(err.message);
+//       console.error('Ошибка при поиске учеников:', err);
+//     } finally {
+//       setLoading(false);
+//     }
+//   };
+
+//   const handleStudentSelect = (student) => {
+//     setSelectedStudent(student);
+//     setSearchTerm(`${student.last_name} ${student.first_name} ${student.patronymic}`);
+//     setShowSearchResults(false);
+//   };
+
+//   const handleAddClick = async () => {
+//     if (!selectedStudent || !classId) return;
+    
+//     const result = await onAddStudent(selectedStudent.id);
+//     if (result.success) {
+//       setSearchTerm('');
+//       setSelectedStudent(null);
+//     } else {
+//       setError(result.message);
+//     }
+//   };
+
+//   const formatDate = (dateString) => {
+//     const options = { year: 'numeric', month: 'long', day: 'numeric' };
+//     return new Date(dateString).toLocaleDateString('ru-RU', options);
+//   };
+
+//   return (
+//     <div className={styles.classListTableContainer}>
+//       <h2>Список класса</h2>
+//       <div className={styles.tableWrapper}>
+//         <table className={styles.classListTable}>
+//           <thead>
+//             <tr>
+//               <th>№</th>
+//               <th>ФИО ученика</th>
+//             </tr>
+//           </thead>
+//           <tbody>
+//             {students.map((student, index) => (
+//               <tr key={student.id}>
+//                 <td>{index + 1}</td>
+//                 <td>{student.full_name}</td>
+//               </tr>
+//             ))}
+//             <tr className={styles.emptyRow}>
+//               <td>
+//                 <button 
+//                   className={styles.addButton}
+//                   onClick={handleAddClick}
+//                   disabled={!selectedStudent}
+//                 >
+//                   +
+//                 </button>
+//               </td>
+//               <td>
+//                 <input
+//                   type="text"
+//                   value={searchTerm}
+//                   onChange={handleSearchChange}
+//                   placeholder="Введите ФИО ученика"
+//                   className={styles.searchInput}
+//                   autoComplete="off"
+//                 />
+//                 {showSearchResults && (
+//                   <div className={styles.searchResults}>
+//                     {loading && <div className={styles.loading}>Загрузка...</div>}
+//                     {error && <div className={styles.error}>{error}</div>}
+//                     {searchResults.length > 0 ? (
+//                       <ul>
+//                         {searchResults.map(student => (
+//                           <li 
+//                             key={student.id}
+//                             onClick={() => handleStudentSelect(student)}
+//                             className={selectedStudent?.id === student.id ? styles.selected : ''}
+//                           >
+//                             <div className={styles.studentName}>
+//                               {`${student.last_name} ${student.first_name} ${student.patronymic}`}
+//                             </div>
+//                             <div className={styles.studentBirth}>
+//                               {formatDate(student.birth_date)}
+//                             </div>
+//                           </li>
+//                         ))}
+//                       </ul>
+//                     ) : (
+//                       !loading && <div className={styles.noResults}>Ничего не найдено</div>
+//                     )}
+//                   </div>
+//                 )}
+//               </td>
+//             </tr>
+//           </tbody>
+//         </table>
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default ClassList;
+
+
 import { useState, useEffect } from 'react';
 import styles from './ListClass.module.css';
 
-const ClassList = ({ students = [], onAddStudent, classId }) => {
+const ListClass = ({ students = [], onAddStudent, classId }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [searchResults, setSearchResults] = useState([]);
   const [showSearchResults, setShowSearchResults] = useState(false);
@@ -144,47 +296,62 @@ const ClassList = ({ students = [], onAddStudent, classId }) => {
   const [error, setError] = useState(null);
   const [selectedStudent, setSelectedStudent] = useState(null);
 
+  useEffect(() => {
+    const searchStudents = async (query) => {
+      if (query.length < 1) {
+        setSearchResults([]);
+        return;
+      }
+
+      setLoading(true);
+      setError(null);
+      try {
+        const token = localStorage.getItem('accessToken');
+        if (!token) {
+          throw new Error('Требуется авторизация');
+        }
+
+        const response = await fetch(
+          `http://127.0.0.1:8000/diary/student/?search=${query}`,
+          {
+            headers: {
+              'Authorization': `Bearer ${token}`,
+              'Content-Type': 'application/json',
+            },
+          }
+        );
+
+        if (!response.ok) {
+          throw new Error('Ошибка при поиске учеников');
+        }
+
+        const data = await response.json();
+        // Фильтруем результаты, чтобы показывать только тех, у кого ФИО начинается с поискового запроса
+        const filteredResults = data.filter(student =>
+          `${student.last_name} ${student.first_name} ${student.patronymic}`
+            .toLowerCase()
+            .startsWith(query.toLowerCase())
+        );
+        setSearchResults(filteredResults);
+      } catch (err) {
+        setError(err.message);
+        console.error('Ошибка при поиске учеников:', err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    const debounceTimer = setTimeout(() => {
+      searchStudents(searchTerm);
+    }, 300);
+
+    return () => clearTimeout(debounceTimer);
+  }, [searchTerm]);
+
   const handleSearchChange = (e) => {
     const value = e.target.value;
     setSearchTerm(value);
-    
-    if (value.length > 0) {
-      setShowSearchResults(true);
-      searchStudents(value);
-    } else {
-      setShowSearchResults(false);
-      setSearchResults([]);
-    }
-  };
-
-  const searchStudents = async (query) => {
-    setLoading(true);
-    setError(null);
-    try {
-      const token = localStorage.getItem('accessToken');
-      if (!token) {
-        throw new Error('Требуется авторизация');
-      }
-
-      const response = await fetch(`http://127.0.0.1:8000/diary/student/?search=${query}`, {
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json'
-        }
-      });
-      
-      if (!response.ok) {
-        throw new Error('Ошибка при поиске учеников');
-      }
-      
-      const data = await response.json();
-      setSearchResults(data);
-    } catch (err) {
-      setError(err.message);
-      console.error('Ошибка при поиске учеников:', err);
-    } finally {
-      setLoading(false);
-    }
+    setShowSearchResults(value.length > 0);
   };
 
   const handleStudentSelect = (student) => {
@@ -228,7 +395,7 @@ const ClassList = ({ students = [], onAddStudent, classId }) => {
                 <td>{student.full_name}</td>
               </tr>
             ))}
-            <tr className={styles.emptyRow}>
+            <tr className={styles.addRow}>
               <td>
                 <button 
                   className={styles.addButton}
@@ -238,7 +405,7 @@ const ClassList = ({ students = [], onAddStudent, classId }) => {
                   +
                 </button>
               </td>
-              <td>
+              <td className={styles.searchCell}>
                 <input
                   type="text"
                   value={searchTerm}
@@ -252,18 +419,20 @@ const ClassList = ({ students = [], onAddStudent, classId }) => {
                     {loading && <div className={styles.loading}>Загрузка...</div>}
                     {error && <div className={styles.error}>{error}</div>}
                     {searchResults.length > 0 ? (
-                      <ul>
+                      <ul className={styles.resultsList}>
                         {searchResults.map(student => (
                           <li 
                             key={student.id}
                             onClick={() => handleStudentSelect(student)}
                             className={selectedStudent?.id === student.id ? styles.selected : ''}
                           >
-                            <div className={styles.studentName}>
-                              {`${student.last_name} ${student.first_name} ${student.patronymic}`}
-                            </div>
-                            <div className={styles.studentBirth}>
-                              {formatDate(student.birth_date)}
+                            <div className={styles.studentInfo}>
+                              <span className={styles.studentName}>
+                                {`${student.last_name} ${student.first_name} ${student.patronymic}`}
+                              </span>
+                              <span className={styles.studentBirth}>
+                                {formatDate(student.birth_date)}
+                              </span>
                             </div>
                           </li>
                         ))}
@@ -282,4 +451,4 @@ const ClassList = ({ students = [], onAddStudent, classId }) => {
   );
 };
 
-export default ClassList;
+export default ListClass;
