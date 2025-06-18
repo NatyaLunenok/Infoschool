@@ -57,7 +57,7 @@ class StudentRegistrationSerializer(UserRegistrationSerializer):
         fields = UserRegistrationSerializer.Meta.fields + (
             "last_name", "first_name", "patronymic", "phone_number",
             "birth_date", "address", "birth_certificate_number", "email",
-            "parent1_id", "parent2_id"
+            "parent1_id", "parent2_id", "photo"
         )
 
     def validate(self, attrs):
