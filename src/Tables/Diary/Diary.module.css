@@ -1,0 +1,132 @@
+.diaryContainer {
+  max-width: 1200px;
+  margin: 30px;
+  font-family: 'Roboto', Arial, sans-serif;
+}
+
+.weekRow {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 30px;
+  gap: 100px;
+}
+
+.dayContainer {
+  width: 30%;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 15px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.dayTitle {
+  font-size: 16px;
+  font-weight: 500;
+  margin: 0 0 15px 0;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #eee;
+  text-align: left;
+  color: #000;
+}
+
+.lessonTable {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 10px;
+}
+
+.lessonRow {
+  margin-bottom: 10px;
+}
+
+.lessonNumber {
+  width: 20px;
+  padding: 8px 5px 8px 0;
+  vertical-align: top;
+  color: #000;
+  font-size: 14px;
+}
+
+.subjectLine {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.subjectText {
+  color: #000;
+  font-weight: normal;
+}
+
+.homeworkLink {
+  margin-left: 8px;
+  padding: 2px 6px;
+  background-color: #e3f2fd;
+  color: #1976d2;
+  border-radius: 4px;
+  text-decoration: none;
+  font-size: 12px;
+  font-weight: 500;
+  transition: background-color 0.2s;
+}
+
+.homeworkLink:hover {
+  background-color: #bbdefb;
+  text-decoration: underline;
+}
+
+.lessonRoom {
+  font-size: 12px;
+  color: #666;
+  margin-top: 4px;
+}
+
+.lessonGrade {
+  width: auto;
+  padding: 8px 0 8px 5px;
+  vertical-align: top;
+  display: flex;
+  gap: 5px;
+}
+
+.gradeCircle {
+  display: flex;
+  justify-content: center;
+  margin: 2px;
+  padding: 4px;
+  border-radius: 4px;
+  min-width: 20px;
+}
+
+/* Стиль для дня без уроков */
+.dayContainer:last-child .lessonTable td {
+  padding: 10px 0;
+  color: #888;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+  gap: 20px;
+}
+
+.weekTitle {
+  margin: 0;
+  font-size: 1.5rem;
+  text-align: center;
+}
+
+.arrowButton {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 5px 15px;
+  border-radius: 4px;
+  transition: background-color 0.3s;
+}
+.arrowButton:hover {
+  background-color: #f0f0f0;
+}

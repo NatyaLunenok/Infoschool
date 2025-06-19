@@ -1,0 +1,109 @@
+.container {
+  font-family: Arial, sans-serif;
+  max-width: 1200px;
+  margin: 0 auto;
+  margin-left: 30px;
+  margin-right: 30px;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+  gap: 20px;
+}
+
+.weekTitle {
+  margin: 0;
+  font-size: 1.5rem;
+  text-align: center;
+}
+
+.arrowButton {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 5px 15px;
+  border-radius: 4px;
+  transition: background-color 0.3s;
+}
+
+.arrowButton:hover {
+  background-color: #f0f0f0;
+}
+
+.tableContainer {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.scheduleTable {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+/* Стили для заголовков дней недели */
+.dayHeader {
+  background-color: #15A138; /* Зеленый цвет */
+  color: white;
+  border: 1px solid #ddd;
+  padding: 4px 8px; /* Уменьшенный padding */
+  text-align: center;
+  min-width: 120px;
+  height: 40px; /* Фиксированная высота */
+}
+
+.dayHeader div {
+  margin: 2px 0;
+  line-height: 1.2;
+}
+
+/* Стили для ячеек с номерами уроков */
+.lessonHeader, .lessonCell {
+  width: 40px;
+  min-width: 40px;
+  max-width: 40px;
+  text-align: center;
+  font-weight: bold;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  padding: 4px; /* Уменьшенный padding */
+  height: 40px; /* Фиксированная высота */
+}
+
+/* Стили для ячеек с временем */
+.timeHeader, .timeCell {
+  width: 80px;
+  min-width: 80px;
+  max-width: 80px;
+  text-align: center;
+  font-weight: bold;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  padding: 4px 8px; /* Уменьшенный padding */
+  height: 40px; /* Фиксированная высота */
+}
+
+/* Стили для ячеек с расписанием */
+.dayCell {
+  min-width: 120px;
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: center;
+  vertical-align: middle;
+  height: 80px;
+}
+
+.dayCell div {
+  margin: 2px 0;
+}
+
+/* Специфичные стили для заголовков */
+.lessonHeader, .timeHeader {
+  background-color: #15A138;
+  height: 40px; /* Фиксированная высота */
+  color: white;
+}

@@ -258,3 +258,44 @@ input:invalid:focus, select:invalid:focus {
     margin-top: 5px;
     text-align: center;
 }
+
+
+.profileSection {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 20px;
+    gap: 20px;
+}
+
+.profileImageContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px; /* Добавляем отступ сверху */
+}
+
+.profileImage {
+    width: 100px;
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 10px;
+    overflow: hidden;
+    border-radius: 50%;
+    background-color: #f0f0f0;
+}
+
+.profilePhoto {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.topFields {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    flex-grow: 1;
+    margin-top: 20px; /* Добавляем отступ сверху для выравнивания */
+}
