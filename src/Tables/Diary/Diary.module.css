@@ -98,11 +98,11 @@
   min-width: 20px;
 }
 
-/* Стиль для дня без уроков */
+/* Стиль для дня без уроков
 .dayContainer:last-child .lessonTable td {
   padding: 10px 0;
   color: #888;
-}
+} */
 
 .header {
   display: flex;
