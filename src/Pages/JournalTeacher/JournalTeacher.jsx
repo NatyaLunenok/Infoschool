@@ -5,6 +5,8 @@ import FirstLine from '../../Layout/Header/FirstLine/FirstLine';
 import styles from './JournalTeacher.module.css';
 import SelectedLine from '../../Layout/Header/SelectedLine/SelectedLine';
 import FetchWithAuth from '../Authorization/FetchWithAuth';
+import { Link } from 'react-router-dom'; // Import Link
+
 
 const JournalTeacher = () => {
   const [selectedSubject, setSelectedSubject] = useState(null);
@@ -97,7 +99,9 @@ const JournalTeacher = () => {
         <FirstLine />
         <div className={styles.ConteinerSecondLine}>
           <button className={styles.activeButton}>ЖУРНАЛ</button>
+          <Link to="/pstm">
           <button className={styles.defaultButton}>РАСПИСАНИЕ</button>
+          </Link>
         </div>
         <SelectedLine
           onSubjectChange={handleSubjectChange}
@@ -113,6 +117,7 @@ const JournalTeacher = () => {
         </div>
       </div>
       {selectedSubject && selectedClass && (
+      <div style={{marginLeft: 30, marginRight:30}}>
         <JournalTable 
           class={selectedClass} 
           subject={selectedSubject}
@@ -121,6 +126,7 @@ const JournalTeacher = () => {
           students={students}
           homeworks={homeworks}
         />
+      </div>
       )}
       <Footer />
     </>

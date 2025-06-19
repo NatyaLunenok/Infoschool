@@ -6,9 +6,10 @@ import JournalTeacher from './Pages/JournalTeacher/JournalTeacher'
 import AccountsAdmin from './Pages/AccountsAdmin/AccountsAdmin'
 import AccountsAdminParents from './Pages/AccountsAdminParents/AccountsAdminParents'
 import AccountsAdminTeachers from './Pages/AccountsAdminTeachers/AccountsAdminTeachers';
+import ScheduleTeacherMy from './Pages/ScheduleTeacherMy/ScheduleTeacherMy';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import HeadTeacherClasses from './Pages/HeadTeacherClasses/HeadTeacherClasses';
-
+import Diary from './Pages/Diary/Diary';
 
 function App(){
   
@@ -19,12 +20,16 @@ function App(){
         {/* <Route path="/" element={<AccountsAdminParents/>} /> */}
         {/* <Route path="/" element={<JournalTeacher/>} /> */}
         {/* <Route path="/" element={<HeadTeacherClasses/>} /> */}
+        {/* <Route path="/" element={<ScheduleTeacherMy/>} /> */}
+        {/* <Route path="/" element={<Diary/>} /> */}
         <Route path="/" element={<Authorization/>} />
         <Route path="/paa" element={<AccountsAdmin/>} />
         <Route path="/pjt" element={<JournalTeacher/>} />
         <Route path="/paap" element={<AccountsAdminParents/>} />
         <Route path="/paat" element={<AccountsAdminTeachers/>} />
         <Route path="/phtc" element={<HeadTeacherClasses/>} />
+        <Route path="/pstm" element={<ScheduleTeacherMy/>} />
+        <Route path="/pd" element={<Diary/>} />
       </Routes>
     </Router>
   );

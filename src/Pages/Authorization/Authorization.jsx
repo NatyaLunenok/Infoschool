@@ -57,6 +57,9 @@ const Authorization = () => {
                 case 'Завуч':
                     redirectPath = '/phtc';
                     break;
+                case 'Ученик':
+                    redirectPath = '/pd';
+                    break;
                 default:
                     redirectPath = '/'; // Путь по умолчанию
                     break;
