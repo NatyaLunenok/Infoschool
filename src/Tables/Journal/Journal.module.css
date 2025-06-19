@@ -1,24 +1,19 @@
-/* JournalTable.module.css */
-
-/* Основной контейнер таблицы */
 .tableWrapper {
   width: 1380px;
   margin: 30px;
   overflow-x: auto; /* Горизонтальный скролл при необходимости */
   position: relative;
   margin-left: 30px;
-  margin-right: 30px;
+  margin-bottom: 30px;  
 }
 
-/* Сама таблица */
 .journalTable {
   border-collapse: collapse;
-  width: 100%;
+  width: 1380px;
   min-width: 1380px; /* Минимальная ширина таблицы */
   font-family: Arial, sans-serif;
 }
 
-/* Заголовок таблицы - делаем sticky */
 .headerRow {
   background-color: #15A138;
   color: white;
