@@ -52,6 +52,7 @@ class StudentRegistrationSerializer(UserRegistrationSerializer):
         allow_null=True,
         source='parent2'
     )
+    photo = serializers.ImageField(required=False, allow_null=True)
 
     class Meta(UserRegistrationSerializer.Meta):
         fields = UserRegistrationSerializer.Meta.fields + (
@@ -79,6 +80,7 @@ class StudentRegistrationSerializer(UserRegistrationSerializer):
             'email': validated_data.get('email'),
             'parent1': validated_data['parent1'],
             'parent2': validated_data.get('parent2'),
+            'photo': validated_data.get('photo'),
             'class_name': None  # Класс остается пустым
         }
 
