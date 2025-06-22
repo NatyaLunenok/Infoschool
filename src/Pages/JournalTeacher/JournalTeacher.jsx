@@ -117,7 +117,7 @@ const JournalTeacher = () => {
         </div>
       </div>
       {selectedSubject && selectedClass && (
-      <div style={{marginLeft: 30, marginRight:30}}>
+      <div style={{marginLeft: 30, marginRight:30, marginBottom:30}}>
         <JournalTable 
           class={selectedClass} 
           subject={selectedSubject}

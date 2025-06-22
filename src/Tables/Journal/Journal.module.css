@@ -1,6 +1,5 @@
 .tableWrapper {
   width: 1380px;
-  margin: 30px;
   overflow-x: auto; /* Горизонтальный скролл при необходимости */
   position: relative;
   margin-bottom: 30px;  
