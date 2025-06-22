@@ -1,151 +1,50 @@
-// import React from 'react';
+// import { useState, useEffect } from 'react';
 // import styles from './Schedule.module.css';
-
-// const Schedule = () => {
-//   const scheduleData = [
-//     {
-//       lesson: '1',
-//       time: '08:00 - 08:40',
-//       days: [
-//         { subject: 'Русский язык', class: '1А', room: 'каб. 47' },
-//         { subject: 'Литература', class: '1А', room: 'каб. 47' },
-//         { subject: 'Литература', class: '2Б', room: 'каб. 47' },
-//         { subject: 'Русский язык', class: '1Б', room: 'каб. 000' },
-//         { subject: 'Литература', class: '1В', room: 'каб. 47' },
-//         null,
-//       ],
-//     },
-//     {
-//       lesson: '2',
-//       time: '08:55 - 09:35',
-//       days: [
-//         { subject: 'Русский язык', class: '1Б', room: 'каб. 47' },
-//         { subject: 'Литература', class: '1Б', room: 'каб. 47' },
-//         { subject: 'Русский язык', class: '2Б', room: 'каб. 47' },
-//         null,
-//         { subject: 'Русский язык', class: '1Б', room: 'каб. 52' },
-//         null,
-//       ],
-//     },
-//     {
-//       lesson: '3',
-//       time: '09:55 - 10:35',
-//       days: [
-//         { subject: 'Литература', class: '1В', room: 'каб. 47' },
-//         { subject: 'Русский язык', class: '2В', room: 'каб. 47' },
-//         null,
-//         { subject: 'Литература', class: '1Б', room: 'каб. 52' },
-//         null,
-//         null,
-//       ],
-//     },
-//     {
-//       lesson: '4',
-//       time: '10:50 - 11:30',
-//       days: [
-//         { subject: 'Литература', class: '1В', room: 'каб. 52' },
-//         { subject: 'Русский язык', class: '2А', room: 'каб. 47' },
-//         { subject: 'Русский язык', class: '1А', room: 'каб. 47' },
-//         null,
-//         null,
-//         null,
-//       ],
-//     },
-//     {
-//       lesson: '5',
-//       time: '11:45 - 12:25',
-//       days: [
-//         { subject: 'Русский язык', class: '1В', room: 'каб. 52' },
-//         { subject: 'Русский язык', class: '3А', room: 'каб. 52' },
-//         { subject: 'Русский язык', class: '1Б', room: 'каб. 47' },
-//         null,
-//         null,
-//         null,
-//       ],
-//     },
-//     {
-//       lesson: '6',
-//       time: '12:30 - 13:10',
-//       days: [
-//         { subject: 'Литература', class: '2А', room: 'каб. 000' },
-//         { subject: 'Литература', class: '3Б', room: 'каб. 52' },
-//         { subject: 'Русский язык', class: '1В', room: 'каб. 47' },
-//         null,
-//         null,
-//         null,
-//       ],
-//     },
-//   ];
-
-//   const daysOfWeek = [
-//     { day: 'Пн', date: '24.03.2025' },
-//     { day: 'Вт', date: '25.03.2025' },
-//     { day: 'Ср', date: '26.03.2025' },
-//     { day: 'Чт', date: '27.03.2025' },
-//     { day: 'Пт', date: '28.03.2025' },
-//     { day: 'Сб', date: '29.03.2025' },
-//   ];
-
-//   return (
-//     <div className={styles.container}>
-//       <div className={styles.header}>
-//         <button className={styles.arrowButton}>←</button>
-//         <h2 className={styles.weekTitle}>24 - 30 марта 2025</h2>
-//         <button className={styles.arrowButton}>→</button>
-//       </div>
-      
-//       <div className={styles.tableContainer}>
-//         <table className={styles.scheduleTable}>
-//           <thead>
-//             <tr>
-//               <th className={styles.lessonHeader}>Урок</th>
-//               <th className={styles.dayHeader}>Время</th>
-//               {daysOfWeek.map((day, index) => (
-//                 <th key={index} className={styles.dayHeader}>
-//                   <div>{day.day}</div>
-//                   <div>{day.date}</div>
-//                 </th>
-//               ))}
-//             </tr>
-//           </thead>
-//           <tbody>
-//             {scheduleData.map((row, rowIndex) => (
-//               <tr key={rowIndex}>
-//                 <td className={styles.lessonCell}>{row.lesson}</td>
-//                 <td className={styles.dayCell}>{row.time}</td>
-//                 {row.days.map((day, dayIndex) => (
-//                   <td key={dayIndex} className={styles.dayCell}>
-//                     {day ? (
-//                       <>
-//                         <div>{day.subject}</div>
-//                         <div>{day.class}</div>
-//                         <div>{day.room}</div>
-//                       </>
-//                     ) : null}
-//                   </td>
-//                 ))}
-//               </tr>
-//             ))}
-//           </tbody>
-//         </table>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default Schedule;
-
-
-// import React, { useState, useEffect } from 'react';
-// import styles from './Schedule.module.css';
-// import FetchWithAuth from '../../Pages/Authorization/FetchWithAuth'; // Импортируем ваш FetchWithAuth
+// import FetchWithAuth from '../../Pages/Authorization/FetchWithAuth';
 
 // const Schedule = () => {
 //   const [scheduleData, setScheduleData] = useState([]);
 //   const [loading, setLoading] = useState(true);
 //   const [error, setError] = useState(null);
 //   const [currentWeek, setCurrentWeek] = useState(new Date());
-//   const teacherId = 2; // ID учителя, можно получать из пропсов или контекста
+//   const [teacherId, setTeacherId] = useState(null);
+//   const [userRole, setUserRole] = useState(null);
+
+//   // Функция для получения данных пользователя
+//   const fetchUserData = async () => {
+//     try {
+//       const username = localStorage.getItem('username');
+//       if (!username) {
+//         throw new Error('Пользователь не авторизован');
+//       }
+
+//       const response = await FetchWithAuth(
+//         `http://127.0.0.1:8000/diary/full-name/?username=${username}`
+//       );
+
+//       if (!response) {
+//         throw new Error('Не удалось получить данные пользователя');
+//       }
+
+//       // Определяем роль пользователя
+//       const role = response.student_id ? 'student' : 
+//                    response.parent_id ? 'parent' : 
+//                    response.teacher_id ? 'teacher' : 
+//                    'admin';
+
+//       setUserRole(role);
+
+//       // Для учителя устанавливаем teacher_id
+//       if (role === 'teacher') {
+//         setTeacherId(response.teacher_id);
+//       } else {
+//         throw new Error('Только учителя могут просматривать это расписание');
+//       }
+//     } catch (err) {
+//       setError(err.message);
+//       setLoading(false);
+//     }
+//   };
 
 //   // Функция для получения дат недели
 //   const getWeekDates = (date) => {
@@ -159,33 +58,32 @@
 //     });
 //   };
 
-//   // Функция для загрузки расписания с использованием FetchWithAuth
+//   // Функция для загрузки расписания
 //   const fetchSchedule = async (date) => {
 //     try {
+//       if (!teacherId) return;
+      
 //       setLoading(true);
 //       setError(null);
       
 //       const weekDates = getWeekDates(date);
       
-//       // Загружаем расписание для каждого дня недели
 //       const schedulePromises = weekDates.map(day => {
 //         const formattedDate = day.toISOString().split('T')[0];
-//         return FetchWithAuth(`http://127.0.0.1:8000/diary/teacher-schedule/?teacher=${teacherId}&date=${formattedDate}`);
+//         return FetchWithAuth(
+//           `http://127.0.0.1:8000/diary/teacher-schedule/?teacher=${teacherId}&date=${formattedDate}`
+//         );
 //       });
 
 //       const responses = await Promise.all(schedulePromises);
       
-//       // Проверяем все ответы на наличие ошибок
 //       responses.forEach(response => {
 //         if (!response) {
 //           throw new Error('Не удалось загрузить расписание');
 //         }
 //       });
       
-//       const weekSchedule = responses.map(res => res);
-      
-//       // Преобразуем данные в формат для отображения
-//       const formattedData = formatScheduleData(weekSchedule, weekDates);
+//       const formattedData = formatScheduleData(responses, weekDates);
 //       setScheduleData(formattedData);
 //     } catch (err) {
 //       setError(err.message || 'Ошибка при загрузке расписания');
@@ -263,13 +161,10 @@
 //     setCurrentWeek(newDate);
 //   };
 
-//   // Загружаем данные при монтировании и при изменении текущей недели
-//   useEffect(() => {
-//     fetchSchedule(currentWeek);
-//   }, [currentWeek]);
-
-//   // Обновляем даты недели при изменении currentWeek
+//   // Получаем даты текущей недели
 //   const currentWeekDates = getWeekDates(currentWeek);
+  
+//   // Форматируем дни недели для отображения
 //   const formattedDaysOfWeek = currentWeekDates.map((date, index) => ({
 //     day: ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'][index],
 //     date: date.toLocaleDateString('ru-RU')
@@ -278,7 +173,28 @@
 //   // Формируем заголовок недели
 //   const weekTitle = `${currentWeekDates[0].toLocaleDateString('ru-RU')} - ${currentWeekDates[5].toLocaleDateString('ru-RU')}`;
 
-//   if (loading) return <div className={styles.loading}>Загрузка расписания...</div>;
+//   // Загружаем данные пользователя при монтировании
+//   useEffect(() => {
+//     fetchUserData();
+//   }, []);
+
+//   // Загружаем расписание при изменении текущей недели или teacherId
+//   useEffect(() => {
+//     if (teacherId) {
+//       fetchSchedule(currentWeek);
+//     }
+//   }, [currentWeek, teacherId]);
+
+//   // Если пользователь не учитель
+//   if (userRole && userRole !== 'teacher') {
+//     return (
+//       <div className={styles.error}>
+//         Доступ запрещен. Только учителя могут просматривать это расписание.
+//       </div>
+//     );
+//   }
+
+//   if (loading) return <div className={styles.loading}>Загрузка...</div>;
 //   if (error) return <div className={styles.error}>Ошибка: {error}</div>;
 
 //   return (
@@ -331,8 +247,7 @@
 // export default Schedule;
 
 
-
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import styles from './Schedule.module.css';
 import FetchWithAuth from '../../Pages/Authorization/FetchWithAuth';
 
@@ -360,7 +275,6 @@ const Schedule = () => {
         throw new Error('Не удалось получить данные пользователя');
       }
 
-      // Определяем роль пользователя
       const role = response.student_id ? 'student' : 
                    response.parent_id ? 'parent' : 
                    response.teacher_id ? 'teacher' : 
@@ -368,7 +282,6 @@ const Schedule = () => {
 
       setUserRole(role);
 
-      // Для учителя устанавливаем teacher_id
       if (role === 'teacher') {
         setTeacherId(response.teacher_id);
       } else {
@@ -411,12 +324,7 @@ const Schedule = () => {
 
       const responses = await Promise.all(schedulePromises);
       
-      responses.forEach(response => {
-        if (!response) {
-          throw new Error('Не удалось загрузить расписание');
-        }
-      });
-      
+      // Даже если нет данных, продолжаем обработку
       const formattedData = formatScheduleData(responses, weekDates);
       setScheduleData(formattedData);
     } catch (err) {
@@ -431,11 +339,12 @@ const Schedule = () => {
   const formatScheduleData = (weekSchedule, weekDates) => {
     // Создаем массив всех уроков за неделю
     const allLessons = [];
+    
     weekSchedule.forEach((daySchedule, dayIndex) => {
       const date = weekDates[dayIndex];
       const dateKey = date.toISOString().split('T')[0];
       
-      if (daySchedule[dateKey]) {
+      if (daySchedule && daySchedule[dateKey]) {
         daySchedule[dateKey].forEach(lesson => {
           allLessons.push({
             ...lesson,
@@ -448,15 +357,21 @@ const Schedule = () => {
 
     // Группируем по номеру урока
     const lessonsByNumber = {};
+    
+    // Создаем пустые записи для всех возможных уроков (1-8)
+    for (let i = 1; i <= 8; i++) {
+      lessonsByNumber[i] = Array(6).fill(null);
+    }
+    
+    // Заполняем данными, если они есть
     allLessons.forEach(lesson => {
-      if (!lessonsByNumber[lesson.lesson_number]) {
-        lessonsByNumber[lesson.lesson_number] = Array(6).fill(null);
+      if (lessonsByNumber[lesson.lesson_number]) {
+        lessonsByNumber[lesson.lesson_number][lesson.dayIndex] = {
+          subject: lesson.subject_name,
+          class: lesson.class_name,
+          room: lesson.classroom_number
+        };
       }
-      lessonsByNumber[lesson.lesson_number][lesson.dayIndex] = {
-        subject: lesson.subject_name,
-        class: lesson.class_name,
-        room: lesson.classroom_number
-      };
     });
 
     // Преобразуем в массив для отображения
@@ -544,7 +459,7 @@ const Schedule = () => {
           <thead>
             <tr>
               <th className={styles.lessonHeader}>Урок</th>
-              <th className={styles.dayHeader}>Время</th>
+              <th className={styles.timeHeader}>Время</th>
               {formattedDaysOfWeek.map((day, index) => (
                 <th key={index} className={styles.dayHeader}>
                   <div>{day.day}</div>
@@ -557,7 +472,7 @@ const Schedule = () => {
             {scheduleData.map((row, rowIndex) => (
               <tr key={rowIndex}>
                 <td className={styles.lessonCell}>{row.lesson}</td>
-                <td className={styles.dayCell}>{row.time}</td>
+                <td className={styles.timeCell}>{row.time}</td>
                 {row.days.map((day, dayIndex) => (
                   <td key={dayIndex} className={styles.dayCell}>
                     {day ? (

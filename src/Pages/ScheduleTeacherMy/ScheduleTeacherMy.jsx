@@ -1,10 +1,7 @@
-import React, { useState, useEffect } from 'react';
 import Footer from '../../Layout/Footer/Footer';
-import JournalTable from '../../Tables/Journal/Journal';
 import FirstLine from '../../Layout/Header/FirstLine/FirstLine';
 import styles from './ScheduleTeacherMy.module.css'
 import Schedule from '../../Tables/Schedule/Schedule';
-import FetchWithAuth from '../Authorization/FetchWithAuth';
 import { Link } from 'react-router-dom'; // Import Link
 
 

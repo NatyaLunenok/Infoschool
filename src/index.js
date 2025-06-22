@@ -10,6 +10,8 @@ import ScheduleTeacherMy from './Pages/ScheduleTeacherMy/ScheduleTeacherMy';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import HeadTeacherClasses from './Pages/HeadTeacherClasses/HeadTeacherClasses';
 import Diary from './Pages/Diary/Diary';
+import GradeQuater1 from './Pages/GradeQuater1/GradeQuater1';
+import GradeSummary from './Pages/GradeSummary/GradeSummary';
 
 function App(){
   
@@ -22,6 +24,8 @@ function App(){
         {/* <Route path="/" element={<HeadTeacherClasses/>} /> */}
         {/* <Route path="/" element={<ScheduleTeacherMy/>} /> */}
         {/* <Route path="/" element={<Diary/>} /> */}
+        {/* <Route path="/" element={<GradeQuater1/>} /> */}
+        {/* <Route path="/" element={<GradeSummary/>} /> */}
         <Route path="/" element={<Authorization/>} />
         <Route path="/paa" element={<AccountsAdmin/>} />
         <Route path="/pjt" element={<JournalTeacher/>} />
@@ -30,6 +34,8 @@ function App(){
         <Route path="/phtc" element={<HeadTeacherClasses/>} />
         <Route path="/pstm" element={<ScheduleTeacherMy/>} />
         <Route path="/pd" element={<Diary/>} />
+        <Route path="/pgq1" element={<GradeQuater1/>} />
+        <Route path="/pgs" element={<GradeSummary/>} />
       </Routes>
     </Router>
   );
