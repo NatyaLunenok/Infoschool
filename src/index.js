@@ -12,6 +12,9 @@ import HeadTeacherClasses from './Pages/HeadTeacherClasses/HeadTeacherClasses';
 import Diary from './Pages/Diary/Diary';
 import GradeQuater1 from './Pages/GradeQuater1/GradeQuater1';
 import GradeSummary from './Pages/GradeSummary/GradeSummary';
+import ScheduleClassPage from './Pages/ScheduleClass/ScheduleClass';
+import Subjects from './Pages/Subjects/Subjects'
+import Rooms from './Pages/Rooms/Rooms';
 
 function App(){
   
@@ -26,6 +29,8 @@ function App(){
         {/* <Route path="/" element={<Diary/>} /> */}
         {/* <Route path="/" element={<GradeQuater1/>} /> */}
         {/* <Route path="/" element={<GradeSummary/>} /> */}
+        {/* <Route path="/" element={<Subjects/>} /> */}
+        {/* <Route path="/" element={<Rooms/>} /> */}
         <Route path="/" element={<Authorization/>} />
         <Route path="/paa" element={<AccountsAdmin/>} />
         <Route path="/pjt" element={<JournalTeacher/>} />
@@ -36,6 +41,9 @@ function App(){
         <Route path="/pd" element={<Diary/>} />
         <Route path="/pgq1" element={<GradeQuater1/>} />
         <Route path="/pgs" element={<GradeSummary/>} />
+        <Route path="/psc" element={<ScheduleClassPage/>} />
+        <Route path="/ps" element={<Subjects/>} />
+        <Route path="/pr" element={<Rooms/>} />
       </Routes>
     </Router>
   );
