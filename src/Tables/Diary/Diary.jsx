@@ -666,32 +666,54 @@ const DiaryTable = ({ username }) => {
     newDate.setDate(newDate.getDate() + 7);
     setCurrentWeek(newDate);
   };
-
-  // Загрузка данных пользователя
-  const fetchUserData = async () => {
-    try {
-      setLoading(true);
-      setError(null);
-      
-      const response = await FetchWithAuth(`http://127.0.0.1:8000/diary/full-name/?username=${username}`);
-      
-      if (!response) {
-        throw new Error('Не удалось загрузить данные пользователя');
-      }
-      
-      if (response.student_id) {
-        setStudentId(response.student_id);
-        setClassId(response.class_id);
-      } else {
-        throw new Error('Дневник доступен только для учеников');
-      }
-    } catch (err) {
-      setError(err.message || 'Ошибка при загрузке данных пользователя');
-      console.error(err);
-    } finally {
-      setLoading(false);
+// В начале компонента DiaryTable, перед вызовом fetchUserData
+useEffect(() => {
+  if (!username) {
+    setError('Не удалось определить пользователя');
+    setLoading(false);
+    return;
+  }
+  
+  const loadData = async () => {
+    if (!classId) {
+      await fetchUserData();
+    } else {
+      await processData();
     }
   };
+  
+  loadData();
+}, [currentWeek, classId, username]); // Добавляем username в зависимости
+
+  // Загрузка данных пользователя
+const fetchUserData = async () => {
+  try {
+    setLoading(true);
+    setError(null);
+    
+    if (!username) {
+      throw new Error('Имя пользователя не определено');
+    }
+    
+    const response = await FetchWithAuth(`http://127.0.0.1:8000/diary/full-name/?username=${username}`);
+    
+    if (!response) {
+      throw new Error('Не удалось загрузить данные пользователя');
+    }
+    
+    if (response.student_id) {
+      setStudentId(response.student_id);
+      setClassId(response.class_id);
+    } else {
+      throw new Error('Дневник доступен только для учеников');
+    }
+  } catch (err) {
+    setError(err.message || 'Ошибка при загрузке данных пользователя');
+    console.error(err);
+  } finally {
+    setLoading(false);
+  }
+};
 
   // Загрузка расписания
   const fetchScheduleData = async () => {
