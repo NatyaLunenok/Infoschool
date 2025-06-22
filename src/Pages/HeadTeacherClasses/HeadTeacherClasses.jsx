@@ -1,94 +1,3 @@
-// import { useState, useEffect } from 'react';
-// import Footer from '../../Layout/Footer/Footer';
-// import FirstLine from '../../Layout/Header/FirstLine/FirstLine';
-// import styles from './HeadTeacherClasses.module.css';
-// import DropDownClass from '../../Layout/Header/SelectedLine/DropDownClass/DropDownClass';
-// import st from '../../images/strelochka_icon.png';
-// import ListClass from '../../Tables/ListClass/ListClass';
-
-// const HeadTeacherClasses = () => {
-//   const [selectedClass, setSelectedClass] = useState(null);
-//   const [classData, setClassData] = useState(null);
-//   const [loading, setLoading] = useState(false);
-//   const [error, setError] = useState(null);
-//   const [openDropdown, setOpenDropdown] = useState({
-//     class: false,
-//     specialization: false,
-//     teacher: false
-//   });
-//   const [specializationOptions, setSpecializationOptions] = useState([]);
-//   const [teacherOptions, setTeacherOptions] = useState([]);
-
-//   useEffect(() => {
-//     const fetchInitialData = async () => {
-//       const token = localStorage.getItem('accessToken');
-//       if (!token) return;
-
-//       try {
-//         // Загрузка специализаций
-//         const specResponse = await fetch('http://127.0.0.1:8000/diary/specialization/', {
-//           headers: {
-//             'Authorization': `Bearer ${token}`,
-//             'Content-Type': 'application/json'
-//           }
-//         });
-//         if (specResponse.ok) {
-//           const specData = await specResponse.json();
-//           setSpecializationOptions(specData.map(item => item.specialization_name));
-//         }
-
-//         // Загрузка учителей
-//         const teacherResponse = await fetch('http://127.0.0.1:8000/diary/teacher-list/', {
-//           headers: {
-//             'Authorization': `Bearer ${token}`,
-//             'Content-Type': 'application/json'
-//           }
-//         });
-//         if (teacherResponse.ok) {
-//           const teacherData = await teacherResponse.json();
-//           setTeacherOptions(teacherData);
-//         }
-//       } catch (err) {
-//         console.error('Ошибка при загрузке данных:', err);
-//       }
-//     };
-
-//     fetchInitialData();
-//   }, []);
-
-//   const fetchClassData = async (classId) => {
-//     setLoading(true);
-//     setError(null);
-//     try {
-//       const token = localStorage.getItem('accessToken');
-//       if (!token) {
-//         throw new Error('Токен отсутствует');
-//       }
-
-//       const response = await fetch(`http://127.0.0.1:8000/diary/classes/${classId}/`, {
-//         headers: {
-//           'Authorization': `Bearer ${token}`,
-//           'Content-Type': 'application/json'
-//         }
-//       });
-      
-//       if (!response.ok) {
-//         if (response.status === 401) {
-//           throw new Error('Требуется авторизация');
-//         }
-//         throw new Error(`Ошибка сервера: ${response.status}`);
-//       }
-      
-//       const data = await response.json();
-//       setClassData(data);
-//     } catch (err) {
-//       setError(err.message);
-//       console.error('Ошибка при загрузке данных класса:', err);
-//     } finally {
-//       setLoading(false);
-//     }
-//   };
-
 import { useState, useEffect } from 'react';
 import Footer from '../../Layout/Footer/Footer';
 import FirstLine from '../../Layout/Header/FirstLine/FirstLine';
@@ -304,41 +213,6 @@ const HeadTeacherClasses = () => {
     }
   };
 
-  const handleClassNameChange = async (e) => {
-    if (!selectedClass) return;
-    
-    const newName = e.target.value;
-    try {
-      const token = localStorage.getItem('accessToken');
-      if (!token) {
-        throw new Error('Требуется авторизация');
-      }
-
-      const response = await fetch(`http://127.0.0.1:8000/diary/classes/${selectedClass.id}/`, {
-        method: 'PATCH',
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          class_name: newName
-        })
-      });
-      
-      if (!response.ok) {
-        throw new Error('Не удалось обновить название класса');
-      }
-      
-      setClassData(prev => ({
-        ...prev,
-        class_name: newName
-      }));
-    } catch (err) {
-      setError(err.message);
-      console.error('Ошибка при обновлении названия класса:', err);
-    }
-  };
-
 const handleAddStudent = async (studentId) => {
   if (!selectedClass) return;
   
@@ -388,38 +262,6 @@ const handleAddStudent = async (studentId) => {
     };
   }
 };
-
-  // return (
-  //   <>
-  //     <div style={{ marginLeft: 30 }}>
-  //       <FirstLine />
-  //       <div className={styles.ConteinerSecondLine}>
-  //         <button className={styles.defaultButton}>РАСПИСАНИЕ</button>
-  //         <button className={styles.activeButton}>КЛАССЫ</button>
-  //       </div>
-  //       <div style={{marginTop: '10px', marginBottom:'10px',marginRight:'30px', display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
-  //         <DropDownClass
-  //           currentClass={selectedClass}
-  //           onChange={handleClassChange}
-  //         />
-  //         <div className={styles.ConteinerButtons}>
-  //           <button className={styles.Button}>Сменить учебный год</button>
-  //           <button className={styles.Button}>Создать</button>
-  //           <button className={styles.Button}>Удалить</button>
-  //         </div>
-  //       </div>
-        
-  //       {loading && <div>Loading...</div>}
-  //       {error && <div className={styles.error}>Error: {error}</div>}
-        
-  //       <div style={{display: 'flex', flexDirection:'row', gap:'200px', marginBottom: '30px'}}>
-  //         {classData && (
-  //           <>
-  //             <ListClass 
-  //               students={classData.students} 
-  //               onAddStudent={handleAddStudent}
-  //               classId={selectedClass.id}
-  //             />
     return (
     <>
       <div style={{ marginLeft: 30 }}>

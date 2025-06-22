@@ -1,0 +1,64 @@
+/* GradeSummaryTable.module.css */
+.tableContainer {
+  width: 1380px;
+  margin: 20px 0;
+  overflow-x: auto;
+}
+
+.gradesTable {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: Arial, sans-serif;
+  table-layout: fixed;
+}
+
+.gradesTable th,
+.gradesTable td {
+  border: 1px solid #ddd;
+  padding: 12px;
+}
+
+.gradesTable th {
+  background-color: #15A138;
+  color: white;
+  font-weight: bold;
+  text-align: center;
+}
+
+.subjectHeader {
+  text-align: left;
+  width: 200px;
+}
+
+.subjectCell {
+  text-align: left;
+}
+
+.gradesTable td:not(.subjectCell) {
+  text-align: center;
+  padding: 8px;
+}
+
+.gradeContainer {
+  display: inline-block;
+  min-width: 40px;
+  padding: 4px ;
+  border-radius: 4px;
+}
+
+.gradesTable tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.gradesTable tr:hover {
+  background-color: #f1f1f1;
+}
+.loading, .error {
+  padding: 20px;
+  text-align: center;
+  font-size: 18px;
+}
+
+.error {
+  color: #ff0000;
+}
