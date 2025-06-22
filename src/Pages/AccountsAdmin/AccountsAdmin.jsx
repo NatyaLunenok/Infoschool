@@ -1,9 +1,5 @@
-import Header from '../../Layout/Header/Header'
 import Footer from '../../Layout/Footer/Footer'
-import JournalTable from '../../Tables/Journal/Journal'
 import FirstLine from '../../Layout/Header/FirstLine/FirstLine'
-import SecondLine from '../../Layout/Header/SecondLine/SecondLine'
-import SelectedUsers from '../../Layout/Header/SelectedUsers/SelectedUsers'
 import AccountStudents from '../../Tables/AccountStudents/AccountStudents'
 import styles from './AccountsAdmin.module.css'
 import { Link } from 'react-router-dom'; // Import Link
@@ -15,7 +11,9 @@ const AccountsAdmin = () => {
         <FirstLine />
         <div className={styles.ConteinerSecondLine}>
           <button className={styles.activeButton}>УЧЕТНЫЕ ЗАПИСИ</button>
+        <Link to="/ps">
           <button className={styles.defaultButton}>ПРЕДМЕТЫ</button>
+        </Link>
           <button className={styles.defaultButton}>КАБИНЕТЫ</button>
         </div>
         <div className={styles.ConteinerSelectedQuarter}>

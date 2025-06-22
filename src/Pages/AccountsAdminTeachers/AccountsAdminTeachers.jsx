@@ -11,7 +11,9 @@ const AccountsAdminTeachers = () => {
     <FirstLine/>
     <div className={styles.ConteinerSecondLine}>
         <button className={styles.activeButton}>УЧЕТНЫЕ ЗАПИСИ</button>
+        <Link to="/ps">
         <button className={styles.defaultButton}>ПРЕДМЕТЫ</button>
+        </Link>
         <button className={styles.defaultButton}>КАБИНЕТЫ</button>
     </div>
     <div className={styles.ConteinerSelectedQuarter}>

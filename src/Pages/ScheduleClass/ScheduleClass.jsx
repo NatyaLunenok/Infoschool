@@ -43,9 +43,9 @@
 import { useState } from 'react';
 import Footer from '../../Layout/Footer/Footer';
 import FirstLine from '../../Layout/Header/FirstLine/FirstLine';
-import styles from './ScheduleClassPage.module.css';
+import styles from './ScheduleClass.module.css';
 import ScheduleClass from '../../Tables/ScheduleClass/ScheduleClass';
-import DropDownClass from '../../UI/DropDownClass/DropDownClass';
+import DropDownClass from '../../Layout/Header/SelectedLine/DropDownClass/DropDownClass';
 import { Link } from 'react-router-dom';
 
 const ScheduleClassPage = () => {
@@ -66,7 +66,9 @@ const ScheduleClassPage = () => {
           <button className={styles.activeButton}>РАСПИСАНИЕ</button>
         </div>
         <div className={styles.ConteinerSelectedQuarter} style={{margin:10}}>
+          <Link to="/pstm">
           <button className={styles.DefaultCell}>Моё расписание</button>
+          </Link>
           <button className={styles.SelectedCell}>Расписание класса</button>
         </div>
         <div style={{

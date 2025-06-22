@@ -19,7 +19,9 @@ const ScheduleTeacherMy = () => {
         </div>
         <div className={styles.ConteinerSelectedQuarter} style={{margin:10}}>
           <button className={styles.SelectedCell}>Моё расписание</button>
+          <Link to="/psc">
           <button className={styles.DefaultCell}>Расписание класса</button>
+          </Link>
         </div>
       </div>
       <Schedule/>
