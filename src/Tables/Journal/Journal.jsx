@@ -1068,16 +1068,28 @@ const JournalTable = ({ class: selectedClass, subject: selectedSubject, quarter,
     setData(formattedData);
   }, [students, dates]);
 
-  useEffect(() => {
-    if (homeworks) {
-      const formattedHomeworks = homeworks.map(hw => ({
+  // useEffect(() => {
+  //   if (homeworks) {
+  //     const formattedHomeworks = homeworks.map(hw => ({
+  //       lessonId: hw.id,
+  //       date: dates.find(d => d.id === hw.id)?.date,
+  //       hasHomework: hw.homework_id !== null
+  //     }));
+  //     setHomeworksList(formattedHomeworks);
+  //   }
+  // }, [homeworks, dates]);
+
+useEffect(() => {
+  const formattedHomeworks = Array.isArray(homeworks) 
+    ? homeworks.map(hw => ({
         lessonId: hw.id,
         date: dates.find(d => d.id === hw.id)?.date,
         hasHomework: hw.homework_id !== null
-      }));
-      setHomeworksList(formattedHomeworks);
-    }
-  }, [homeworks, dates]);
+      }))
+    : []; // Если homeworks не массив - используем пустой массив
+    
+  setHomeworksList(formattedHomeworks);
+}, [homeworks, dates]);
 
   const openHomeworkModal = async (lessonId, mode = 'add') => {
     setSelectedLessonForHomework(lessonId);
@@ -1174,10 +1186,17 @@ const JournalTable = ({ class: selectedClass, subject: selectedSubject, quarter,
     }
   };
 
-  const hasHomework = (lessonId) => {
-    const homework = homeworks.find(hw => hw.id === lessonId);
-    return homework?.homework_id !== null && homework?.homework_id !== undefined;
-  };
+  // const hasHomework = (lessonId) => {
+  //   const homework = homeworks.find(hw => hw.id === lessonId);
+  //   return homework?.homework_id !== null && homework?.homework_id !== undefined;
+  // };
+
+const hasHomework = (lessonId) => {
+  if (!Array.isArray(homeworks)) return false; // Защита от не-массивов
+  
+  const homework = homeworks.find(hw => hw.id === lessonId);
+  return homework?.homework_id !== null && homework?.homework_id !== undefined;
+};
 
   useEffect(() => {
     document.addEventListener('mousedown', handleClickOutside);

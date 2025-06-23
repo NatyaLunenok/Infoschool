@@ -285,8 +285,8 @@ const JournalTeacher = () => {
             quarter={selectedQuarter} // Передаем выбранную четверть
             dates={dates}
             students={students}
-            homeworks={homeworks}
-          />
+            // homeworks={homeworks}
+homeworks={Array.isArray(homeworksData) ? homeworksData : []}          />
         </div>
       )}
       <Footer />
