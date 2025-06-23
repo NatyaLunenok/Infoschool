@@ -475,7 +475,7 @@ return (
         <table className={styles.fixedTable}>
           <colgroup>
             <col style={{ width: '50px' }} />
-            <col style={{ width: '500px' }} />
+            <col style={{ width: '300px' }} />
           </colgroup>
           <thead>
             <tr className={styles.headerRow}>

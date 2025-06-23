@@ -60,7 +60,7 @@
 }
 
 .fixedTable {
-  width: 550px; /* 50px + 500px */
+  width: 350px; /* 50px + 500px */
 }
 
 .scrollableTable {
@@ -131,11 +131,11 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 50px;
+  width: 70px;
 }
 
 .gradeInput {
-  width: 50px;
+  width: 70px;
   text-align: center;
   padding: 4px;
   border: 1px solid #ccc;
