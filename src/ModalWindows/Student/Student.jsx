@@ -59,10 +59,22 @@ const Student = ({ studentId, onClose }) => {
               <div className={styles.profileSection}>
                 <div className={styles.profileImageContainer}>
                   <div className={styles.profileImage}>
-                    <svg width="100" height="100" viewBox="0 0 100 100" fill="#F2D7B8">
-                      <circle cx="50" cy="30" r="15" />
-                      <path d="M50 60 C 30 60 10 80 10 90 A 40 40 0 0 1 90 90 C 90 80 70 60 50 60 Z" />
-                    </svg>
+                    {studentData.photo ? (
+                      <img 
+                        src={studentData.photo} 
+                        alt={`${studentData.last_name} ${studentData.first_name}`}
+                        className={styles.profilePhoto}
+                        onError={(e) => {
+                          e.target.onerror = null;
+                          e.target.src = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><circle cx="50" cy="30" r="15" fill="%23F2D7B8"/><path d="M50 60 C 30 60 10 80 10 90 A 40 40 0 0 1 90 90 C 90 80 70 60 50 60 Z" fill="%23F2D7B8"/></svg>';
+                        }}
+                      />
+                    ) : (
+                      <svg width="100" height="100" viewBox="0 0 100 100" fill="#F2D7B8">
+                        <circle cx="50" cy="30" r="15" />
+                        <path d="M50 60 C 30 60 10 80 10 90 A 40 40 0 0 1 90 90 C 90 80 70 60 50 60 Z" />
+                      </svg>
+                    )}
                   </div>
                 </div>
                 
