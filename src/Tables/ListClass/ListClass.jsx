@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import styles from './ListClass.module.css';
+import Student from '../../ModalWindows/Student/Student';
 
 const ListClass = ({ students = [], onAddStudent, classId }) => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -9,6 +10,7 @@ const ListClass = ({ students = [], onAddStudent, classId }) => {
   const [error, setError] = useState(null);
   const [selectedStudent, setSelectedStudent] = useState(null);
   const [addError, setAddError] = useState(null);
+  const [selectedStudentId, setSelectedStudentId] = useState(null);
 
   // Сортируем студентов по алфавиту
   const sortedStudents = [...students].sort((a, b) => 
@@ -115,10 +117,14 @@ const ListClass = ({ students = [], onAddStudent, classId }) => {
           </thead>
           <tbody>
             {sortedStudents.map((student, index) => (
-              <tr key={student.id}>
-                <td>{index + 1}</td>
-                <td>{student.full_name}</td>
-              </tr>
+            <tr 
+              key={student.id}
+              onClick={() => setSelectedStudentId(student.id)}
+              className={styles.studentRow}
+            >
+              <td>{index + 1}</td>
+              <td>{student.full_name}</td>
+            </tr>
             ))}
             <tr className={styles.addRow}>
               <td>
@@ -172,6 +178,12 @@ const ListClass = ({ students = [], onAddStudent, classId }) => {
           </tbody>
         </table>
       </div>
+      {selectedStudentId && (
+        <Student 
+          studentId={selectedStudentId} 
+          onClose={() => setSelectedStudentId(null)} 
+        />
+      )}
     </div>
   );
 };

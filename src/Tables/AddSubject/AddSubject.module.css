@@ -45,7 +45,7 @@
 
 .addButton {
   padding: 10px 20px;
-  background-color: #4a90e2;
+  background-color: #15A138;
   color: white;
   border: none;
   border-radius: 4px;
@@ -55,11 +55,11 @@
 }
 
 .addButton:hover:not(:disabled) {
-  background-color: #3a7bc8;
+  background-color: #15A138;
 }
 
 .addButton:active:not(:disabled) {
-  background-color: #2a65a8;
+  background-color: #15A138;
 }
 
 .addButton:disabled {

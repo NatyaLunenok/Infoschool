@@ -1,22 +1,36 @@
-// // ClassroomManagement.jsx
-// import React, { useState } from 'react';
+// import { useState, useEffect } from 'react';
 // import styles from './ClassroomManagement.module.css';
+// import FetchWithAuth from '../../Pages/Authorization/FetchWithAuth';
 
 // const ClassroomManagement = () => {
 //   const [classroomNumber, setClassroomNumber] = useState('');
 //   const [classroomType, setClassroomType] = useState('Учебный');
-//   const [classrooms, setClassrooms] = useState([
-//     { id: 1, number: '101', type: 'Учебный' },
-//     { id: 2, number: '102', type: 'Учебный' },
-//     { id: 3, number: '103', type: 'Большой зал' },
-//     { id: 4, number: '104', type: 'Учебный' },
-//     { id: 5, number: '105', type: 'Учебный' },
-//     { id: 6, number: '106', type: 'Учебный' },
-//     { id: 7, number: '107', type: 'Малый зал' },
-//     { id: 8, number: '108', type: 'Учебный' },
-//     { id: 9, number: '109', type: 'Учебный' },
-//     { id: 10, number: '201', type: 'Учебный' }
-//   ]);
+//   const [classrooms, setClassrooms] = useState([]);
+//   const [isLoading, setIsLoading] = useState(true);
+//   const [error, setError] = useState(null);
+
+//   useEffect(() => {
+//     const fetchClassrooms = async () => {
+//       try {
+//         const data = await FetchWithAuth('http://127.0.0.1:8000/diary/classroom/');
+//         if (data) {
+//           const formattedClassrooms = data.map(item => ({
+//             id: item.classroom_number,
+//             number: item.classroom_number.toString(),
+//             type: item.type_name
+//           }));
+//           setClassrooms(formattedClassrooms);
+//         }
+//       } catch (err) {
+//         console.error('Ошибка при загрузке кабинетов:', err);
+//         setError(err.message);
+//       } finally {
+//         setIsLoading(false);
+//       }
+//     };
+
+//     fetchClassrooms();
+//   }, []);
 
 //   const handleAddClassroom = () => {
 //     if (classroomNumber.trim() && !classrooms.some(c => c.number === classroomNumber)) {
@@ -46,45 +60,55 @@
 //     }
 //   };
 
+//   if (isLoading) {
+//     return <div className={styles.container}>Загрузка данных о кабинетах...</div>;
+//   }
+
+//   if (error) {
+//     return <div className={styles.container}>Ошибка: {error}</div>;
+//   }
+
 //   return (
 //     <div className={styles.container}>      
 //       <div className={styles.contentWrapper}>
 //         <div className={styles.tableWrapper}>
-//           <table className={styles.classroomTable}>
-//             <thead>
-//               <tr>
-//                 <th className={styles.numberHeader}>Номер кабинета</th>
-//                 <th className={styles.typeHeader}>Тип</th>
-//               </tr>
-//             </thead>
-//             <tbody>
-//               {classrooms.map((classroom) => (
-//                 <tr key={classroom.id}>
-//                   <td className={styles.numberCell}>
-//                     <button 
-//                       onClick={() => handleDeleteClassroom(classroom.id)}
-//                       className={styles.deleteButton}
-//                       aria-label="Удалить кабинет"
-//                     >
-//                       ×
-//                     </button>
-//                     <span>{classroom.number}</span>
-//                   </td>
-//                   <td className={styles.typeCell}>
-//                     <select
-//                       value={classroom.type}
-//                       onChange={(e) => handleTypeChange(classroom.id, e.target.value)}
-//                       className={styles.typeSelect}
-//                     >
-//                       <option value="Учебный">Учебный</option>
-//                       <option value="Большой зал">Большой зал</option>
-//                       <option value="Малый зал">Малый зал</option>
-//                     </select>
-//                   </td>
+//           <div className={styles.tableContainer}>
+//             <table className={styles.classroomTable}>
+//               <thead>
+//                 <tr>
+//                   <th className={styles.numberHeader}>Номер кабинета</th>
+//                   <th className={styles.typeHeader}>Тип</th>
 //                 </tr>
-//               ))}
-//             </tbody>
-//           </table>
+//               </thead>
+//               <tbody>
+//                 {classrooms.map((classroom) => (
+//                   <tr key={classroom.id}>
+//                     <td className={styles.numberCell}>
+//                       <button 
+//                         onClick={() => handleDeleteClassroom(classroom.id)}
+//                         className={styles.deleteButton}
+//                         aria-label="Удалить кабинет"
+//                       >
+//                         ×
+//                       </button>
+//                       <span>{classroom.number}</span>
+//                     </td>
+//                     <td className={styles.typeCell}>
+//                       <select
+//                         value={classroom.type}
+//                         onChange={(e) => handleTypeChange(classroom.id, e.target.value)}
+//                         className={styles.typeSelect}
+//                       >
+//                         <option value="Учебный класс">Учебный класс</option>
+//                         <option value="Большой спортивный зал">Большой спортивный зал</option>
+//                         <option value="Малый спортивный зал">Малый спортивный зал</option>
+//                       </select>
+//                     </td>
+//                   </tr>
+//                 ))}
+//               </tbody>
+//             </table>
+//           </div>
 //         </div>
 
 //         <div className={styles.inputSection}>
@@ -109,9 +133,9 @@
 //               onChange={(e) => setClassroomType(e.target.value)}
 //               className={styles.selectField}
 //             >
-//               <option value="Учебный">Учебный</option>
-//               <option value="Большой зал">Большой зал</option>
-//               <option value="Малый зал">Малый зал</option>
+//               <option value="Учебный класс">Учебный класс</option>
+//               <option value="Большой спортивный зал">Большой спортивный зал</option>
+//               <option value="Малый спортивный зал">Малый спортивный зал</option>
 //             </select>
 //           </div>
 
@@ -131,38 +155,55 @@
 // export default ClassroomManagement;
 
 
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import styles from './ClassroomManagement.module.css';
 import FetchWithAuth from '../../Pages/Authorization/FetchWithAuth';
 
 const ClassroomManagement = () => {
   const [classroomNumber, setClassroomNumber] = useState('');
-  const [classroomType, setClassroomType] = useState('Учебный');
+  const [classroomType, setClassroomType] = useState('');
   const [classrooms, setClassrooms] = useState([]);
+  const [classroomTypes, setClassroomTypes] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const fetchClassrooms = async () => {
+    const fetchData = async () => {
       try {
-        const data = await FetchWithAuth('http://127.0.0.1:8000/diary/classroom/');
-        if (data) {
-          const formattedClassrooms = data.map(item => ({
+        setIsLoading(true);
+        setError(null);
+        
+        // Загружаем типы кабинетов
+        const typesData = await FetchWithAuth('http://127.0.0.1:8000/diary/classroom-type/');
+        if (typesData && typesData.length > 0) {
+          setClassroomTypes(typesData);
+          // Устанавливаем первый тип по умолчанию
+          setClassroomType(typesData[0].type_name);
+        } else {
+          throw new Error('Не удалось загрузить типы кабинетов');
+        }
+
+        // Загружаем список кабинетов
+        const classroomsData = await FetchWithAuth('http://127.0.0.1:8000/diary/classroom/');
+        if (classroomsData) {
+          const formattedClassrooms = classroomsData.map(item => ({
             id: item.classroom_number,
             number: item.classroom_number.toString(),
             type: item.type_name
           }));
           setClassrooms(formattedClassrooms);
+        } else {
+          throw new Error('Не удалось загрузить список кабинетов');
         }
       } catch (err) {
-        console.error('Ошибка при загрузке кабинетов:', err);
+        console.error('Ошибка при загрузке данных:', err);
         setError(err.message);
       } finally {
         setIsLoading(false);
       }
     };
 
-    fetchClassrooms();
+    fetchData();
   }, []);
 
   const handleAddClassroom = () => {
@@ -194,7 +235,7 @@ const ClassroomManagement = () => {
   };
 
   if (isLoading) {
-    return <div className={styles.container}>Загрузка данных о кабинетах...</div>;
+    return <div className={styles.container}>Загрузка данных...</div>;
   }
 
   if (error) {
@@ -205,41 +246,45 @@ const ClassroomManagement = () => {
     <div className={styles.container}>      
       <div className={styles.contentWrapper}>
         <div className={styles.tableWrapper}>
-          <table className={styles.classroomTable}>
-            <thead>
-              <tr>
-                <th className={styles.numberHeader}>Номер кабинета</th>
-                <th className={styles.typeHeader}>Тип</th>
-              </tr>
-            </thead>
-            <tbody>
-              {classrooms.map((classroom) => (
-                <tr key={classroom.id}>
-                  <td className={styles.numberCell}>
-                    <button 
-                      onClick={() => handleDeleteClassroom(classroom.id)}
-                      className={styles.deleteButton}
-                      aria-label="Удалить кабинет"
-                    >
-                      ×
-                    </button>
-                    <span>{classroom.number}</span>
-                  </td>
-                  <td className={styles.typeCell}>
-                    <select
-                      value={classroom.type}
-                      onChange={(e) => handleTypeChange(classroom.id, e.target.value)}
-                      className={styles.typeSelect}
-                    >
-                      <option value="Учебный класс">Учебный класс</option>
-                      <option value="Большой спортивный зал">Большой спортивный зал</option>
-                      <option value="Малый спортивный зал">Малый спортивный зал</option>
-                    </select>
-                  </td>
+          <div className={styles.tableContainer}>
+            <table className={styles.classroomTable}>
+              <thead>
+                <tr>
+                  <th className={styles.numberHeader}>Номер кабинета</th>
+                  <th className={styles.typeHeader}>Тип</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {classrooms.map((classroom) => (
+                  <tr key={classroom.id}>
+                    <td className={styles.numberCell}>
+                      <button 
+                        onClick={() => handleDeleteClassroom(classroom.id)}
+                        className={styles.deleteButton}
+                        aria-label="Удалить кабинет"
+                      >
+                        ×
+                      </button>
+                      <span>{classroom.number}</span>
+                    </td>
+                    <td className={styles.typeCell}>
+                      <select
+                        value={classroom.type}
+                        onChange={(e) => handleTypeChange(classroom.id, e.target.value)}
+                        className={styles.typeSelect}
+                      >
+                        {classroomTypes.map(type => (
+                          <option key={type.id} value={type.type_name}>
+                            {type.type_name}
+                          </option>
+                        ))}
+                      </select>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
 
         <div className={styles.inputSection}>
@@ -264,16 +309,18 @@ const ClassroomManagement = () => {
               onChange={(e) => setClassroomType(e.target.value)}
               className={styles.selectField}
             >
-              <option value="Учебный класс">Учебный класс</option>
-              <option value="Большой спортивный зал">Большой спортивный зал</option>
-              <option value="Малый спортивный зал">Малый спортивный зал</option>
+              {classroomTypes.map(type => (
+                <option key={type.id} value={type.type_name}>
+                  {type.type_name}
+                </option>
+              ))}
             </select>
           </div>
 
           <button 
             onClick={handleAddClassroom}
             className={styles.addButton}
-            disabled={!classroomNumber.trim()}
+            disabled={!classroomNumber.trim() || !classroomType}
           >
             Добавить кабинет
           </button>

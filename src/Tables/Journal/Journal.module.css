@@ -1,22 +1,16 @@
-/* Journal.module.css */
-.tableContainer {
-  width: 100%;
-  overflow-x: auto;
-  margin-bottom: 20px;
-}
-
-.tableWrapper {
-  width: max-content;
-  min-width: 100%;
+/* .tableWrapper {
+  width: 1380px;
+  overflow-x: auto; 
   position: relative;
+  margin-bottom: 30px;  
+  margin-top: 30px;
 }
 
 .journalTable {
   border-collapse: collapse;
-  width: 100%;
-  min-width: max-content;
+  width: 1380px;
+  min-width: 1380px;
   font-family: Arial, sans-serif;
-  table-layout: fixed;
 }
 
 
@@ -32,10 +26,7 @@
   padding: 8px;
   border: 1px solid #ddd;
   cursor: pointer;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  position: relative;
+  white-space: nowrap; 
 }
 
 .highlightedDate {
@@ -48,9 +39,6 @@
   text-align: center;
   vertical-align: top;
   white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  height: 40px;
 }
 
 .evenRow {
@@ -73,7 +61,7 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 100%;
+  width: 100px;
 }
 
 .gradeInput {
@@ -126,9 +114,194 @@
 .deleteButton:hover {
   background-color: #ddd;
   color: #333;
+} */
+
+
+/* Journal.module.css */
+.tableContainer {
+  width: 100%;
+  overflow-x: auto;
+  margin-bottom: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.tableWrapper {
+  width: 1380px;
+  position: relative;
+  margin: 30px 0;
+}
+
+.journalTable {
+  border-collapse: collapse;
+  width: 1380px;
+  table-layout: fixed;
+  font-family: Arial, sans-serif;
+}
+
+.journalTable colgroup col {
+  width: 100px; /* Фиксированная ширина для колонок с датами */
+}
+
+.journalTable colgroup col:first-child {
+  width: 50px; /* Уже для колонки с номером */
+}
+
+.journalTable colgroup col:nth-child(2) {
+  width: 200px; /* Ширина для колонки с именем ученика */
+}
+
+.headerRow {
+  background-color: #15A138;
+  color: white;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.headerCell {
+  padding: 12px 8px;
+  border: 1px solid #ddd;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  position: relative;
+}
+
+.highlightedDate {
+  background-color: #F7944D;
+}
+
+/* Стили для строк и ячеек */
+.dataCell {
+  padding: 8px;
+  border: 1px solid #ddd;
+  text-align: center;
+  vertical-align: middle;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  height: 40px;
+}
+
+.dataCell:first-child {
+  padding: 8px 4px;
+}
+
+.evenRow {
+  background-color: #fafafa;
+}
+
+.oddRow {
+  background-color: white;
 }
 
 .homework {
   font-weight: bold;
   color: #333;
+  text-align: left !important;
+  padding-left: 15px !important;
+}
+
+/* Стили для оценок */
+.grade {
+  display: inline-block;
+  margin: 2px;
+  padding: 4px;
+  border-radius: 4px;
+  min-width: 20px;
+}
+
+/* Контейнер для редактирования оценки */
+.editingContainer {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.gradeInput {
+  width: 30px;
+  text-align: center;
+  padding: 4px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  font-size: 14px;
+  margin-right: 2px;
+}
+
+.gradeInput:focus {
+  outline: none;
+  border-color: #15A138;
+}
+
+.gradeButton {
+  padding: 4px 8px;
+  font-size: 12px;
+  cursor: pointer;
+  white-space: nowrap;
+  background-color: #15A138;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  transition: background-color 0.2s;
+}
+
+.gradeButton:hover {
+  background-color: #128830;
+}
+
+/* Контейнер для оценки и кнопки удаления */
+.gradeContainer {
+  display: inline-flex;
+  align-items: center;
+  margin: 2px;
+  position: relative;
+}
+
+.deleteButton {
+  background-color: transparent;
+  color: #888;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  font-size: 12px;
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  line-height: 1;
+  width: 16px;
+  height: 16px;
+  text-align: center;
+  border-radius: 50%;
+  opacity: 0;
+  transition: opacity 0.2s ease-in-out;
+}
+
+.gradeContainer:hover .deleteButton {
+  opacity: 1;
+}
+
+.deleteButton:hover {
+  background-color: #ddd;
+  color: #333;
+}
+
+/* Стили для иконки скрепки */
+.paperclip-icon {
+  vertical-align: middle;
+}
+
+/* Адаптивность */
+@media (max-width: 1400px) {
+  .tableWrapper {
+    width: 100%;
+  }
+  
+  .journalTable {
+    width: 1380px;
+    min-width: 1380px;
+  }
 }
