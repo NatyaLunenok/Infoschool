@@ -28,11 +28,11 @@
 }
 
 .journalTable colgroup col:nth-child(2) {
-  width: 300px; /* Ширина колонки с учениками увеличена в 3 раза */
+  width: 500px; /* Ширина колонки с учениками увеличена в 3 раза */
 }
 
 .journalTable colgroup col:not(:first-child):not(:nth-child(2)) {
-  width: 100px; /* Колонки с датами */
+  width: 200px; /* Колонки с датами */
 }
 
 .headerRow {

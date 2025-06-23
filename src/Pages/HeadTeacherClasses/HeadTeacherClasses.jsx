@@ -5,6 +5,7 @@ import styles from './HeadTeacherClasses.module.css';
 import DropDownClass from '../../Layout/Header/SelectedLine/DropDownClass/DropDownClass';
 import st from '../../images/strelochka_icon.png';
 import ListClass from '../../Tables/ListClass/ListClass';
+import { Link } from 'react-router-dom';
 
 const HeadTeacherClasses = () => {
   const [selectedClass, setSelectedClass] = useState(null);
@@ -267,7 +268,9 @@ const handleAddStudent = async (studentId) => {
       <div style={{ marginLeft: 30 }}>
         <FirstLine />
         <div className={styles.ConteinerSecondLine}>
+          <Link to="/psht">
           <button className={styles.defaultButton}>РАСПИСАНИЕ</button>
+          </Link>
           <button className={styles.activeButton}>КЛАССЫ</button>
         </div>
         <div style={{marginTop: '10px', marginBottom:'10px',marginRight:'30px', display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>

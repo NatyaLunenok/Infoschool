@@ -55,7 +55,7 @@ const Authorization = () => {
                     redirectPath = '/paa';
                     break;
                 case 'Завуч':
-                    redirectPath = '/phtc';
+                    redirectPath = '/psht';
                     break;
                 case 'Ученик':
                     redirectPath = '/pd';
