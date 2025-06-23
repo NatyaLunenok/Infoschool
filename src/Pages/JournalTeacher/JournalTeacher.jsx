@@ -148,7 +148,7 @@ import { Link } from 'react-router-dom';
 const JournalTeacher = () => {
   const [selectedSubject, setSelectedSubject] = useState(null);
   const [selectedClass, setSelectedClass] = useState(null);
-  const [selectedQuarter, setSelectedQuarter] = useState(1);
+  const [selectedQuarter, setSelectedQuarter] = useState(1); // Добавлено состояние для выбранной четверти
   const [dates, setDates] = useState([]);
   const [students, setStudents] = useState([]);
   const [homeworks, setHomeworks] = useState([]);
@@ -171,7 +171,7 @@ const JournalTeacher = () => {
       setError(null);
       
       try {
-        // Загружаем даты уроков
+        // Загружаем даты уроков (используем selectedQuarter вместо жесткого значения 4)
         const lessonsData = await FetchWithAuth(
           `http://127.0.0.1:8000/diary/lessons/?class_id=${selectedClass.id}&subject_id=${selectedSubject.id}&quarter=${selectedQuarter}`
         );
@@ -193,7 +193,7 @@ const JournalTeacher = () => {
         
         setDates(formattedDates);
         
-        // Загружаем данные об учениках и оценках
+        // Загружаем данные об учениках и оценках (используем selectedQuarter)
         const journalData = await FetchWithAuth(
           `http://127.0.0.1:8000/diary/journal/?class_id=${selectedClass.id}&subject_id=${selectedSubject.id}&quarter=${selectedQuarter}&year=2024`
         );
@@ -204,7 +204,7 @@ const JournalTeacher = () => {
         
         setStudents(journalData);
 
-        // Загружаем домашние задания
+        // Загружаем домашние задания (используем selectedQuarter)
         const homeworksData = await FetchWithAuth(
           `http://127.0.0.1:8000/diary/homeworks/?class_id=${selectedClass.id}&subject_id=${selectedSubject.id}&quarter=${selectedQuarter}`
         );
@@ -221,7 +221,7 @@ const JournalTeacher = () => {
     };
     
     fetchData();
-  }, [selectedClass, selectedSubject, selectedQuarter]);
+  }, [selectedClass, selectedSubject, selectedQuarter]); // Добавлен selectedQuarter в зависимости
 
   if (loading) {
     return <div>Загрузка данных журнала...</div>;
@@ -238,7 +238,7 @@ const JournalTeacher = () => {
         <div className={styles.ConteinerSecondLine}>
           <button className={styles.activeButton}>ЖУРНАЛ</button>
           <Link to="/pstm">
-          <button className={styles.defaultButton}>РАСПИСАНИЕ</button>
+            <button className={styles.defaultButton}>РАСПИСАНИЕ</button>
           </Link>
         </div>
         <SelectedLine
@@ -275,16 +275,16 @@ const JournalTeacher = () => {
         </div>
       </div>
       {selectedSubject && selectedClass && (
-      <div style={{marginLeft: 30, marginRight:30, marginBottom:30}}>
-        <JournalTable 
-          class={selectedClass} 
-          subject={selectedSubject}
-          quarter={selectedQuarter}
-          dates={dates}
-          students={students}
-          homeworks={homeworks}
-        />
-      </div>
+        <div style={{marginLeft: 30, marginRight:30, marginBottom:30}}>
+          <JournalTable 
+            class={selectedClass} 
+            subject={selectedSubject}
+            quarter={selectedQuarter} // Используем selectedQuarter вместо жесткого значения
+            dates={dates}
+            students={students}
+            homeworks={homeworks}
+          />
+        </div>
       )}
       <Footer />
     </>
