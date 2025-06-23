@@ -286,7 +286,7 @@ const JournalTeacher = () => {
             dates={dates}
             students={students}
             // homeworks={homeworks}
-homeworks={Array.isArray(homeworksData) ? homeworksData : []}          />
+  homeworks={Array.isArray(homeworks) ? homeworks : []}    />
         </div>
       )}
       <Footer />
