@@ -21,15 +21,29 @@
 
 .tableWrapper {
   flex: 2;
-  overflow-x: auto;
+  overflow: hidden;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+}
+
+.tableContainer {
+  overflow-y: auto;
+  max-height: 600px;
+  position: relative;
 }
 
 .classroomTable {
   width: 100%;
   border-collapse: collapse;
   min-width: 400px;
+}
+
+.classroomTable thead {
+  position: sticky;
+  top: 0;
+  z-index: 10;
 }
 
 .classroomTable th,
@@ -147,7 +161,7 @@
 .inputField:focus,
 .selectField:focus {
   outline: none;
-  border-color: #80bdff;
+  border-color: #15A138;
   box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
 }
 
@@ -188,5 +202,9 @@
   .tableWrapper,
   .inputSection {
     width: 100%;
+  }
+
+  .tableContainer {
+    max-height: 400px;
   }
 }

@@ -1,137 +1,4 @@
-// // ClassroomManagement.jsx
-// import React, { useState } from 'react';
-// import styles from './ClassroomManagement.module.css';
-
-// const ClassroomManagement = () => {
-//   const [classroomNumber, setClassroomNumber] = useState('');
-//   const [classroomType, setClassroomType] = useState('Учебный');
-//   const [classrooms, setClassrooms] = useState([
-//     { id: 1, number: '101', type: 'Учебный' },
-//     { id: 2, number: '102', type: 'Учебный' },
-//     { id: 3, number: '103', type: 'Большой зал' },
-//     { id: 4, number: '104', type: 'Учебный' },
-//     { id: 5, number: '105', type: 'Учебный' },
-//     { id: 6, number: '106', type: 'Учебный' },
-//     { id: 7, number: '107', type: 'Малый зал' },
-//     { id: 8, number: '108', type: 'Учебный' },
-//     { id: 9, number: '109', type: 'Учебный' },
-//     { id: 10, number: '201', type: 'Учебный' }
-//   ]);
-
-//   const handleAddClassroom = () => {
-//     if (classroomNumber.trim() && !classrooms.some(c => c.number === classroomNumber)) {
-//       const newClassroom = {
-//         id: Date.now(),
-//         number: classroomNumber,
-//         type: classroomType
-//       };
-//       setClassrooms([...classrooms, newClassroom]);
-//       setClassroomNumber('');
-//     }
-//   };
-
-//   const handleDeleteClassroom = (id) => {
-//     setClassrooms(classrooms.filter(classroom => classroom.id !== id));
-//   };
-
-//   const handleTypeChange = (id, newType) => {
-//     setClassrooms(classrooms.map(classroom => 
-//       classroom.id === id ? { ...classroom, type: newType } : classroom
-//     ));
-//   };
-
-//   const handleKeyPress = (e) => {
-//     if (e.key === 'Enter') {
-//       handleAddClassroom();
-//     }
-//   };
-
-//   return (
-//     <div className={styles.container}>      
-//       <div className={styles.contentWrapper}>
-//         <div className={styles.tableWrapper}>
-//           <table className={styles.classroomTable}>
-//             <thead>
-//               <tr>
-//                 <th className={styles.numberHeader}>Номер кабинета</th>
-//                 <th className={styles.typeHeader}>Тип</th>
-//               </tr>
-//             </thead>
-//             <tbody>
-//               {classrooms.map((classroom) => (
-//                 <tr key={classroom.id}>
-//                   <td className={styles.numberCell}>
-//                     <button 
-//                       onClick={() => handleDeleteClassroom(classroom.id)}
-//                       className={styles.deleteButton}
-//                       aria-label="Удалить кабинет"
-//                     >
-//                       ×
-//                     </button>
-//                     <span>{classroom.number}</span>
-//                   </td>
-//                   <td className={styles.typeCell}>
-//                     <select
-//                       value={classroom.type}
-//                       onChange={(e) => handleTypeChange(classroom.id, e.target.value)}
-//                       className={styles.typeSelect}
-//                     >
-//                       <option value="Учебный">Учебный</option>
-//                       <option value="Большой зал">Большой зал</option>
-//                       <option value="Малый зал">Малый зал</option>
-//                     </select>
-//                   </td>
-//                 </tr>
-//               ))}
-//             </tbody>
-//           </table>
-//         </div>
-
-//         <div className={styles.inputSection}>
-//           <div className={styles.inputGroup}>
-//             <label htmlFor="classroomNumber">Введите номер кабинета:</label>
-//             <input
-//               id="classroomNumber"
-//               type="text"
-//               value={classroomNumber}
-//               onChange={(e) => setClassroomNumber(e.target.value)}
-//               onKeyPress={handleKeyPress}
-//               className={styles.inputField}
-//               placeholder="Например: 301"
-//             />
-//           </div>
-
-//           <div className={styles.inputGroup}>
-//             <label htmlFor="classroomType">Выберите тип кабинета:</label>
-//             <select 
-//               id="classroomType"
-//               value={classroomType}
-//               onChange={(e) => setClassroomType(e.target.value)}
-//               className={styles.selectField}
-//             >
-//               <option value="Учебный">Учебный</option>
-//               <option value="Большой зал">Большой зал</option>
-//               <option value="Малый зал">Малый зал</option>
-//             </select>
-//           </div>
-
-//           <button 
-//             onClick={handleAddClassroom}
-//             className={styles.addButton}
-//             disabled={!classroomNumber.trim()}
-//           >
-//             Добавить кабинет
-//           </button>
-//         </div>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default ClassroomManagement;
-
-
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import styles from './ClassroomManagement.module.css';
 import FetchWithAuth from '../../Pages/Authorization/FetchWithAuth';
 
@@ -205,41 +72,43 @@ const ClassroomManagement = () => {
     <div className={styles.container}>      
       <div className={styles.contentWrapper}>
         <div className={styles.tableWrapper}>
-          <table className={styles.classroomTable}>
-            <thead>
-              <tr>
-                <th className={styles.numberHeader}>Номер кабинета</th>
-                <th className={styles.typeHeader}>Тип</th>
-              </tr>
-            </thead>
-            <tbody>
-              {classrooms.map((classroom) => (
-                <tr key={classroom.id}>
-                  <td className={styles.numberCell}>
-                    <button 
-                      onClick={() => handleDeleteClassroom(classroom.id)}
-                      className={styles.deleteButton}
-                      aria-label="Удалить кабинет"
-                    >
-                      ×
-                    </button>
-                    <span>{classroom.number}</span>
-                  </td>
-                  <td className={styles.typeCell}>
-                    <select
-                      value={classroom.type}
-                      onChange={(e) => handleTypeChange(classroom.id, e.target.value)}
-                      className={styles.typeSelect}
-                    >
-                      <option value="Учебный класс">Учебный класс</option>
-                      <option value="Большой спортивный зал">Большой спортивный зал</option>
-                      <option value="Малый спортивный зал">Малый спортивный зал</option>
-                    </select>
-                  </td>
+          <div className={styles.tableContainer}>
+            <table className={styles.classroomTable}>
+              <thead>
+                <tr>
+                  <th className={styles.numberHeader}>Номер кабинета</th>
+                  <th className={styles.typeHeader}>Тип</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {classrooms.map((classroom) => (
+                  <tr key={classroom.id}>
+                    <td className={styles.numberCell}>
+                      <button 
+                        onClick={() => handleDeleteClassroom(classroom.id)}
+                        className={styles.deleteButton}
+                        aria-label="Удалить кабинет"
+                      >
+                        ×
+                      </button>
+                      <span>{classroom.number}</span>
+                    </td>
+                    <td className={styles.typeCell}>
+                      <select
+                        value={classroom.type}
+                        onChange={(e) => handleTypeChange(classroom.id, e.target.value)}
+                        className={styles.typeSelect}
+                      >
+                        <option value="Учебный класс">Учебный класс</option>
+                        <option value="Большой спортивный зал">Большой спортивный зал</option>
+                        <option value="Малый спортивный зал">Малый спортивный зал</option>
+                      </select>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
 
         <div className={styles.inputSection}>

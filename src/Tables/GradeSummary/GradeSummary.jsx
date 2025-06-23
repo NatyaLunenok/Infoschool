@@ -44,7 +44,7 @@ const GradeSummaryTable = () => {
 
         // Загружаем итоговые оценки
         const marksResponse = await FetchWithAuth(
-          `http://127.0.0.1:8000/diary/student-final-marks/?student_id=${userData.student_id}&year=$2024`
+          `http://127.0.0.1:8000/diary/student-final-marks/?student_id=${userData.student_id}&year=2024`
         );
 
         // Загружаем список предметов

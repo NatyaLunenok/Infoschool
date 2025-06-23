@@ -194,39 +194,6 @@ const AddStudent = ({ onClose, onAdd }) => {
     };
 
     return (
-        // <div className={styles.modalOverlay}>
-        //     <div className={styles.modalContainer}>
-        //         <div className={styles.modalHeader}>
-        //             <h2 className={styles.modalTitle}>Добавление ученика</h2>
-        //             <span className={styles.modalCloseButton} onClick={onClose}>&times;</span>
-        //         </div>
-        //         <div className={styles.modalBody}>
-        //             {loading && <div className={styles.loadingOverlay}>Загрузка...</div>}
-        //             {error && <div className={styles.errorMessage}>{error}</div>}
-        //             {success && <div className={styles.successMessage}>{success}</div>}
-                    
-        //             <div className={styles.profileSection}>
-        //                 <div className={styles.profileImage}>
-        //                     {previewUrl ? (
-        //                         <img src={previewUrl} alt="Превью фото" className={styles.profilePhoto} />
-        //                     ) : (
-        //                         <svg width="50" height="50" viewBox="0 0 100 100" fill="#F2D7B8">
-        //                             <circle cx="50" cy="30" r="15" />
-        //                             <path d="M50 60 C 30 60 10 80 10 90 A 40 40 0 0 1 90 90 C 90 80 70 60 50 60 Z" />
-        //                         </svg>
-        //                     )}
-        //                     <input
-        //                         type="file"
-        //                         id="photo"
-        //                         name="photo"
-        //                         accept="image/*"
-        //                         onChange={handleFileChange}
-        //                         style={{ display: 'none' }}
-        //                         disabled={loading}
-        //                     />
-        //                     <label htmlFor="photo" className={styles.photoUploadLabel}>
-        //                         {formData.photo ? 'Изменить фото' : 'Добавить фото'}
-        //                     </label>
         <div className={styles.modalOverlay}>
             <div className={styles.modalContainer}>
                 <div className={styles.modalHeader}>

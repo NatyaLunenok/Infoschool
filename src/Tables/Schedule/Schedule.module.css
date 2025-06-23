@@ -73,9 +73,9 @@
 
 /* Стили для ячеек с временем */
 .timeHeader, .timeCell {
-  width: 80px;
+  width: 160px;
   min-width: 80px;
-  max-width: 80px;
+  max-width: 160px;
   text-align: center;
   font-weight: bold;
   background-color: #f9f9f9;

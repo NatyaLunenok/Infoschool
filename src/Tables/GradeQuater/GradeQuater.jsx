@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import styles from './GradeQuater.module.css';
 import FetchWithAuth from '../../Pages/Authorization/FetchWithAuth';
 
@@ -54,7 +54,7 @@ const GradeQuater1Table = ({ quarter }) => {
         // Получаем оценки для выбранной четверти
         const currentYear = new Date().getFullYear();
         const marksResponse = await FetchWithAuth(
-          `http://127.0.0.1:8000/diary/student-quarter-marks/?student_id=${userResponse.student_id}&year=$2024&quarter=${quarter}`
+          `http://127.0.0.1:8000/diary/student-quarter-marks/?student_id=${userResponse.student_id}&year=2024&quarter=${quarter}`
         );
 
         setSubjects(subjectsResponse);
