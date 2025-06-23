@@ -1,7 +1,8 @@
 .container {
   font-family: Arial, sans-serif;
-  max-width: 1200px;
+  max-width: 1380px;
   margin:30px;
+  justify-content: center;
 }
 
 .header {
@@ -33,7 +34,7 @@
 }
 
 .tableContainer {
-  width: 100%;
+  width: 100%
 }
 
 .scheduleTable {
@@ -79,6 +80,11 @@
   border: 1px solid #ddd;
   padding: 4px 8px;
   height: 40px;
+}
+
+.timeHeader{
+  background-color: #15A138;
+  color: white;
 }
 
 .dayCell {

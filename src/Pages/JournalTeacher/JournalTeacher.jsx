@@ -148,7 +148,7 @@ import { Link } from 'react-router-dom';
 const JournalTeacher = () => {
   const [selectedSubject, setSelectedSubject] = useState(null);
   const [selectedClass, setSelectedClass] = useState(null);
-  const [selectedQuarter, setSelectedQuarter] = useState(1); // Добавляем состояние для выбранной четверти
+  const [selectedQuarter, setSelectedQuarter] = useState(4); // Добавляем состояние для выбранной четверти
   const [dates, setDates] = useState([]);
   const [students, setStudents] = useState([]);
   const [homeworks, setHomeworks] = useState([]);

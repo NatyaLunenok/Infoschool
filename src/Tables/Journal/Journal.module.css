@@ -8,16 +8,10 @@
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
-.tableWrapper {
-  width: auto;
-  display: inline-block;
-  position: relative;
-}
-
 .journalTable {
   border-collapse: collapse;
   width: auto;
-  max-width: 1380px;
+  min-width: 1380px; /* Минимальная ширина */
   font-family: Arial, sans-serif;
   table-layout: fixed;
 }
@@ -28,12 +22,20 @@
 }
 
 .journalTable colgroup col:nth-child(2) {
-  width: 500px; /* Ширина колонки с учениками увеличена в 3 раза */
+  width: 700px; /* Ширина колонки с учениками */
 }
 
 .journalTable colgroup col:not(:first-child):not(:nth-child(2)) {
-  width: 200px; /* Колонки с датами */
+  width: 400px; /* Колонки с датами */
 }
+
+
+.tableWrapper {
+  width: auto;
+  display: inline-block;
+  position: relative;
+}
+
 
 .headerRow {
   background-color: #15A138;
@@ -98,7 +100,7 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 100%;
+  width: 50px;
 }
 
 .gradeInput {

@@ -1068,17 +1068,6 @@ const JournalTable = ({ class: selectedClass, subject: selectedSubject, quarter,
     setData(formattedData);
   }, [students, dates]);
 
-  // useEffect(() => {
-  //   if (homeworks) {
-  //     const formattedHomeworks = homeworks.map(hw => ({
-  //       lessonId: hw.id,
-  //       date: dates.find(d => d.id === hw.id)?.date,
-  //       hasHomework: hw.homework_id !== null
-  //     }));
-  //     setHomeworksList(formattedHomeworks);
-  //   }
-  // }, [homeworks, dates]);
-
 useEffect(() => {
   const formattedHomeworks = Array.isArray(homeworks) 
     ? homeworks.map(hw => ({
@@ -1185,11 +1174,6 @@ useEffect(() => {
       closeHomeworkModal();
     }
   };
-
-  // const hasHomework = (lessonId) => {
-  //   const homework = homeworks.find(hw => hw.id === lessonId);
-  //   return homework?.homework_id !== null && homework?.homework_id !== undefined;
-  // };
 
 const hasHomework = (lessonId) => {
   if (!Array.isArray(homeworks)) return false; // Защита от не-массивов
@@ -1347,7 +1331,15 @@ const hasHomework = (lessonId) => {
 
   return (
     <>
-      <table className={styles.journalTable} ref={tableRef}>
+      {/* <table className={styles.journalTable} ref={tableRef}> */}
+<table className={styles.journalTable} ref={tableRef} style={{ width: '1380px' }}>
+<colgroup>
+  <col /> {/* Колонка с номером */}
+  <col style={{ width: '700px' }} /> 
+  {dates.map((dateObj) => ( // Добавляем параметр dateObj в callback
+    <col key={`col-${dateObj.id}`} style={{ width: '300px' }} />
+  ))}
+</colgroup>
         <thead>
           <tr className={styles.headerRow}>
             <th className={styles.headerCell}>№</th>

@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 import { useState } from 'react';
 
 const GradeQuater1 = () => {
-  const [selectedQuarter, setSelectedQuarter] = useState(1);
+  const [selectedQuarter, setSelectedQuarter] = useState(4);
 
   return (
     <>

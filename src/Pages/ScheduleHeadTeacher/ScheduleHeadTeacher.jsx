@@ -75,7 +75,8 @@ const ScheduleHeadTeacher = () => {
           marginRight: '30px',
           display: 'flex',
           flexDirection: 'row',
-          justifyContent: 'space-between'
+          justifyContent: 'space-between',
+          width:1380
         }}>
           <DropDownClass
             currentClass={selectedClass}
@@ -86,9 +87,9 @@ const ScheduleHeadTeacher = () => {
             <button className={styles.button}>Удалить</button>
           </div>
         </div>
-        
+        <div style={{marginLeft:-30}}>
         {selectedClass && <ScheduleClassTable classId={selectedClass.id} />}
-        
+        </div>
         <div style={{
           display: 'flex',
           flexDirection: 'row',
