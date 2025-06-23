@@ -47,7 +47,7 @@ import { useState } from 'react';
 import Footer from '../../Layout/Footer/Footer';
 import FirstLine from '../../Layout/Header/FirstLine/FirstLine';
 import styles from './ScheduleHeadTeacher.module.css';
-import ScheduleClass from '../../Tables/ScheduleClass/ScheduleClass';
+import ScheduleClassTable from '../../Tables/ScheduleClass/ScheduleClass';
 import DropDownClass from '../../Layout/Header/SelectedLine/DropDownClass/DropDownClass';
 import { Link } from 'react-router-dom';
 
@@ -75,8 +75,7 @@ const ScheduleHeadTeacher = () => {
           marginRight: '30px',
           display: 'flex',
           flexDirection: 'row',
-          justifyContent: 'space-between',
-          width: '1380px'
+          justifyContent: 'space-between'
         }}>
           <DropDownClass
             currentClass={selectedClass}
@@ -88,13 +87,12 @@ const ScheduleHeadTeacher = () => {
           </div>
         </div>
         
-        {selectedClass && <ScheduleClass classId={selectedClass.id} />}
+        {selectedClass && <ScheduleClassTable classId={selectedClass.id} />}
         
         <div style={{
           display: 'flex',
           flexDirection: 'row',
           justifyContent: 'flex-end',
-          width: '1380px',
           marginBottom: '30px'
         }}>
           <button 
