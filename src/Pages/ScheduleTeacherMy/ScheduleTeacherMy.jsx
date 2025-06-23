@@ -17,7 +17,7 @@ const ScheduleTeacherMy = () => {
           </Link>
           <button className={styles.activeButton}>РАСПИСАНИЕ</button>
         </div>
-        <div className={styles.ConteinerSelectedQuarter} style={{margin:10}}>
+        <div className={styles.ConteinerSelectedQuarter}>
           <button className={styles.SelectedCell}>Моё расписание</button>
           <Link to="/psc">
           <button className={styles.DefaultCell}>Расписание класса</button>

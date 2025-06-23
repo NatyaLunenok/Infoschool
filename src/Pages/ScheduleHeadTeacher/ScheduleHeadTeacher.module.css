@@ -1,0 +1,91 @@
+.ConteinerSecondLine{
+    width: 1380px;
+    background-color: #EFEFFD;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 0px;
+    border-radius: 8px;
+}
+
+.activeButton{
+    background-color: #15A138;
+    color: white;
+    font-family: "Inter", sans-serif;
+    font-size: 16px;
+    font-weight: bold;
+    align-items: center;
+    justify-content: center;
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+
+}
+
+.defaultButton{
+    background-color: #EFEFFD;
+    color: #15A138;
+    font-family: "Inter", sans-serif;
+    font-size: 16px;
+    font-weight: bold;
+    align-items: center;
+    justify-content: center;
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+.ConteinerSelectedQuarter{
+    display: flex;
+    flex-direction: row;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    gap: -1px;
+}
+
+.SelectedCell{
+    align-items: center;
+    justify-content: center;
+    color: black;
+    background-color: #F7944D;
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    border: 1px solid #6B6B73;
+    font-family: "Inter", sans-serif;
+    font-size: 16px;
+    color: #000;
+    cursor: pointer;
+}
+
+.DefaultCell{
+    align-items: center;
+    justify-content: center;
+    color: black;
+    background-color: #EFEFFD;
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    border: 1px solid #6B6B73;
+    font-family: "Inter", sans-serif;
+    font-size: 16px;
+    color: #000;
+    cursor: pointer;
+}
+
+.button{
+    background-color: #15A138;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding-left:20px;
+    padding-right: 20px;
+}

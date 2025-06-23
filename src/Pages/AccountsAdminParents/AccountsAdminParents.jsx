@@ -14,7 +14,9 @@ const AccountsAdminParents = () => {
        <Link to="/ps">
         <button className={styles.defaultButton}>ПРЕДМЕТЫ</button>
       </Link>
+        <Link to="/pr">
         <button className={styles.defaultButton}>КАБИНЕТЫ</button>
+      </Link>
     </div>
     <div className={styles.ConteinerSelectedQuarter}>
         <Link to="/paa">

@@ -15,6 +15,7 @@ import GradeSummary from './Pages/GradeSummary/GradeSummary';
 import ScheduleClassPage from './Pages/ScheduleClass/ScheduleClass';
 import Subjects from './Pages/Subjects/Subjects'
 import Rooms from './Pages/Rooms/Rooms';
+import ScheduleHeadTeacher from './Pages/ScheduleHeadTeacher/ScheduleHeadTeacher';
 
 function App(){
   
@@ -31,7 +32,8 @@ function App(){
         {/* <Route path="/" element={<GradeSummary/>} /> */}
         {/* <Route path="/" element={<Subjects/>} /> */}
         {/* <Route path="/" element={<Rooms/>} /> */}
-        <Route path="/" element={<Authorization/>} />
+        <Route path="/" element={<ScheduleHeadTeacher/>} />
+        {/* <Route path="/" element={<Authorization/>} /> */}
         <Route path="/paa" element={<AccountsAdmin/>} />
         <Route path="/pjt" element={<JournalTeacher/>} />
         <Route path="/paap" element={<AccountsAdminParents/>} />
@@ -44,6 +46,7 @@ function App(){
         <Route path="/psc" element={<ScheduleClassPage/>} />
         <Route path="/ps" element={<Subjects/>} />
         <Route path="/pr" element={<Rooms/>} />
+        <Route path="/psht" element={<ScheduleHeadTeacher/>} />
       </Routes>
     </Router>
   );

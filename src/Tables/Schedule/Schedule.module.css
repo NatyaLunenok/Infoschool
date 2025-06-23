@@ -1,4 +1,4 @@
-.container {
+/* .container {
   font-family: Arial, sans-serif;
   max-width: 1200px;
   margin:30px;
@@ -42,15 +42,14 @@
   font-size: 14px;
 }
 
-/* Стили для заголовков дней недели */
 .dayHeader {
-  background-color: #15A138; /* Зеленый цвет */
+  background-color: #15A138;
   color: white;
   border: 1px solid #ddd;
-  padding: 4px 8px; /* Уменьшенный padding */
+  padding: 4px 8px;
   text-align: center;
   min-width: 172px;
-  height: 40px; /* Фиксированная высота */
+  height: 40px; 
 }
 
 .dayHeader div {
@@ -58,7 +57,6 @@
   line-height: 1.2;
 }
 
-/* Стили для ячеек с номерами уроков */
 .lessonHeader, .lessonCell {
   width: 40px;
   min-width: 40px;
@@ -67,11 +65,10 @@
   font-weight: bold;
   background-color: #f9f9f9;
   border: 1px solid #ddd;
-  padding: 4px; /* Уменьшенный padding */
-  height: 40px; /* Фиксированная высота */
+  padding: 4px;
+  height: 40px;
 }
 
-/* Стили для ячеек с временем */
 .timeHeader, .timeCell {
   width: 160px;
   min-width: 80px;
@@ -80,11 +77,10 @@
   font-weight: bold;
   background-color: #f9f9f9;
   border: 1px solid #ddd;
-  padding: 4px 8px; /* Уменьшенный padding */
-  height: 40px; /* Фиксированная высота */
+  padding: 4px 8px;
+  height: 40px;
 }
 
-/* Стили для ячеек с расписанием */
 .dayCell {
   min-width: 120px;
   border: 1px solid #ddd;
@@ -98,10 +94,9 @@
   margin: 2px 0;
 }
 
-/* Специфичные стили для заголовков */
 .lessonHeader, .timeHeader {
   background-color: #15A138;
-  height: 40px; /* Фиксированная высота */
+  height: 40px;
   color: white;
 }
 
@@ -119,4 +114,107 @@
   padding: 20px;
   text-align: center;
   font-size: 18px;
+} */
+
+/* Schedule.module.css */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+  gap: 20px;
+}
+
+.weekTitle {
+  margin: 0;
+  font-size: 1.2rem;
+}
+
+.arrowButton {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 5px 15px;
+  border-radius: 4px;
+  transition: background-color 0.2s;
+}
+
+.arrowButton:hover {
+  background-color: #f0f0f0;
+}
+
+.tableContainer {
+  overflow-x: auto;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.scheduleTable {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+.scheduleTable th, 
+.scheduleTable td {
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: center;
+}
+
+/* Увеличенный столбец времени */
+.timeHeader,
+.timeCell {
+  width: 120px; /* Увеличена ширина столбца */
+  min-width: 120px;
+  white-space: nowrap;
+}
+
+.lessonHeader,
+.lessonCell {
+  width: 50px;
+}
+
+.dayHeader,
+.dayCell {
+  width: calc((100% - 170px) / 6); /* 170px = ширина столбцов урока и времени */
+  min-width: 150px;
+}
+
+.dayHeader {
+  background-color: #15A138;
+  color: white;
+}
+
+.dayHeader div:first-child {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.dayCell div {
+  margin-bottom: 5px;
+}
+
+.dayCell div:first-child {
+  font-weight: bold;
+}
+
+.loading {
+  text-align: center;
+  padding: 20px;
+  font-size: 1.2rem;
+}
+
+.error {
+  color: #dc3545;
+  text-align: center;
+  padding: 20px;
+  font-size: 1.2rem;
 }
