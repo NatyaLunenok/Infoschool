@@ -1332,14 +1332,15 @@ const hasHomework = (lessonId) => {
   return (
     <>
       {/* <table className={styles.journalTable} ref={tableRef}> */}
-<table className={styles.journalTable} ref={tableRef} style={{ width: '1380px' }}>
-<colgroup>
-  <col /> {/* Колонка с номером */}
-  <col style={{ width: '700px' }} /> 
-  {dates.map((dateObj) => ( // Добавляем параметр dateObj в callback
-    <col key={`col-${dateObj.id}`} style={{ width: '300px' }} />
-  ))}
-</colgroup>
+    <div className={styles.tableContainer}>
+      <table className={styles.journalTable} ref={tableRef}>
+        <colgroup>
+          <col />
+          <col style={{ width: '500px' }} />
+          {dates.map((dateObj) => (
+            <col key={`col-${dateObj.id}`} style={{ width: '200px' }} />
+          ))}
+        </colgroup>
         <thead>
           <tr className={styles.headerRow}>
             <th className={styles.headerCell}>№</th>
@@ -1431,6 +1432,8 @@ const hasHomework = (lessonId) => {
           ))}
         </tbody>
       </table>
+          </div>
+
       <HomeworkModal
         isOpen={isHomeworkModalOpen}
         onClose={closeHomeworkModal}

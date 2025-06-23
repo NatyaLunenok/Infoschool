@@ -1,17 +1,16 @@
-/* Journal.module.css */
 .tableContainer {
   width: 100%;
   max-width: 1380px;
   margin: 30px auto;
-  overflow-x: auto;
+  overflow-x: auto; /* Это добавит горизонтальный скролл */
   border-radius: 8px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  position: relative;
 }
 
 .journalTable {
   border-collapse: collapse;
-  width: auto;
-  min-width: 1380px; /* Минимальная ширина */
+  width: 100%; /* Измените на 100% */
   font-family: Arial, sans-serif;
   table-layout: fixed;
 }
