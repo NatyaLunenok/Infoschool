@@ -72,3 +72,20 @@ class StudentListView(ListAPIView):
             )
         serializer = self.get_serializer(queryset, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+class ClassroomTypeListView(ListAPIView):
+    permission_classes = [permissions.IsAuthenticated]
+
+    queryset = ClassroomType.objects.all()
+    serializer_class = ClassroomTypeSerializer
+
+    def list(self, request, *args, **kwargs):
+        queryset = self.get_queryset()
+        if not queryset.exists():
+            return Response(
+                {"message": "Типы кабинетов не найдены"},
+                status=status.HTTP_404_NOT_FOUND
+            )
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)

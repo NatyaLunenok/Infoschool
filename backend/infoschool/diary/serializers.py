@@ -359,7 +359,7 @@ class StudentSerializer(serializers.ModelSerializer):
         model = Student
         fields = ['id', 'last_name', 'first_name', 'patronymic', 'birth_date',
                   'email', 'phone_number', 'address', 'birth_certificate_number',
-                  'parent1', 'parent2']
+                  'parent1', 'parent2', 'photo']
 
     def get_parent_full_name(self, parent):
         if not parent:
@@ -522,3 +522,9 @@ class MarkSerializer(serializers.ModelSerializer):
     class Meta:
         model = Mark
         fields = ['lesson_id', 'mark']
+
+
+class ClassroomTypeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ClassroomType
+        fields = ['id', 'type_name']
