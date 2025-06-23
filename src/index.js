@@ -32,8 +32,8 @@ function App(){
         {/* <Route path="/" element={<GradeSummary/>} /> */}
         {/* <Route path="/" element={<Subjects/>} /> */}
         {/* <Route path="/" element={<Rooms/>} /> */}
-        <Route path="/" element={<ScheduleHeadTeacher/>} />
-        {/* <Route path="/" element={<Authorization/>} /> */}
+        {/* <Route path="/" element={<ScheduleHeadTeacher/>} /> */}
+        <Route path="/" element={<Authorization/>} />
         <Route path="/paa" element={<AccountsAdmin/>} />
         <Route path="/pjt" element={<JournalTeacher/>} />
         <Route path="/paap" element={<AccountsAdminParents/>} />
