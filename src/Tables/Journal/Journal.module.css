@@ -21,7 +21,7 @@
 }
 
 .journalTable colgroup col:nth-child(2) {
-  width: 700px; /* Ширина колонки с учениками */
+  width: 500px; /* Ширина колонки с учениками */
 }
 
 .journalTable colgroup col:not(:first-child):not(:nth-child(2)) {
@@ -30,9 +30,41 @@
 
 
 .tableWrapper {
-  width: auto;
-  display: inline-block;
+  display: flex;
+  width: 100%;
+  max-width: 1380px;
+  margin: 30px auto;
+  overflow: hidden;
   position: relative;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.fixedColumn {
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  background: white;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.scrollableContent {
+  overflow-x: auto;
+  flex: 1;
+}
+
+.fixedTable, .scrollableTable {
+  border-collapse: collapse;
+  table-layout: fixed;
+  font-family: Arial, sans-serif;
+}
+
+.fixedTable {
+  width: 550px; /* 50px + 500px */
+}
+
+.scrollableTable {
+  min-width: calc(100% - 550px);
 }
 
 
@@ -103,7 +135,7 @@
 }
 
 .gradeInput {
-  width: 30px;
+  width: 50px;
   text-align: center;
   padding: 4px;
   border: 1px solid #ccc;
