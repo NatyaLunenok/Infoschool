@@ -94,7 +94,8 @@ const ScheduleHeadTeacher = () => {
           display: 'flex',
           flexDirection: 'row',
           justifyContent: 'flex-end',
-          marginBottom: '30px'
+          marginBottom: '30px',
+          marginRight: '30px'
         }}>
           <button 
             style={{ paddingTop: '10px', paddingBottom: '10px' }} 
@@ -103,9 +104,8 @@ const ScheduleHeadTeacher = () => {
             Сохранить изменения
           </button>
         </div>
-        
-        <Footer />
       </div>
+      <Footer />
     </>
   );
 };
